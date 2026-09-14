@@ -1,0 +1,170 @@
+---
+// ConversionTable.astro
+const referenceData = [
+  { cm: '0.10', mm: '1.0', inch: '0.039', fraction: '1/32"', note: 'Tebal kartu ATM' },
+  { cm: '1.00', mm: '10.0', inch: '0.394', fraction: '3/8"', note: 'Lebar kuku kelingking rata-rata' },
+  { cm: '2.41', mm: '24.1', inch: '0.951', fraction: '61/64"', note: 'Diameter koin Rp 1.000' },
+  { cm: '2.54', mm: '25.4', inch: '1.000', fraction: '1"', note: 'Tepat 1 Inci (Standard Inch)' },
+  { cm: '5.00', mm: '50.0', inch: '1.969', fraction: '1 31/32"', note: 'Panjang batang korek api' },
+  { cm: '8.56', mm: '85.6', inch: '3.370', fraction: '3 3/8"', note: 'Standar panjang e-KTP / Kartu ATM' },
+  { cm: '10.00', mm: '100.0', inch: '3.937', fraction: '3 15/16"', note: 'Panjang 1 Desimeter (dm)' },
+  { cm: '15.00', mm: '150.0', inch: '5.906', fraction: '5 29/32"', note: 'Penggaris saku plastik pendek' },
+  { cm: '30.00', mm: '300.0', inch: '11.811', fraction: '11 13/16"', note: 'Penggaris standar sekolah (30 cm)' }
+];
+---
+
+<section class="py-12 sm:py-16 border-t border-(--border) bg-(--card)/30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center mb-10">
+      <span class="text-xs font-bold uppercase tracking-widest text-indigo-500 dark:text-cyan-400">
+        Tabel Referensi & Konversi
+      </span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-(--foreground) tracking-tight mt-1">
+        Konversi Satuan Panjang (cm ↔ mm ↔ inci)
+      </h2>
+      <p class="mt-2 text-sm text-(--muted-foreground)">
+        Gunakan kalkulator instan dan tabel patokan ukuran fisik di bawah untuk mempermudah perhitungan Anda.
+      </p>
+    </div>
+
+    <!-- Quick Conversion Calculator Widget -->
+    <div class="max-w-2xl mx-auto mb-12 p-6 rounded-2xl bg-(--card) border border-(--border) shadow-md">
+      <h3 class="text-sm font-bold text-(--foreground) mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+          <line x1="8" y1="6" x2="16" y2="6"></line>
+          <line x1="16" y1="14" x2="16" y2="18"></line>
+          <path d="M16 10h.01"></path>
+          <path d="M12 10h.01"></path>
+          <path d="M8 10h.01"></path>
+          <path d="M12 14h.01"></path>
+          <path d="M8 14h.01"></path>
+          <path d="M12 18h.01"></path>
+          <path d="M8 18h.01"></path>
+        </svg>
+        Kalkulator Konversi Cepat
+      </h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <!-- CM Input -->
+        <div class="space-y-1">
+          <label for="calc-input-cm" class="text-xs font-medium text-(--muted-foreground)">Sentimeter (cm)</label>
+          <input
+            type="number"
+            id="calc-input-cm"
+            value="10"
+            step="any"
+            class="w-full px-3 py-2 rounded-xl bg-(--muted)/50 border border-(--border) font-mono-tabular font-bold text-(--foreground) focus:ring-2 focus:ring-indigo-500/30 focus:outline-none text-sm"
+          />
+        </div>
+
+        <!-- MM Input -->
+        <div class="space-y-1">
+          <label for="calc-input-mm" class="text-xs font-medium text-(--muted-foreground)">Milimeter (mm)</label>
+          <input
+            type="number"
+            id="calc-input-mm"
+            value="100"
+            step="any"
+            class="w-full px-3 py-2 rounded-xl bg-(--muted)/50 border border-(--border) font-mono-tabular font-bold text-(--foreground) focus:ring-2 focus:ring-indigo-500/30 focus:outline-none text-sm"
+          />
+        </div>
+
+        <!-- Inch Input -->
+        <div class="space-y-1">
+          <label for="calc-input-inch" class="text-xs font-medium text-(--muted-foreground)">Inci (inch)</label>
+          <input
+            type="number"
+            id="calc-input-inch"
+            value="3.937"
+            step="any"
+            class="w-full px-3 py-2 rounded-xl bg-(--muted)/50 border border-(--border) font-mono-tabular font-bold text-(--foreground) focus:ring-2 focus:ring-indigo-500/30 focus:outline-none text-sm"
+          />
+        </div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-(--border)/60 text-xs text-(--muted-foreground) flex flex-wrap items-center justify-between gap-2">
+        <span>Rumus standar: <strong>1 inci = 2.54 cm = 25.4 mm</strong></span>
+        <span class="font-medium">Hasil pecahan ekuivalen: <span id="calc-fraction-res" class="font-mono text-indigo-500 dark:text-cyan-400 font-bold">≈ 3 15/16"</span></span>
+      </div>
+    </div>
+
+    <!-- Pre-rendered Reference Table -->
+    <div class="max-w-4xl mx-auto overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs sm:text-sm">
+          <thead class="bg-(--muted)/80 text-(--foreground) border-b border-(--border) uppercase text-[11px] font-bold tracking-wider">
+            <tr>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">Sentimeter (cm)</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">Milimeter (mm)</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">Inci (Desimal)</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">Inci (Pecahan)</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">Contoh Objek Fisik</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-(--border)">
+            {referenceData.map((row) => (
+              <tr class="hover:bg-(--muted)/30 transition-colors">
+                <td class="py-3 px-4 sm:px-6 font-mono-tabular font-bold text-(--foreground)">{row.cm} cm</td>
+                <td class="py-3 px-4 sm:px-6 font-mono-tabular text-(--muted-foreground)">{row.mm} mm</td>
+                <td class="py-3 px-4 sm:px-6 font-mono-tabular text-indigo-600 dark:text-cyan-400 font-medium">{row.inch} in</td>
+                <td class="py-3 px-4 sm:px-6 font-mono text-(--muted-foreground)">{row.fraction}</td>
+                <td class="py-3 px-4 sm:px-6 text-(--muted-foreground)">{row.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Conversion Calculator Logic
+  const cmInput = document.getElementById('calc-input-cm');
+  const mmInput = document.getElementById('calc-input-mm');
+  const inchInput = document.getElementById('calc-input-inch');
+  const fracRes = document.getElementById('calc-fraction-res');
+
+  function toFraction(val) {
+    const whole = Math.floor(val);
+    const remainder = val - whole;
+    const sixteenths = Math.round(remainder * 16);
+    if (sixteenths === 0) return `${whole}"`;
+    if (sixteenths === 16) return `${whole + 1}"`;
+    let num = sixteenths;
+    let den = 16;
+    while (num % 2 === 0 && den % 2 === 0) { num /= 2; den /= 2; }
+    return whole === 0 ? `${num}/${den}"` : `${whole} ${num}/${den}"`;
+  }
+
+  cmInput?.addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value);
+    if (!isNaN(val)) {
+      if (mmInput) mmInput.value = (val * 10).toFixed(1);
+      const inch = val / 2.54;
+      if (inchInput) inchInput.value = inch.toFixed(3);
+      if (fracRes) fracRes.textContent = `≈ ${toFraction(inch)}`;
+    }
+  });
+
+  mmInput?.addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value);
+    if (!isNaN(val)) {
+      const cm = val / 10;
+      if (cmInput) cmInput.value = cm.toFixed(2);
+      const inch = cm / 2.54;
+      if (inchInput) inchInput.value = inch.toFixed(3);
+      if (fracRes) fracRes.textContent = `≈ ${toFraction(inch)}`;
+    }
+  });
+
+  inchInput?.addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value);
+    if (!isNaN(val)) {
+      const cm = val * 2.54;
+      if (cmInput) cmInput.value = cm.toFixed(2);
+      if (mmInput) mmInput.value = (cm * 10).toFixed(1);
+      if (fracRes) fracRes.textContent = `≈ ${toFraction(val)}`;
+    }
+  });
+</script>

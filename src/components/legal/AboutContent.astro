@@ -1,0 +1,108 @@
+---
+// AboutContent.astro
+interface Props {
+  lang?: string;
+}
+const { lang = 'id' } = Astro.props;
+const isId = lang === 'id';
+---
+
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10">
+  <!-- Header Intro -->
+  <div class="space-y-3 text-center sm:text-left border-b border-(--border) pb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider border border-indigo-500/20">
+      <span>📐</span>
+      <span>{isId ? 'Tentang Penggaris Online' : 'About Penggaris Online'}</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-(--foreground) tracking-tight">
+      {isId ? 'Tentang Kami (About Us)' : 'About Us - Precision Online Ruler'}
+    </h1>
+    <p class="text-xs sm:text-sm text-(--muted-foreground)">
+      {isId ? 'Misi kami menghadirkan instrumen ukur digital ukuran asli 1:1 paling akurat dan praktis di Indonesia.' : 'Our mission is to deliver the most accurate, zero-cost 1:1 digital measurement tool across all devices.'}
+    </p>
+  </div>
+
+  <!-- Main Narrative -->
+  <div class="space-y-8 text-sm text-(--muted-foreground) leading-relaxed">
+    <section class="p-6 rounded-3xl bg-(--card) border border-(--border) space-y-4">
+      <h2 class="text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>🚀</span>
+        <span>{isId ? 'Latar Belakang & Visi Kami' : 'Our Story and Vision'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Penggaris Online HP CM (penggarisonline.com) bermula dari sebuah masalah sederhana yang dialami jutaan orang setiap harinya: kebutuhan mendadak untuk mengukur panjang sekrup, lebar kartu nama, diameter cincin, atau ukuran foto, saat penggaris mistar fisik sedang tidak tersedia. Kebanyakan orang mencoba mencari gambar penggaris di Google, namun ukuran yang ditampilkan selalu meleset karena setiap layar memiliki kepadatan piksel (PPI) yang berbeda.'
+          : 'Penggaris Online HP CM (penggarisonline.com) was born out of a universal everyday challenge: needing to quickly measure a screw, card, ring diameter, or package dimension when no physical ruler is within reach. Simple image searches yield distorted rulers because screens vary wildly in Pixel Density (PPI).'}
+      </p>
+      <p>
+        {isId
+          ? 'Kami merancang sebuah solusi berbasis web mutakhir yang dapat diakses secara instan dari peramban peranti apa pun tanpa perlu instalasi aplikasi rumit. Dengan memadukan kalkulasi kerapatan piksel layar cerdas dan metode kalibrasi satu langkah menggunakan kartu e-KTP / ATM berstandar internasional ISO/IEC 7810 ID-1 (85.60 mm), kami mewujudkan akurasi fisik nyata 100% tepat di layar kaca ponsel pintar Anda.'
+          : 'We engineered an open, browser-native measurement platform that eliminates installation barriers. By pairing reactive SVG rendering with an ISO/IEC 7810 ID-1 card calibration mechanism (85.60 mm), we deliver exact 1:1 physical accuracy directly onto your smartphone glass.'}
+      </p>
+    </section>
+
+    <!-- Key Pillars Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl glass-panel border border-(--border) space-y-2.5">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 flex items-center justify-center font-bold text-lg">
+          🎯
+        </div>
+        <h3 class="font-bold text-base text-(--foreground)">{isId ? 'Presisi Standar ISO' : 'ISO-Calibrated Precision'}</h3>
+        <p class="text-xs text-(--muted-foreground)">
+          {isId
+            ? 'Menggunakan standar dimensi kartu debit & e-KTP Indonesia untuk memastikan setiap milimeter di layar cocok dengan mistar baja pabrikan.'
+            : 'Harnesses international credit card standard ISO 7810 ID-1 to guarantee sub-millimeter precision.'}
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl glass-panel border border-(--border) space-y-2.5">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 flex items-center justify-center font-bold text-lg">
+          ⚡
+        </div>
+        <h3 class="font-bold text-base text-(--foreground)">{isId ? '100% Gratis & Ringan' : '100% Free & Lightweight'}</h3>
+        <p class="text-xs text-(--muted-foreground)">
+          {isId
+            ? 'Dapat dimuat dalam hitungan milidetik, hemat kuota internet, dan dapat berjalan secara offline tanpa lag.'
+            : 'Loads in milliseconds, consumes minimal bandwidth, and runs completely offline once cached.'}
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl glass-panel border border-(--border) space-y-2.5">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 flex items-center justify-center font-bold text-lg">
+          🇮🇩
+        </div>
+        <h3 class="font-bold text-base text-(--foreground)">{isId ? 'Dibuat untuk Indonesia' : 'Built for Global Creators'}</h3>
+        <p class="text-xs text-(--muted-foreground)">
+          {isId
+            ? 'Disesuaikan dengan kebutuhan pelajar, pengrajin, desainer grafis, teknisi, dan pelaku UMKM online di seluruh Nusantara.'
+            : 'Tailored for students, engineers, artisans, and e-commerce sellers requiring rapid on-demand measurement.'}
+        </p>
+      </div>
+    </div>
+
+    <!-- Tech Specs / Standards -->
+    <section class="p-6 rounded-3xl bg-(--card) border border-(--border) space-y-3">
+      <h2 class="text-xl font-bold text-(--foreground)">
+        {isId ? 'Spesifikasi & Standar Rekayasa' : 'Engineering Specifications & Standards'}
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs">
+        <div class="p-3.5 rounded-xl bg-(--muted)/40 border border-(--border) space-y-1">
+          <span class="font-bold text-(--foreground)">Standar Kalibrasi Fisik:</span>
+          <p class="text-(--muted-foreground)">ISO/IEC 7810 ID-1 (85.60 mm × 53.98 mm, e-KTP &amp; ATM Indonesia)</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-(--muted)/40 border border-(--border) space-y-1">
+          <span class="font-bold text-(--foreground)">Resolusi Pembacaan:</span>
+          <p class="text-(--muted-foreground)">0.1 mm (Milimeter), 0.01 cm (Sentimeter), 1/16" (Pecahan Inci)</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-(--muted)/40 border border-(--border) space-y-1">
+          <span class="font-bold text-(--foreground)">Dukungan Perangkat:</span>
+          <p class="text-(--muted-foreground)">HP Android, iPhone (iOS), iPad, Tablet Samsung, Laptop Windows &amp; Mac</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-(--muted)/40 border border-(--border) space-y-1">
+          <span class="font-bold text-(--foreground)">Arsitektur Privasi:</span>
+          <p class="text-(--muted-foreground)">Client-side SVG Engine, Zero Data Transmission to Remote Servers</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</article>

@@ -1,0 +1,97 @@
+---
+// CompetitorComparison.astro
+const comparisons = [
+  {
+    feature: 'Metode Kalibrasi Standar Indonesia (KTP/ATM)',
+    us: 'Tersedia dengan standar kartu e-KTP & ATM ISO 7810 ID-1 (85.6 mm)',
+    competitor: 'Hanya tebakan acak, kartu kredit luar negeri, atau tidak ada sama sekali',
+    icon: 'credit-card'
+  },
+  {
+    feature: 'Preset Otomatis Smartphone Lokal',
+    us: 'Pilihan langsung iPhone, Samsung Galaxy, Redmi, Poco, Oppo, Vivo, Infinix',
+    competitor: 'Hanya monitor desktop atau perangkat luar negeri yang tidak umum',
+    icon: 'smartphone'
+  },
+  {
+    feature: 'Jangka Sorong Interaktif (Dual Pointer Caliper)',
+    us: 'Penanda laser A & B yang bisa digeser dengan pembacaan langsung di layar',
+    competitor: 'Kebanyakan hanya gambar statis kaku tanpa penanda interaktif',
+    icon: 'sliders'
+  },
+  {
+    feature: 'Kualitas Bahasa Indonesia',
+    us: '100% Bahasa Indonesia natural, akurat, dan istilah teknik baku',
+    competitor: 'Terjemahan mesin kaku (misal: "Cm penguasa" alih-alih penggaris)',
+    icon: 'languages'
+  },
+  {
+    feature: 'Kenyamanan Pengguna & Privasi',
+    us: 'Tanpa iklan popup, tanpa pelacakan agresif, 100% jalan di browser lokal',
+    competitor: 'Penuh banner iklan Google Adsense yang menutup area pengukuran',
+    icon: 'shield-check'
+  },
+  {
+    feature: 'Dukungan Pecahan Inci (Vulgar Fraction)',
+    us: 'Menampilkan desimal dan pecahan vulgar langsung (contoh: 2 3/8")',
+    competitor: 'Hanya angka desimal biasa yang sulit dibaca untuk pertukangan',
+    icon: 'divide'
+  }
+];
+---
+
+<section class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="text-center max-w-3xl mx-auto mb-10">
+    <span class="text-xs font-bold uppercase tracking-widest text-indigo-500 dark:text-cyan-400">
+      Perbandingan Fitur
+    </span>
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-(--foreground) tracking-tight mt-1">
+      Penggaris Online vs Website Penggaris Lainnya
+    </h2>
+    <p class="mt-2 text-sm text-(--muted-foreground)">
+      Lihat perbedaan nyata mengapa sistem kalibrasi dan antarmuka Penggaris Online kami memberikan pengalaman ukur yang jauh lebih presisi dan nyaman.
+    </p>
+  </div>
+
+  <div class="overflow-hidden rounded-3xl border border-(--border) bg-(--card) shadow-md">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs sm:text-sm">
+        <thead class="bg-(--muted)/80 text-(--foreground) border-b border-(--border)">
+          <tr>
+            <th scope="col" class="py-4 px-5 sm:px-6 font-bold">Fitur & Kemampuan</th>
+            <th scope="col" class="py-4 px-5 sm:px-6 font-extrabold text-indigo-600 dark:text-cyan-400 bg-indigo-500/10 dark:bg-cyan-500/10">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Penggaris Online Kami
+              </span>
+            </th>
+            <th scope="col" class="py-4 px-5 sm:px-6 font-medium text-(--muted-foreground)">
+              Situs Kompetitor Umum
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-(--border)">
+          {comparisons.map((row) => (
+            <tr class="hover:bg-(--muted)/20 transition-colors">
+              <td class="py-4 px-5 sm:px-6 font-semibold text-(--foreground)">
+                {row.feature}
+              </td>
+              <td class="py-4 px-5 sm:px-6 bg-indigo-500/5 dark:bg-cyan-500/5 font-medium text-(--foreground)">
+                <div class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+                  <span>{row.us}</span>
+                </div>
+              </td>
+              <td class="py-4 px-5 sm:px-6 text-(--muted-foreground)">
+                <div class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-500 flex items-center justify-center shrink-0 text-xs font-bold">✕</span>
+                  <span>{row.competitor}</span>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

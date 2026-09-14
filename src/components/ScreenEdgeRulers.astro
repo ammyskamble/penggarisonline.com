@@ -1,0 +1,244 @@
+---
+// ScreenEdgeRulers.astro
+// RealOnlineRuler-inspired edge ruler system with Top, Bottom, Left, and Right true screen bezels
+---
+
+<div
+  id="edge-rulers-overlay"
+  class="fixed inset-0 z-40 hidden flex-col bg-(--background)/95 backdrop-blur-xs select-none overflow-hidden touch-none"
+>
+  <!-- Floating Edge Control Bar (Positioned to clear the top ruler completely) -->
+  <div class="edge-mode-toolbar fixed top-14 sm:top-14 inset-x-3 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 z-50 flex flex-wrap items-center justify-between sm:justify-center gap-1.5 p-1.5 rounded-2xl glass-panel shadow-xl border border-(--border) max-w-[94vw] overflow-visible">
+    <!-- Title / Brand indicator -->
+    <div class="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold text-(--foreground) shrink-0">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span>Mode Tepi Layar</span>
+    </div>
+
+    <div class="hidden md:block w-px h-5 bg-(--border)"></div>
+
+    <!-- Edge Position Toggles (Left, Right, Top, Bottom) -->
+    <div class="flex items-center gap-1 shrink-0">
+      <button
+        type="button"
+        data-edge-btn="top"
+        class="edge-toggle-btn px-2.5 py-1 rounded-xl text-xs font-semibold border border-(--border) bg-(--card) text-(--foreground) hover:border-indigo-500 transition-all flex items-center gap-1 cursor-pointer"
+        title="Aktifkan penggaris tepi atas"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+        <span>Atas</span>
+      </button>
+
+      <button
+        type="button"
+        data-edge-btn="bottom"
+        class="edge-toggle-btn px-2.5 py-1 rounded-xl text-xs font-semibold border border-(--border) bg-(--card) text-(--foreground) hover:border-indigo-500 transition-all flex items-center gap-1 cursor-pointer"
+        title="Aktifkan penggaris tepi bawah"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+        <span>Bawah</span>
+      </button>
+
+      <button
+        type="button"
+        data-edge-btn="left"
+        class="edge-toggle-btn px-2.5 py-1 rounded-xl text-xs font-semibold border border-(--border) bg-(--card) text-(--foreground) hover:border-indigo-500 transition-all flex items-center gap-1 cursor-pointer"
+        title="Aktifkan penggaris tepi kiri"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+        <span>Kiri</span>
+      </button>
+
+      <button
+        type="button"
+        data-edge-btn="right"
+        class="edge-toggle-btn px-2.5 py-1 rounded-xl text-xs font-semibold border border-(--border) bg-(--card) text-(--foreground) hover:border-indigo-500 transition-all flex items-center gap-1 cursor-pointer"
+        title="Aktifkan penggaris tepi kanan"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+        <span>Kanan</span>
+      </button>
+    </div>
+
+    <div class="w-px h-5 bg-(--border)"></div>
+
+    <!-- Edge Unit Selector (cm / inci) -->
+    <div class="flex items-center bg-(--muted) p-0.5 rounded-xl border border-(--border) shadow-inner shrink-0">
+      <button
+        type="button"
+        data-edge-unit="cm"
+        class="edge-unit-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-(--card) text-(--foreground) shadow-xs border border-(--border) cursor-pointer"
+        title="Skala Metrik (cm & mm)"
+      >
+        cm
+      </button>
+      <button
+        type="button"
+        data-edge-unit="inch"
+        class="edge-unit-btn px-2.5 py-1 rounded-lg text-xs font-medium text-(--muted-foreground) hover:text-(--foreground) transition-all cursor-pointer"
+        title="Skala Imperial (inci & 1/16\")"
+      >
+        inci
+      </button>
+    </div>
+
+    <div class="w-px h-5 bg-(--border)"></div>
+
+    <!-- Directional Flip Controls (⇄ Flip X, ⇅ Flip Y) -->
+    <div class="flex items-center gap-1 shrink-0">
+      <button
+        type="button"
+        id="btn-edge-flip-x"
+        class="px-2 py-1 rounded-xl border border-(--border) bg-(--card) text-(--muted-foreground) hover:text-(--foreground) hover:border-indigo-500 text-xs font-medium transition-all cursor-pointer"
+        title="Balik Arah Penggaris Horizontal (Kiri ⇄ Kanan)"
+      >
+        ⇄ Balik X
+      </button>
+      <button
+        type="button"
+        id="btn-edge-flip-y"
+        class="px-2 py-1 rounded-xl border border-(--border) bg-(--card) text-(--muted-foreground) hover:text-(--foreground) hover:border-indigo-500 text-xs font-medium transition-all cursor-pointer"
+        title="Balik Arah Penggaris Vertikal (Atas ⇅ Bawah)"
+      >
+        ⇅ Balik Y
+      </button>
+    </div>
+
+    <div class="w-px h-5 bg-(--border)"></div>
+
+    <!-- Extra Tools: Guides & Crosshair -->
+    <div class="flex items-center gap-1 shrink-0">
+      <button
+        type="button"
+        id="btn-edge-crosshair"
+        class="p-1.5 rounded-xl border border-(--border) bg-(--card) text-(--muted-foreground) hover:text-(--foreground) hover:border-indigo-500 transition-all text-xs cursor-pointer"
+        title="Toggle Crosshair Penunjuk Koordinat"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="22" y1="12" x2="18" y2="12"></line>
+          <line x1="6" y1="12" x2="2" y2="12"></line>
+          <line x1="12" y1="6" x2="12" y2="2"></line>
+          <line x1="12" y1="22" x2="12" y2="18"></line>
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        id="btn-edge-clear-guides"
+        class="px-2 py-1 rounded-xl border border-(--border) bg-(--card) text-(--muted-foreground) hover:text-(--foreground) hover:border-indigo-500 transition-all text-xs font-medium cursor-pointer"
+        title="Hapus Garis Panduan yang Ditambahkan"
+      >
+        Bersihkan Garis
+      </button>
+    </div>
+
+    <div class="w-px h-5 bg-(--border)"></div>
+
+    <!-- Exit / Close Toggle Button -->
+    <button
+      type="button"
+      id="btn-close-edge-mode"
+      class="px-3 py-1 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 border border-rose-500/30 text-xs font-bold transition-all flex items-center gap-1 shrink-0 cursor-pointer"
+      title="Kembali ke Tampilan Standar (Esc)"
+    >
+      <span>✕ Tutup</span>
+    </button>
+  </div>
+
+  <!-- Real-Time Physical Screen Bounds HUD -->
+  <!-- Real-Time Physical Screen Bounds HUD -->
+  <div
+    id="edge-bounds-hud"
+    class="fixed bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-2xl glass-panel shadow-2xl border border-indigo-500/30 text-center pointer-events-none transition-all flex items-center gap-3"
+  >
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+      <span class="text-xs text-(--muted-foreground) font-semibold">Area Ukur Efektif:</span>
+      <span id="edge-hud-dimensions" class="text-xs sm:text-sm font-extrabold font-mono-tabular text-(--foreground)">--</span>
+    </div>
+    <span class="w-px h-3.5 bg-(--border)"></span>
+    <span id="edge-hud-pixels" class="text-[11px] font-mono text-(--muted-foreground)">-- px</span>
+  </div>
+
+  <!-- Edge Ruler Background Tracks (z-20) -->
+  <div id="edge-bg-top" class="edge-bg absolute top-0 left-0 right-0 h-11 bg-(--card) border-b border-(--border) shadow-xs z-20 transition-opacity"></div>
+  <div id="edge-bg-bottom" class="edge-bg absolute bottom-0 left-0 right-0 h-11 bg-(--card) border-t border-(--border) shadow-xs z-20 transition-opacity"></div>
+  <div id="edge-bg-left" class="edge-bg absolute top-0 left-0 bottom-0 w-11 bg-(--card) border-r border-(--border) shadow-xs z-20 transition-opacity"></div>
+  <div id="edge-bg-right" class="edge-bg absolute top-0 right-0 bottom-0 w-11 bg-(--card) border-l border-(--border) shadow-xs z-20 transition-opacity"></div>
+
+  <!-- Four True Screen Edge Ruler Canvases (z-30, transparent so corner ticks never clip) -->
+  <!-- Top Edge Ruler -->
+  <svg
+    id="edge-ruler-top"
+    class="edge-ruler absolute top-0 left-0 right-0 h-11 w-full bg-transparent pointer-events-none z-30 transition-opacity"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="edge-ticks-top"></g>
+  </svg>
+
+  <!-- Bottom Edge Ruler -->
+  <svg
+    id="edge-ruler-bottom"
+    class="edge-ruler absolute bottom-0 left-0 right-0 h-11 w-full bg-transparent pointer-events-none z-30 transition-opacity"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="edge-ticks-bottom"></g>
+  </svg>
+
+  <!-- Left Edge Ruler -->
+  <svg
+    id="edge-ruler-left"
+    class="edge-ruler absolute top-0 left-0 bottom-0 w-11 h-full bg-transparent pointer-events-none z-30 transition-opacity"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="edge-ticks-left"></g>
+  </svg>
+
+  <!-- Right Edge Ruler -->
+  <svg
+    id="edge-ruler-right"
+    class="edge-ruler absolute top-0 right-0 bottom-0 w-11 h-full bg-transparent pointer-events-none z-30 transition-opacity"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="edge-ticks-right"></g>
+  </svg>
+
+  <!-- Interactive Surface (for guide lines & crosshair) -->
+  <div id="edge-surface" class="absolute inset-0 z-20 cursor-crosshair">
+    <!-- SVG Container for dropped guide lines -->
+    <svg id="edge-guides-svg" class="w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+      <g id="edge-guides-group"></g>
+    </svg>
+
+    <!-- Crosshair Lines -->
+    <div id="edge-crosshair-h" class="absolute left-0 right-0 h-px bg-indigo-500/50 pointer-events-none hidden"></div>
+    <div id="edge-crosshair-v" class="absolute top-0 bottom-0 w-px bg-indigo-500/50 pointer-events-none hidden"></div>
+
+    <!-- Live Cursor Coordinate Badge -->
+    <div
+      id="edge-cursor-readout"
+      class="absolute pointer-events-none px-2.5 py-1 rounded-lg glass-panel shadow-lg border border-indigo-500/30 text-xs font-mono font-bold text-indigo-600 dark:text-cyan-300 hidden -translate-x-1/2 -translate-y-10"
+    >
+      X: 0.00 cm | Y: 0.00 cm
+    </div>
+
+    <!-- Center Hint when no edges active -->
+    <div id="edge-welcome-hint" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center pointer-events-none">
+      <div class="max-w-md p-6 rounded-3xl glass-panel shadow-xl border border-(--border) space-y-3 pointer-events-auto">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 flex items-center justify-center mx-auto text-xl">
+          📐
+        </div>
+        <h3 class="font-extrabold text-base sm:text-lg text-(--foreground)">
+          Penggaris Menempel di Tepi Layar
+        </h3>
+        <p class="text-xs text-(--muted-foreground) leading-relaxed">
+          Posisikan penggaris tepat di tepi bezel fisik layar HP atau monitor Anda. Pilih sisi <strong>Atas</strong>, <strong>Bawah</strong>, <strong>Kiri</strong>, atau <strong>Kanan</strong> dari bilah navigasi di atas.
+        </p>
+        <p class="text-[11px] text-indigo-500 dark:text-cyan-400 font-medium">
+          💡 Klik di area layar manapun untuk meletakkan garis panduan pengukur.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+---
+// PrivacyContent.astro
+interface Props {
+  lang?: string;
+}
+const { lang = 'id' } = Astro.props;
+const isId = lang === 'id';
+---
+
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8">
+  <div class="space-y-3 text-center sm:text-left border-b border-(--border) pb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider border border-indigo-500/20">
+      <span>🛡️</span>
+      <span>{isId ? 'Privasi & Keamanan Data' : 'Privacy & Data Protection'}</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-(--foreground) tracking-tight">
+      {isId ? 'Kebijakan Privasi (Privacy Policy)' : 'Privacy Policy'}
+    </h1>
+    <p class="text-xs sm:text-sm text-(--muted-foreground)">
+      {isId ? 'Terakhir diperbarui: 14 September 2026 • Berlaku efektif untuk seluruh pengguna penggarisonline.com' : 'Last updated: September 14, 2026 • Applies to all users of penggarisonline.com'}
+    </p>
+  </div>
+
+  <div class="prose prose-sm sm:prose-base dark:prose-invert max-w-none space-y-6 text-sm text-(--muted-foreground) leading-relaxed">
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '1. Komitmen Privasi Kami' : '1. Our Privacy Commitment'}
+      </h2>
+      <p>
+        {isId 
+          ? 'Selamat datang di Penggaris Online HP CM (penggarisonline.com). Kami sangat menghargai dan memprioritaskan privasi Anda. Aplikasi penggaris digital ini dirancang dengan prinsip arsitektur "Client-Side First", di mana seluruh perhitungan matematika, penyesuaian piksel, dan pengukuran fisik berjalan secara lokal di perangkat peramban Anda.'
+          : 'Welcome to Penggaris Online HP CM (penggarisonline.com). We deeply value and prioritize your privacy. This digital ruler tool is engineered with a "Client-Side First" architectural principle, ensuring that all mathematical computations, pixel scaling, and physical measurements run strictly within your local browser.'}
+      </p>
+    </section>
+
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '2. Data yang Kami Simpan Secara Lokal (LocalStorage)' : '2. Data We Store Locally (LocalStorage)'}
+      </h2>
+      <p>
+        {isId
+          ? 'Situs kami TIDAK mengumpulkan data pribadi sensitif seperti nama, nomor identitas KTP, nomor rekening kartu ATM, ataupun lokasi GPS Anda. Satu-satunya data yang disimpan adalah konfigurasi teknis yang disimpan di memori peramban lokal (localStorage) perangkat Anda, yang meliputi:'
+          : 'Our website does NOT collect sensitive personal data such as your name, national ID numbers, ATM card numbers, or GPS location. The only information retained is technical preference data stored inside your local browser storage (localStorage), which includes:'}
+      </p>
+      <ul class="list-disc list-inside space-y-1.5 pl-2">
+        <li><strong>{isId ? 'Nilai Kalibrasi Layar (PPI):' : 'Calibrated Screen Density (PPI):'}</strong> {isId ? 'Angka kerapatan piksel per inci layar hasil kalibrasi e-KTP/ATM agar Anda tidak perlu mengulang kalibrasi.' : 'The pixel density value derived from calibration so you do not need to re-calibrate on every visit.'}</li>
+        <li><strong>{isId ? 'Preferensi Satuan Ukuran:' : 'Unit Preference:'}</strong> {isId ? 'Pilihan satuan aktif terakhir Anda (cm, mm, atau inci).' : 'Your selected measurement unit (cm, mm, or inches).'}</li>
+        <li><strong>{isId ? 'Preferensi Tema Tampilan:' : 'Theme Preference:'}</strong> {isId ? 'Mode Gelap (Dark Mode) atau Mode Terang (Light Mode).' : 'Dark Mode or Light Mode toggle state.'}</li>
+      </ul>
+    </section>
+
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '3. Penggunaan Kamera dan Perangkat Keras' : '3. Camera and Hardware Access'}
+      </h2>
+      <p>
+        {isId
+          ? 'Fitur penggaris utama di situs ini TIDAK memerlukan akses ke kamera, mikrofon, atau berkas file di HP Anda. Seluruh pengukuran dilakukan dengan menempelkan objek secara langsung pada layar kaca peranti Anda. Jika di masa mendatang terdapat fitur Augmented Reality (AR) opsional yang memanfaatkan kamera, sistem akan selalu meminta persetujuan eksplisit (permission prompt) terlebih dahulu.'
+          : 'The core on-screen ruler features on this website do NOT require access to your smartphone camera, microphone, or storage files. All measurements are conducted directly on your screen glass. If optional camera-based AR features are introduced in the future, explicit browser permission will always be requested beforehand.'}
+      </p>
+    </section>
+
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '4. Kuki (Cookies) dan Layanan Pihak Ketiga' : '4. Cookies and Third-Party Services'}
+      </h2>
+      <p>
+        {isId
+          ? 'Kami dapat menggunakan kuki analitik standar atau jaringan periklanan pihak ketiga (seperti Google AdSense atau Cloudflare CDN) semata-mata untuk memantau performa kecepatan situs, mencegah serangan siber, dan menjaga agar layanan ini dapat diakses secara 100% gratis oleh seluruh masyarakat Indonesia.'
+          : 'We may utilize standard analytics cookies or third-party content delivery/advertising partners (such as Google AdSense or Cloudflare) solely to monitor website uptime, prevent automated cyber threats, and keep this measurement service 100% free for all users worldwide.'}
+      </p>
+    </section>
+
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '5. Hubungi Petugas Privasi' : '5. Contacting Privacy Support'}
+      </h2>
+      <p>
+        {isId
+          ? 'Jika Anda memiliki pertanyaan, saran, atau permintaan klarifikasi mengenai kebijakan privasi ini, silakan hubungi tim kami melalui email resmi:'
+          : 'If you have any questions, inquiries, or suggestions regarding this Privacy Policy, please reach out to our team at:'}
+      </p>
+      <div class="p-3 rounded-xl bg-(--muted) font-mono text-xs text-indigo-600 dark:text-cyan-400 font-semibold w-fit">
+        ✉️ privacy@penggarisonline.com / kontak@penggarisonline.com
+      </div>
+    </section>
+  </div>
+</article>

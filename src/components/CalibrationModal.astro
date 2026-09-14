@@ -1,0 +1,266 @@
+---
+// CalibrationModal.astro
+import { CARD_STANDARD } from '../scripts/ruler-engine.js';
+---
+
+<!-- Calibration Modal Backdrop -->
+<div
+  id="calibration-modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm overflow-y-auto"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="calib-modal-title"
+>
+  <!-- Modal Dialog Container -->
+  <div class="relative w-full max-w-2xl bg-(--card) border border-(--border) rounded-2xl shadow-2xl overflow-hidden my-6 transition-all">
+    <!-- Header -->
+    <div class="px-5 py-4 border-b border-(--border) flex items-center justify-between bg-(--muted)/40">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 flex items-center justify-center">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 id="calib-modal-title" class="font-bold text-base sm:text-lg text-(--foreground)">
+            Kalibrasi Akurasi Layar
+          </h3>
+          <p class="text-xs text-(--muted-foreground)">Pastikan ukuran penggaris 1:1 akurat sesuai fisik asli</p>
+        </div>
+      </div>
+      <button
+        type="button"
+        id="btn-close-modal"
+        class="w-8 h-8 rounded-lg hover:bg-(--muted) text-(--muted-foreground) hover:text-(--foreground) flex items-center justify-center text-lg font-bold transition-colors"
+        aria-label="Tutup modal"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-5 space-y-6 max-h-[75vh] overflow-y-auto">
+      <!-- Calibration Method Tabs -->
+      <div class="flex rounded-xl bg-(--muted) p-1 border border-(--border)">
+        <button
+          type="button"
+          data-tab-target="tab-ktp"
+          class="calib-tab-btn flex-1 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-(--card) text-(--foreground) shadow-xs transition-all"
+        >
+          💳 Kartu e-KTP / ATM
+        </button>
+        <button
+          type="button"
+          data-tab-target="tab-diagonal"
+          class="calib-tab-btn flex-1 py-2 text-xs sm:text-sm font-medium text-(--muted-foreground) hover:text-(--foreground) rounded-lg transition-all"
+        >
+          📐 Diagonal Layar
+        </button>
+        <button
+          type="button"
+          data-tab-target="tab-manual"
+          class="calib-tab-btn flex-1 py-2 text-xs sm:text-sm font-medium text-(--muted-foreground) hover:text-(--foreground) rounded-lg transition-all"
+        >
+          ⚙️ Manual PPI
+        </button>
+      </div>
+
+      <!-- TAB 1: KTP / ATM CARD CALIBRATION (Recommended) -->
+      <div id="tab-ktp" class="calib-tab-content space-y-4">
+        <div class="p-3.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-700 dark:text-cyan-300 flex items-start gap-2.5">
+          <svg class="w-4 h-4 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <div>
+            <strong>Metode Paling Akurat di Indonesia:</strong> Tempelkan kartu fisik (e-KTP, SIM, atau Kartu ATM BCA/Mandiri/BRI) langsung di atas layar. Geser slider di bawah hingga garis luar kotak kartu di layar sama persis dengan kartu fisik Anda.
+          </div>
+        </div>
+
+        <!-- Visual Card Simulator Area -->
+        <div class="relative py-4 flex flex-col items-center justify-center bg-(--muted)/30 rounded-2xl border border-dashed border-(--border) min-h-[190px] overflow-hidden">
+          <!-- Dynamic Card Box (resizes in px) -->
+          <div
+            id="visual-calib-card"
+            class="relative rounded-xl border-2 border-indigo-500 dark:border-cyan-400 bg-gradient-to-br from-indigo-500/20 to-cyan-500/10 shadow-lg flex flex-col justify-between p-3 transition-[width,height] duration-75"
+            style="width: 323px; height: 204px;"
+          >
+            <!-- Card Chip simulation -->
+            <div class="flex items-center justify-between">
+              <div class="w-8 h-6 rounded bg-amber-400/80 border border-amber-600/40 flex items-center justify-center">
+                <div class="w-4 h-3 border border-amber-800/40 rounded-xs"></div>
+              </div>
+              <span class="text-[10px] font-bold tracking-widest text-indigo-600 dark:text-cyan-300 uppercase">
+                Standar 85.60 mm
+              </span>
+            </div>
+
+            <!-- Card Center Label -->
+            <div class="text-center my-auto">
+              <p class="text-xs font-bold text-(--foreground)">TEMPELKAN KARTU ATM / KTP DI SINI</p>
+              <p class="text-[10px] text-(--muted-foreground)">Standar ISO/IEC 7810 ID-1</p>
+            </div>
+
+            <!-- Card Bottom Width Spec -->
+            <div class="flex justify-between items-center text-[10px] font-mono text-(--muted-foreground)">
+              <span id="calib-card-width-px">323 px</span>
+              <span>Lebar: 8.56 cm</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider Control for Card Width -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <label for="card-width-slider" class="font-medium text-(--foreground)">
+              Geser untuk menyesuaikan ukuran kartu:
+            </label>
+            <span id="card-slider-val-label" class="font-mono font-bold text-indigo-600 dark:text-cyan-400">
+              323 px (96.0 PPI)
+            </span>
+          </div>
+          <input
+            type="range"
+            id="card-width-slider"
+            min="150"
+            max="600"
+            step="1"
+            value="323"
+            class="w-full h-2 rounded-lg bg-(--muted) cursor-ew-resize appearance-none"
+          />
+          <div class="flex justify-between text-[11px] text-(--muted-foreground)">
+            <span>Kecil (Layar HP DPI Tinggi)</span>
+            <span>Besar (Monitor Desktop)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: DIAGONAL SCREEN CALIBRATION -->
+      <div id="tab-diagonal" class="calib-tab-content hidden space-y-4">
+        <p class="text-xs text-(--muted-foreground)">
+          Jika Anda mengetahui ukuran diagonal layar perangkat Anda dalam satuan inci (misal: 6.1" iPhone, 14.0" Laptop, 24" Monitor), masukkan di bawah:
+        </p>
+
+        <div class="space-y-3">
+          <label for="input-diagonal-inches" class="block text-xs font-medium text-(--foreground)">
+            Ukuran Diagonal Layar (Inci):
+          </label>
+          <div class="flex gap-2">
+            <input
+              type="number"
+              id="input-diagonal-inches"
+              placeholder="Contoh: 6.1 atau 14.0"
+              step="0.1"
+              min="3"
+              max="85"
+              class="flex-1 px-3.5 py-2 rounded-xl bg-(--card) border border-(--border) text-sm font-medium text-(--foreground) focus:ring-2 focus:ring-indigo-500/30 focus:outline-none"
+            />
+            <button
+              type="button"
+              id="btn-apply-diagonal"
+              class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-colors"
+            >
+              Terapkan
+            </button>
+          </div>
+
+          <!-- Quick Diagonal Buttons -->
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="text-xs text-(--muted-foreground) self-center">Pilihan Cepat:</span>
+            <button type="button" class="btn-quick-diag px-2.5 py-1 rounded-lg bg-(--muted) hover:bg-(--card) text-xs border border-(--border)" data-diag="6.1">6.1" (iPhone)</button>
+            <button type="button" class="btn-quick-diag px-2.5 py-1 rounded-lg bg-(--muted) hover:bg-(--card) text-xs border border-(--border)" data-diag="6.7">6.7" (HP Besar)</button>
+            <button type="button" class="btn-quick-diag px-2.5 py-1 rounded-lg bg-(--muted) hover:bg-(--card) text-xs border border-(--border)" data-diag="14.0">14.0" (Laptop)</button>
+            <button type="button" class="btn-quick-diag px-2.5 py-1 rounded-lg bg-(--muted) hover:bg-(--card) text-xs border border-(--border)" data-diag="15.6">15.6" (Laptop)</button>
+            <button type="button" class="btn-quick-diag px-2.5 py-1 rounded-lg bg-(--muted) hover:bg-(--card) text-xs border border-(--border)" data-diag="24.0">24.0" (Monitor)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: MANUAL PPI INPUT -->
+      <div id="tab-manual" class="calib-tab-content hidden space-y-4">
+        <p class="text-xs text-(--muted-foreground)">
+          Atur langsung nilai Kerapatan Piksel Layar (Pixels Per Inch / PPI) secara presisi dengan tombol mikro:
+        </p>
+
+        <div class="flex items-center justify-center gap-3 py-4">
+          <button
+            type="button"
+            id="btn-ppi-minus-1"
+            class="w-10 h-10 rounded-xl bg-(--muted) hover:bg-(--card) border border-(--border) text-lg font-bold flex items-center justify-center transition-colors"
+            title="Kurangi 1 PPI"
+          >
+            -1
+          </button>
+          <button
+            type="button"
+            id="btn-ppi-minus-01"
+            class="w-10 h-10 rounded-xl bg-(--muted) hover:bg-(--card) border border-(--border) text-xs font-bold flex items-center justify-center transition-colors"
+            title="Kurangi 0.1 PPI"
+          >
+            -0.1
+          </button>
+
+          <div class="px-5 py-2 rounded-xl bg-(--muted) border border-(--border) text-center min-w-[140px]">
+            <input
+              type="number"
+              id="input-manual-ppi"
+              step="0.1"
+              min="30"
+              max="900"
+              value="96.0"
+              class="w-full text-center text-xl font-extrabold font-mono-tabular bg-transparent text-(--foreground) focus:outline-none"
+            />
+            <span class="text-[10px] text-(--muted-foreground) uppercase font-bold tracking-wider">PPI</span>
+          </div>
+
+          <button
+            type="button"
+            id="btn-ppi-plus-01"
+            class="w-10 h-10 rounded-xl bg-(--muted) hover:bg-(--card) border border-(--border) text-xs font-bold flex items-center justify-center transition-colors"
+            title="Tambah 0.1 PPI"
+          >
+            +0.1
+          </button>
+          <button
+            type="button"
+            id="btn-ppi-plus-1"
+            class="w-10 h-10 rounded-xl bg-(--muted) hover:bg-(--card) border border-(--border) text-lg font-bold flex items-center justify-center transition-colors"
+            title="Tambah 1 PPI"
+          >
+            +1
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="px-5 py-4 border-t border-(--border) bg-(--muted)/40 flex items-center justify-between gap-3">
+      <button
+        type="button"
+        id="btn-reset-calib-default"
+        class="px-3.5 py-2 rounded-xl hover:bg-(--muted) text-xs font-medium text-rose-500 hover:text-rose-600 border border-transparent hover:border-(--border) transition-colors"
+      >
+        Reset ke Default
+      </button>
+
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          id="btn-cancel-calib"
+          class="px-4 py-2 rounded-xl bg-(--muted) hover:bg-(--card) text-xs font-semibold text-(--foreground) border border-(--border) transition-colors"
+        >
+          Batal
+        </button>
+        <button
+          type="button"
+          id="btn-save-calib"
+          class="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white text-xs font-bold shadow-md shadow-indigo-600/30 transition-all"
+        >
+          Simpan Kalibrasi
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

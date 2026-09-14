@@ -1,0 +1,112 @@
+---
+interface Props {
+  currentLang?: string;
+}
+
+const { currentLang = 'id' } = Astro.props;
+
+const prefix = currentLang === 'en' ? '/en' : '';
+---
+
+<footer class="mt-auto border-t border-(--border) bg-(--card) text-(--muted-foreground) py-10 sm:py-14">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-(--border)">
+      <!-- Col 1: Brand & Description -->
+      <div class="md:col-span-2 space-y-3 text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-2">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21.3 15.3 8.7 2.7a1 1 0 0 0-1.4 0L2.7 7.3a1 1 0 0 0 0 1.4l12.6 12.6a1 1 0 0 0 1.4 0l4.6-4.6a1 1 0 0 0 0-1.4z"></path>
+            </svg>
+          </div>
+          <span class="font-bold text-lg text-(--foreground)">
+            Penggaris<span class="text-indigo-500 dark:text-cyan-400">Online</span>
+          </span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold uppercase">
+            penggarisonline.com
+          </span>
+        </div>
+        <p class="text-xs text-(--muted-foreground) max-w-sm mx-auto md:mx-0 leading-relaxed">
+          Penggaris online hp cm ukuran asli 1:1 akurat di layar telepon dan laptop. Dilengkapi kalibrasi presisi e-KTP / kartu ATM Indonesia, jangka sorong, pengukur 2D, lingkaran, dan mode tepi layar.
+        </p>
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1 text-[11px]">
+          <span class="px-2.5 py-1 rounded-lg bg-(--muted) border border-(--border) text-(--foreground) font-medium">
+            🔒 100% Privat &amp; Offline
+          </span>
+          <span class="px-2.5 py-1 rounded-lg bg-(--muted) border border-(--border) text-(--foreground) font-medium">
+            💳 ISO/IEC 7810 ID-1
+          </span>
+        </div>
+      </div>
+
+      <!-- Col 2: Halaman Informasi & Legal -->
+      <div class="space-y-3 text-center md:text-left">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-(--foreground)">
+          Informasi &amp; Legalitas
+        </h3>
+        <ul class="space-y-2 text-xs">
+          <li>
+            <a href={`${prefix}/about-us`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
+              Tentang Kami (About Us)
+            </a>
+          </li>
+          <li>
+            <a href={`${prefix}/privacy-policy`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
+              Kebijakan Privasi (Privacy Policy)
+            </a>
+          </li>
+          <li>
+            <a href={`${prefix}/terms-conditions`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
+              Syarat &amp; Ketentuan (Terms)
+            </a>
+          </li>
+          <li>
+            <a href={`${prefix}/contact-us`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
+              Hubungi Kami (Contact Us)
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Bahasa & Navigasi Cepat -->
+      <div class="space-y-3 text-center md:text-left">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-(--foreground)">
+          Pilihan Bahasa
+        </h3>
+        <div class="flex items-center justify-center md:justify-start gap-1.5 bg-(--muted) p-1 rounded-xl border border-(--border) w-fit mx-auto md:mx-0">
+          <a
+            href="/"
+            class={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
+              currentLang === 'id'
+                ? 'bg-(--card) text-(--foreground) shadow-xs border border-(--border)'
+                : 'text-(--muted-foreground) hover:text-(--foreground)'
+            }`}
+          >
+            🇮🇩 Indonesia
+          </a>
+          <a
+            href="/en/about-us"
+            class={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
+              currentLang === 'en'
+                ? 'bg-(--card) text-(--foreground) shadow-xs border border-(--border)'
+                : 'text-(--muted-foreground) hover:text-(--foreground)'
+            }`}
+          >
+            🇬🇧 English
+          </a>
+        </div>
+        <p class="text-[11px] text-(--muted-foreground) leading-relaxed">
+          Tersedia dalam Bahasa Indonesia dan English dengan dukungan multi-satuan cm, mm, dan inci.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-(--muted-foreground)">
+      <p>© {new Date().getFullYear()} Penggaris Online (penggarisonline.com). Seluruh hak cipta dilindungi undang-undang.</p>
+      <p class="flex items-center gap-1 text-[11px]">
+        Dirancang &amp; dioptimalkan untuk pengguna di seluruh Indonesia.
+      </p>
+    </div>
+  </div>
+</footer>

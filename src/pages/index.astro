@@ -1,0 +1,2280 @@
+---
+// index.astro
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import DevicePresetBar from '../components/DevicePresetBar.astro';
+import RulerCanvas from '../components/RulerCanvas.astro';
+import MeasurementCard from '../components/MeasurementCard.astro';
+import CalibrationModal from '../components/CalibrationModal.astro';
+import FeaturesSection from '../components/FeaturesSection.astro';
+import CalibrationGuide from '../components/CalibrationGuide.astro';
+import ConversionTable from '../components/ConversionTable.astro';
+import SeoContentSection from '../components/SeoContentSection.astro';
+import CompetitorComparison from '../components/CompetitorComparison.astro';
+import FAQSection from '../components/FAQSection.astro';
+import Footer from '../components/Footer.astro';
+import ScreenEdgeRulers from '../components/ScreenEdgeRulers.astro';
+---
+
+<Layout>
+  <Navbar />
+  <DevicePresetBar />
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <!-- Hero Title & Subheading -->
+    <div class="text-center max-w-3xl mx-auto pt-2 pb-1">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-(--foreground) tracking-tight">
+        Penggaris <span class="bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-500 bg-clip-text text-transparent">Online HP CM</span> Ukuran Asli
+      </h1>
+      <p class="mt-2 text-sm sm:text-base text-(--muted-foreground)">
+        Alat ukur mistar digital akurat 1:1 di layar HP, telepon, tablet, dan laptop. Penggaris sesuai skala dengan kalibrasi e-KTP/ATM, penggaris 2D luas bidang, pengukur lingkaran, dan mode tepi layar.
+      </p>
+    </div>
+
+    <!-- Interactive Canvas & Tools -->
+    <RulerCanvas />
+
+    <!-- Live Real-Time Measurement Card -->
+    <MeasurementCard />
+
+    <!-- Features Section -->
+    <FeaturesSection />
+
+    <!-- Step-by-Step Calibration Guide -->
+    <CalibrationGuide />
+
+    <!-- Conversion Calculator & Table -->
+    <ConversionTable />
+
+    <!-- Comprehensive SEO Guide (800-1200 words) -->
+    <SeoContentSection />
+
+    <!-- Competitor Comparison Table -->
+    <CompetitorComparison />
+
+    <!-- FAQ Section -->
+    <FAQSection />
+  </main>
+
+  <CalibrationModal />
+  <ScreenEdgeRulers />
+  <Footer />
+</Layout>
+
+<script>
+  import { rulerEngine, CARD_STANDARD } from '../scripts/ruler-engine.js';
+
+  // Initialize engine (loads saved PPI, unit, orientation from localStorage + auto-detects PPI)
+  rulerEngine.init();
+
+  // --- 1. DOM REFERENCES ---
+  // Tool Viewports
+  const toolButtons = document.querySelectorAll<HTMLButtonElement>('[data-tool-btn]');
+  const view1dCanvas = document.getElementById('view-1d-canvas');
+  const view2dCanvas = document.getElementById('view-2d-canvas');
+  const viewCircleCanvas = document.getElementById('view-circle-canvas');
+  const viewAngleCanvas = document.getElementById('view-angle-canvas');
+
+  // Lock Button & Banner
+  const btnToggleLock = document.getElementById('btn-toggle-lock');
+  const lockIconUnlocked = document.getElementById('lock-icon-unlocked');
+  const lockIconLocked = document.getElementById('lock-icon-locked');
+  const lockBtnText = document.getElementById('lock-btn-text');
+  const lockedStatusBanner = document.getElementById('locked-status-banner');
+  const btnUnlockBanner = document.getElementById('btn-unlock-banner');
+
+  // 1D Ruler Viewport
+  const rulerSvg = document.getElementById('ruler-svg') as SVGSVGElement | null;
+  const metricTicksGroup = document.getElementById('metric-ticks-group');
+  const imperialTicksGroup = document.getElementById('imperial-ticks-group');
+  const caliperPointerA = document.getElementById('caliper-pointer-a');
+  const caliperPointerB = document.getElementById('caliper-pointer-b');
+  const caliperHighlightArea = document.getElementById('caliper-highlight-area');
+  const rulerFloatDimension = document.getElementById('ruler-float-dimension');
+
+  // 2D Canvas Elements
+  const ruler2dSvg = document.getElementById('ruler-2d-svg') as SVGSVGElement | null;
+  const ticks2dX = document.getElementById('ticks-2d-x');
+  const ticks2dY = document.getElementById('ticks-2d-y');
+  const caliperBox2d = document.getElementById('caliper-box-2d');
+  const handle2dCorner = document.getElementById('handle-2d-corner');
+  const handle2dDrag = document.getElementById('handle-2d-drag');
+  const badge2dDimensions = document.getElementById('badge-2d-dimensions');
+  const badge2dArea = document.getElementById('badge-2d-area');
+
+  // Circle Canvas Elements
+  const circleSvg = document.getElementById('circle-svg') as SVGSVGElement | null;
+  const circleBackgroundGrid = document.getElementById('circle-background-grid');
+  const dynamicCaliperCircle = document.getElementById('dynamic-caliper-circle');
+  const circleDiameterLine = document.getElementById('circle-diameter-line');
+  const circleCenterBadge = document.getElementById('circle-center-badge');
+  const circleBadgeDiameter = document.getElementById('circle-badge-diameter');
+  const circleBadgeSub = document.getElementById('circle-badge-sub');
+  const handleCircleRadius = document.getElementById('handle-circle-radius');
+  const sliderCircleDiameter = document.getElementById('slider-circle-diameter') as HTMLInputElement | null;
+  const circleSliderLabel = document.getElementById('circle-slider-label');
+  const coinPresetButtons = document.querySelectorAll<HTMLButtonElement>('.btn-coin-preset');
+  const crosshairX = document.getElementById('crosshair-x');
+  const crosshairY = document.getElementById('crosshair-y');
+
+  // Angle / Protractor Elements
+  const protractorSvg = document.getElementById('protractor-svg') as SVGSVGElement | null;
+  const protractorMarkings = document.getElementById('protractor-markings');
+  const angleArcPath = document.getElementById('angle-arc-path');
+  const angleArm1Line = document.getElementById('angle-arm1-line');
+  const angleArm2Line = document.getElementById('angle-arm2-line');
+  const protractorPivot = document.getElementById('protractor-pivot');
+  const handleAngleArm1 = document.getElementById('handle-angle-arm1');
+  const handleAngleArm2 = document.getElementById('handle-angle-arm2');
+  const angleDegreesReadout = document.getElementById('angle-degrees-readout');
+  const angleSubReadout = document.getElementById('angle-sub-readout');
+
+  // Measurement Card Metric Groups
+  const metricsGroup1d = document.getElementById('metrics-group-1d');
+  const metricsGroup2d = document.getElementById('metrics-group-2d');
+  const metricsGroupCircle = document.getElementById('metrics-group-circle');
+  const metricsGroupAngle = document.getElementById('metrics-group-angle');
+
+  // Measurement Card Readouts
+  const readoutTitleText = document.getElementById('readout-title-text');
+  const readoutSubtitleText = document.getElementById('readout-subtitle-text');
+  const readoutPrimaryValue = document.getElementById('readout-primary-value');
+  const readoutPrimaryUnit = document.getElementById('readout-primary-unit');
+  const readoutFractionBadge = document.getElementById('readout-fraction-badge');
+  const readoutPulseDot = document.getElementById('readout-pulse-dot');
+  const stepperControls = document.getElementById('stepper-controls');
+
+  // 1D Metrics
+  const metricCm = document.getElementById('metric-cm');
+  const metricMm = document.getElementById('metric-mm');
+  const metricInch = document.getElementById('metric-inch');
+  const metricPx = document.getElementById('metric-px');
+
+  // 2D Metrics
+  const metric2dW = document.getElementById('metric-2d-w');
+  const metric2dH = document.getElementById('metric-2d-h');
+  const metric2dArea = document.getElementById('metric-2d-area');
+  const metric2dDiag = document.getElementById('metric-2d-diag');
+
+  // Circle Metrics
+  const metricCircleDia = document.getElementById('metric-circle-dia');
+  const metricCircleRad = document.getElementById('metric-circle-rad');
+  const metricCircleCirc = document.getElementById('metric-circle-circ');
+  const metricCircleArea = document.getElementById('metric-circle-area');
+
+  // Angle Metrics
+  const metricAngleDeg = document.getElementById('metric-angle-deg');
+  const metricAngleRad = document.getElementById('metric-angle-rad');
+  const metricAngleType = document.getElementById('metric-angle-type');
+
+  // Status Displays
+  const calibStatusText = document.getElementById('calib-status-text');
+  const calibStatusIndicator = document.getElementById('calib-status-indicator');
+  const screenPpiDisplay = document.getElementById('screen-ppi-display');
+  const navCalibIndicator = document.getElementById('nav-calib-indicator');
+  const devicePresetSelect = document.getElementById('device-preset-select') as HTMLSelectElement | null;
+  const unitButtons = document.querySelectorAll<HTMLButtonElement>('[data-unit-btn]');
+  const btnFlipZero = document.getElementById('btn-flip-zero');
+  const btnResetCaliper = document.getElementById('btn-reset-caliper');
+  const btnToggleOrientation = document.getElementById('btn-toggle-orientation');
+  const stepButtons = document.querySelectorAll<HTMLButtonElement>('.step-btn');
+  const btnQuickStepMinus = document.getElementById('btn-quick-step-minus');
+  const btnQuickStepPlus = document.getElementById('btn-quick-step-plus');
+  const btnCopyMeasurement = document.getElementById('btn-copy-measurement');
+  const copyIconDefault = document.getElementById('copy-icon-default');
+  const copyIconCheck = document.getElementById('copy-icon-check');
+  const copyBtnText = document.getElementById('copy-btn-text');
+
+  // Manual Precision Control References
+  const manualGroup1d = document.getElementById('manual-group-1d');
+  const manualGroup2d = document.getElementById('manual-group-2d');
+  const manualGroupCircle = document.getElementById('manual-group-circle');
+  const manualGroupAngle = document.getElementById('manual-group-angle');
+
+  const inputManual1d = document.getElementById('input-manual-1d') as HTMLInputElement | null;
+  const labelManual1dUnit = document.getElementById('label-manual-1d-unit');
+  const inputManual2dW = document.getElementById('input-manual-2d-w') as HTMLInputElement | null;
+  const inputManual2dH = document.getElementById('input-manual-2d-h') as HTMLInputElement | null;
+  const inputManualCircle = document.getElementById('input-manual-circle') as HTMLInputElement | null;
+  const inputManualAngle = document.getElementById('input-manual-angle') as HTMLInputElement | null;
+
+  const btnStep1d = document.querySelectorAll<HTMLButtonElement>('.btn-step-1d');
+  const btnStep2dW = document.querySelectorAll<HTMLButtonElement>('.btn-step-2d-w');
+  const btnStep2dH = document.querySelectorAll<HTMLButtonElement>('.btn-step-2d-h');
+  const btnStepCircle = document.querySelectorAll<HTMLButtonElement>('.btn-step-circle');
+  const btnStepAngle = document.querySelectorAll<HTMLButtonElement>('.btn-step-angle');
+  const btnQuickAnglePills = document.querySelectorAll<HTMLButtonElement>('.btn-quick-angle-pill');
+
+  // Canvas Protractor Controls
+  const btnCanvasAnglePresets = document.querySelectorAll<HTMLButtonElement>('.btn-canvas-angle-preset');
+  const sliderAngleDegree = document.getElementById('slider-angle-degree') as HTMLInputElement | null;
+  const canvasAngleSliderLabel = document.getElementById('canvas-angle-slider-label');
+  const btnCanvasAngleMinus5 = document.getElementById('btn-canvas-angle-minus-5');
+  const btnCanvasAngleMinus1 = document.getElementById('btn-canvas-angle-minus-1');
+  const btnCanvasAnglePlus1 = document.getElementById('btn-canvas-angle-plus-1');
+  const btnCanvasAnglePlus5 = document.getElementById('btn-canvas-angle-plus-5');
+
+  // Modal References
+  const calibrationModal = document.getElementById('calibration-modal');
+  const btnOpenCalib = document.getElementById('btn-open-calibration');
+  const btnQuickCalib = document.getElementById('btn-quick-calibrate');
+  const btnCloseModal = document.getElementById('btn-close-modal');
+  const btnCancelCalib = document.getElementById('btn-cancel-calib');
+  const btnSaveCalib = document.getElementById('btn-save-calib');
+  const btnResetCalibDefault = document.getElementById('btn-reset-calib-default');
+  const visualCalibCard = document.getElementById('visual-calib-card');
+  const cardWidthSlider = document.getElementById('card-width-slider') as HTMLInputElement | null;
+  const cardSliderValLabel = document.getElementById('card-slider-val-label');
+  const calibCardWidthPx = document.getElementById('calib-card-width-px');
+  const inputDiagonalInches = document.getElementById('input-diagonal-inches') as HTMLInputElement | null;
+  const btnApplyDiagonal = document.getElementById('btn-apply-diagonal');
+  const quickDiagButtons = document.querySelectorAll<HTMLButtonElement>('.btn-quick-diag');
+  const inputManualPpi = document.getElementById('input-manual-ppi') as HTMLInputElement | null;
+  const btnPpiMinus1 = document.getElementById('btn-ppi-minus-1');
+  const btnPpiMinus01 = document.getElementById('btn-ppi-minus-01');
+  const btnPpiPlus01 = document.getElementById('btn-ppi-plus-01');
+  const btnPpiPlus1 = document.getElementById('btn-ppi-plus-1');
+  const calibTabButtons = document.querySelectorAll<HTMLButtonElement>('.calib-tab-btn');
+  const calibTabContents = document.querySelectorAll<HTMLElement>('.calib-tab-content');
+
+  let tempPpi = 96;
+
+  // --- 2. SWITCH ACTIVE TOOL ---
+  function switchTool(toolName: string) {
+    rulerEngine.setTool(toolName);
+
+    // Hide all viewports
+    view1dCanvas?.classList.add('hidden');
+    view2dCanvas?.classList.add('hidden');
+    viewCircleCanvas?.classList.add('hidden');
+    viewAngleCanvas?.classList.add('hidden');
+
+    // Hide all metric groups
+    metricsGroup1d?.classList.add('hidden');
+    metricsGroup2d?.classList.add('hidden');
+    metricsGroupCircle?.classList.add('hidden');
+    metricsGroupAngle?.classList.add('hidden');
+
+    // Hide all manual adjustment groups
+    manualGroup1d?.classList.add('hidden');
+    manualGroup2d?.classList.add('hidden');
+    manualGroupCircle?.classList.add('hidden');
+    manualGroupAngle?.classList.add('hidden');
+
+    // Update tool tab buttons styling
+    toolButtons.forEach(btn => {
+      const t = btn.getAttribute('data-tool-btn');
+      if (t === toolName) {
+        btn.className = 'tool-btn px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-(--primary) text-white shadow-xs';
+      } else {
+        btn.className = 'tool-btn px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-(--muted-foreground) hover:text-(--foreground) transition-all';
+      }
+    });
+
+    if (toolName === '1d') {
+      view1dCanvas?.classList.remove('hidden');
+      metricsGroup1d?.classList.remove('hidden');
+      manualGroup1d?.classList.remove('hidden');
+      if (btnFlipZero) btnFlipZero.classList.remove('hidden');
+      if (stepperControls) stepperControls.classList.remove('hidden');
+      if (btnQuickStepMinus) btnQuickStepMinus.textContent = '-1 mm';
+      if (btnQuickStepPlus) btnQuickStepPlus.textContent = '+1 mm';
+      renderRulerTicks();
+    } else if (toolName === '2d') {
+      view2dCanvas?.classList.remove('hidden');
+      metricsGroup2d?.classList.remove('hidden');
+      manualGroup2d?.classList.remove('hidden');
+      if (btnFlipZero) btnFlipZero.classList.add('hidden');
+      if (stepperControls) stepperControls.classList.remove('hidden');
+      if (btnQuickStepMinus) btnQuickStepMinus.textContent = '-1 mm';
+      if (btnQuickStepPlus) btnQuickStepPlus.textContent = '+1 mm';
+      render2DRulerTicks();
+    } else if (toolName === 'circle') {
+      viewCircleCanvas?.classList.remove('hidden');
+      metricsGroupCircle?.classList.remove('hidden');
+      manualGroupCircle?.classList.remove('hidden');
+      if (btnFlipZero) btnFlipZero.classList.add('hidden');
+      if (stepperControls) stepperControls.classList.remove('hidden');
+      if (btnQuickStepMinus) btnQuickStepMinus.textContent = '-1 mm';
+      if (btnQuickStepPlus) btnQuickStepPlus.textContent = '+1 mm';
+      renderCircleGrid();
+    } else if (toolName === 'angle') {
+      viewAngleCanvas?.classList.remove('hidden');
+      metricsGroupAngle?.classList.remove('hidden');
+      manualGroupAngle?.classList.remove('hidden');
+      if (btnFlipZero) btnFlipZero.classList.add('hidden');
+      if (stepperControls) stepperControls.classList.remove('hidden');
+      if (btnQuickStepMinus) btnQuickStepMinus.textContent = '-1°';
+      if (btnQuickStepPlus) btnQuickStepPlus.textContent = '+1°';
+      renderProtractor();
+    }
+
+    updateUI();
+  }
+
+  toolButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tool = btn.getAttribute('data-tool-btn');
+      if (tool) switchTool(tool);
+    });
+  });
+
+  // --- 3. CALIPER LOCK LOGIC ---
+  function updateLockUI() {
+    const locked = rulerEngine.isLocked;
+    if (locked) {
+      lockIconUnlocked?.classList.add('hidden');
+      lockIconLocked?.classList.remove('hidden');
+      if (lockBtnText) lockBtnText.textContent = 'Sentuhan Terkunci';
+      btnToggleLock?.classList.add('bg-amber-500/20', 'border-amber-500/40', 'text-amber-600', 'dark:text-amber-400');
+      lockedStatusBanner?.classList.remove('hidden');
+      if (readoutPulseDot) readoutPulseDot.className = 'w-2 h-2 rounded-full bg-amber-500';
+
+      // Visual cues on calipers
+      document.querySelectorAll('.caliper-pin').forEach(el => {
+        el.classList.add('bg-amber-500!', 'dark:bg-amber-500!');
+      });
+      document.querySelectorAll('.caliper-line').forEach(el => {
+        el.classList.add('bg-amber-500!', 'dark:bg-amber-500!');
+      });
+    } else {
+      lockIconUnlocked?.classList.remove('hidden');
+      lockIconLocked?.classList.add('hidden');
+      if (lockBtnText) lockBtnText.textContent = 'Kunci Layar (Sentuh)';
+      btnToggleLock?.classList.remove('bg-amber-500/20', 'border-amber-500/40', 'text-amber-600', 'dark:text-amber-400');
+      lockedStatusBanner?.classList.add('hidden');
+      if (readoutPulseDot) readoutPulseDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
+
+      document.querySelectorAll('.caliper-pin').forEach(el => {
+        el.classList.remove('bg-amber-500!', 'dark:bg-amber-500!');
+      });
+      document.querySelectorAll('.caliper-line').forEach(el => {
+        el.classList.remove('bg-amber-500!', 'dark:bg-amber-500!');
+      });
+    }
+  }
+
+  btnToggleLock?.addEventListener('click', () => {
+    rulerEngine.toggleLock();
+    updateLockUI();
+  });
+
+  btnUnlockBanner?.addEventListener('click', () => {
+    if (rulerEngine.isLocked) rulerEngine.toggleLock();
+    updateLockUI();
+  });
+
+  // --- 4. 1D RULER RENDERING & DRAG ---
+  function renderRulerTicks() {
+    if (!view1dCanvas || !rulerSvg || !metricTicksGroup || !imperialTicksGroup) return;
+
+    const width = view1dCanvas.clientWidth;
+    const height = view1dCanvas.clientHeight;
+    rulerSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    metricTicksGroup.innerHTML = '';
+    imperialTicksGroup.innerHTML = '';
+
+    const ppi = rulerEngine.ppi;
+    const pxPerMm = ppi / 25.4;
+    const pxPerInch = ppi;
+    const isHorizontal = rulerEngine.orientation === 'horizontal';
+    const isDual = rulerEngine.scaleMode === 'dual';
+    const isFlip = rulerEngine.flipZero;
+    const textFill = 'var(--foreground)';
+
+    if (isHorizontal) {
+      const totalMm = Math.ceil(width / pxPerMm);
+      for (let mm = 0; mm <= totalMm; mm++) {
+        const x = isFlip ? width - mm * pxPerMm : mm * pxPerMm;
+        if (x < -10 || x > width + 10) continue;
+
+        let tickHeight = 7;
+        let isZero = mm === 0;
+        let isCm = mm % 10 === 0;
+        let isHalfCm = mm % 5 === 0 && !isCm;
+
+        if (isCm) tickHeight = 22;
+        else if (isHalfCm) tickHeight = 14;
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x.toFixed(1));
+        line.setAttribute('y1', '0');
+        line.setAttribute('x2', x.toFixed(1));
+        line.setAttribute('y2', tickHeight.toString());
+        line.setAttribute('stroke', isZero ? 'var(--primary)' : (isCm ? 'var(--primary)' : (isHalfCm ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)')));
+        line.setAttribute('stroke-width', isZero ? '2.5' : (isCm ? '1.5' : '1'));
+        metricTicksGroup.appendChild(line);
+
+        if (isCm) {
+          const cmVal = mm / 10;
+          const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          let textX = x;
+          let anchor = 'middle';
+          if (x < 14) {
+            textX = Math.max(6, x + 4);
+            anchor = 'start';
+          } else if (x > width - 14) {
+            textX = Math.min(width - 6, x - 4);
+            anchor = 'end';
+          }
+          text.setAttribute('x', textX.toFixed(1));
+          text.setAttribute('y', '36');
+          text.setAttribute('text-anchor', anchor);
+          text.setAttribute('fill', textFill);
+          text.setAttribute('font-family', 'JetBrains Mono, monospace');
+          text.setAttribute('font-size', '11');
+          text.setAttribute('font-weight', '700');
+          text.textContent = cmVal.toString();
+          metricTicksGroup.appendChild(text);
+        }
+      }
+
+      if (isDual || rulerEngine.unit === 'inch') {
+        const total16ths = Math.ceil((width / pxPerInch) * 16);
+        for (let i = 0; i <= total16ths; i++) {
+          const x = isFlip ? width - (i / 16) * pxPerInch : (i / 16) * pxPerInch;
+          if (x < -10 || x > width + 10) continue;
+
+          let tickHeight = 6;
+          const isZero = i === 0;
+          const isInch = i % 16 === 0;
+          const isHalf = i % 8 === 0 && !isInch;
+          const isQuarter = i % 4 === 0 && !isHalf && !isInch;
+          const isEighth = i % 2 === 0 && !isQuarter && !isHalf && !isInch;
+
+          if (isInch) tickHeight = 24;
+          else if (isHalf) tickHeight = 18;
+          else if (isQuarter) tickHeight = 13;
+          else if (isEighth) tickHeight = 9;
+
+          const y1 = height;
+          const y2 = height - tickHeight;
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', x.toFixed(1));
+          line.setAttribute('y1', y1.toString());
+          line.setAttribute('x2', x.toFixed(1));
+          line.setAttribute('y2', y2.toFixed(1));
+          line.setAttribute('stroke', isZero ? 'var(--cyan-glow)' : (isInch ? 'var(--cyan-glow)' : (isHalf || isQuarter ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)')));
+          line.setAttribute('stroke-width', isZero ? '2.5' : (isInch ? '1.5' : '1'));
+          imperialTicksGroup.appendChild(line);
+
+          if (isInch) {
+            const inchVal = i / 16;
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            let textX = x;
+            let anchor = 'middle';
+            if (x < 14) {
+              textX = Math.max(6, x + 4);
+              anchor = 'start';
+            } else if (x > width - 14) {
+              textX = Math.min(width - 6, x - 4);
+              anchor = 'end';
+            }
+            text.setAttribute('x', textX.toFixed(1));
+            text.setAttribute('y', (height - 30).toString());
+            text.setAttribute('text-anchor', anchor);
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '11');
+            text.setAttribute('font-weight', '700');
+            text.textContent = `${inchVal}"`;
+            imperialTicksGroup.appendChild(text);
+          }
+        }
+      }
+    }
+  }
+
+  function setup1DDrag(handleEl: HTMLElement | null, isPointerA: boolean) {
+    if (!handleEl || !view1dCanvas) return;
+
+    let isDragging = false;
+    let lastMajorTick = -1;
+
+    handleEl.addEventListener('pointerdown', (e) => {
+      if (rulerEngine.isLocked) return;
+      isDragging = true;
+      handleEl.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    handleEl.addEventListener('pointermove', (e) => {
+      if (!isDragging || !view1dCanvas || rulerEngine.isLocked) return;
+
+      const rect = view1dCanvas.getBoundingClientRect();
+      const isH = rulerEngine.orientation === 'horizontal';
+      let pos = isH ? e.clientX - rect.left : e.clientY - rect.top;
+      const maxLimit = isH ? rect.width : rect.height;
+      pos = Math.max(0, Math.min(maxLimit, pos));
+
+      if (isPointerA) rulerEngine.caliperStart = pos;
+      else rulerEngine.caliperEnd = pos;
+
+      const pxPerCm = rulerEngine.ppi / 2.54;
+      const currentCm = Math.floor(Math.abs(rulerEngine.caliperEnd - rulerEngine.caliperStart) / pxPerCm);
+      if (currentCm !== lastMajorTick) {
+        lastMajorTick = currentCm;
+        rulerEngine.triggerHaptic();
+      }
+
+      updateUI();
+    });
+
+    const endDrag = (e: PointerEvent) => {
+      if (isDragging) {
+        isDragging = false;
+        try { handleEl.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+    };
+
+    handleEl.addEventListener('pointerup', endDrag);
+    handleEl.addEventListener('pointercancel', endDrag);
+    handleEl.addEventListener('lostpointercapture', endDrag);
+
+    // Keyboard slider navigation for accessibility (ArrowLeft, ArrowRight, ArrowUp, ArrowDown)
+    handleEl.addEventListener('keydown', (e) => {
+      if (rulerEngine.isLocked) return;
+      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+        e.preventDefault();
+        const pxPerMm = (rulerEngine.ppi / 25.4);
+        const stepMm = e.shiftKey ? 10 : 1;
+        const deltaPx = (e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : -1) * stepMm * pxPerMm;
+
+        const maxLimit = rulerEngine.orientation === 'horizontal' ? (view1dCanvas?.clientWidth || 800) : (view1dCanvas?.clientHeight || 600);
+        let currentPos = isPointerA ? rulerEngine.caliperStart : rulerEngine.caliperEnd;
+        let newPos = Math.max(0, Math.min(maxLimit, currentPos + deltaPx));
+
+        if (isPointerA) rulerEngine.caliperStart = newPos;
+        else rulerEngine.caliperEnd = newPos;
+
+        rulerEngine.triggerHaptic();
+        updateUI();
+      }
+    });
+  }
+
+  // --- 5. 2D RULER RENDERING & DRAG (L-SQUARE) ---
+  function render2DRulerTicks() {
+    if (!view2dCanvas || !ruler2dSvg || !ticks2dX || !ticks2dY) return;
+
+    const width = view2dCanvas.clientWidth;
+    const height = view2dCanvas.clientHeight;
+    ruler2dSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    ticks2dX.innerHTML = '';
+    ticks2dY.innerHTML = '';
+
+    const ppi = rulerEngine.ppi;
+    const pxPerMm = ppi / 25.4;
+    const textFill = 'var(--muted-foreground)';
+
+    // Top X-Axis Ticks (from x = 30px to width)
+    const totalXmm = Math.ceil((width - 30) / pxPerMm);
+    for (let mm = 0; mm <= totalXmm; mm++) {
+      const x = 30 + mm * pxPerMm;
+      if (x > width + 5) break;
+
+      let isCm = mm % 10 === 0;
+      let tickH = isCm ? 18 : (mm % 5 === 0 ? 12 : 6);
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', x.toFixed(1));
+      line.setAttribute('y1', '0');
+      line.setAttribute('x2', x.toFixed(1));
+      line.setAttribute('y2', tickH.toString());
+      line.setAttribute('stroke', isCm ? 'var(--primary)' : 'var(--border)');
+      line.setAttribute('stroke-width', isCm ? '1.5' : '1');
+      ticks2dX.appendChild(line);
+
+      if (isCm && mm > 0) {
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', x.toFixed(1));
+        text.setAttribute('y', '28');
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', textFill);
+        text.setAttribute('font-family', 'JetBrains Mono, monospace');
+        text.setAttribute('font-size', '10');
+        text.setAttribute('font-weight', '600');
+        text.textContent = (mm / 10).toString();
+        ticks2dX.appendChild(text);
+      }
+    }
+
+    // Left Y-Axis Ticks (from y = 30px to height)
+    const totalYmm = Math.ceil((height - 30) / pxPerMm);
+    for (let mm = 0; mm <= totalYmm; mm++) {
+      const y = 30 + mm * pxPerMm;
+      if (y > height + 5) break;
+
+      let isCm = mm % 10 === 0;
+      let tickW = isCm ? 18 : (mm % 5 === 0 ? 12 : 6);
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', '0');
+      line.setAttribute('y1', y.toFixed(1));
+      line.setAttribute('x2', tickW.toString());
+      line.setAttribute('y2', y.toFixed(1));
+      line.setAttribute('stroke', isCm ? 'var(--primary)' : 'var(--border)');
+      line.setAttribute('stroke-width', isCm ? '1.5' : '1');
+      ticks2dY.appendChild(line);
+
+      if (isCm && mm > 0) {
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', '24');
+        text.setAttribute('y', (y + 3).toFixed(1));
+        text.setAttribute('text-anchor', 'start');
+        text.setAttribute('fill', textFill);
+        text.setAttribute('font-family', 'JetBrains Mono, monospace');
+        text.setAttribute('font-size', '10');
+        text.setAttribute('font-weight', '600');
+        text.textContent = (mm / 10).toString();
+        ticks2dY.appendChild(text);
+      }
+    }
+  }
+
+  // 2D Box Resize & Move
+  function setup2DHandlers() {
+    if (!handle2dCorner || !handle2dDrag || !caliperBox2d || !view2dCanvas) return;
+
+    let isResizing = false;
+    let isMoving = false;
+    let startX = 0, startY = 0;
+    let boxLeft = 60, boxTop = 60, boxWidth = 200, boxHeight = 140;
+
+    // Corner Resize
+    handle2dCorner.addEventListener('pointerdown', (e) => {
+      if (rulerEngine.isLocked) return;
+      isResizing = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      boxWidth = rulerEngine.caliper2D.x2 - rulerEngine.caliper2D.x1;
+      boxHeight = rulerEngine.caliper2D.y2 - rulerEngine.caliper2D.y1;
+      handle2dCorner.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    handle2dCorner.addEventListener('pointermove', (e) => {
+      if (!isResizing || rulerEngine.isLocked) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      const newW = Math.max(30, boxWidth + dx);
+      const newH = Math.max(30, boxHeight + dy);
+
+      rulerEngine.caliper2D.x2 = rulerEngine.caliper2D.x1 + newW;
+      rulerEngine.caliper2D.y2 = rulerEngine.caliper2D.y1 + newH;
+      updateUI();
+    });
+
+    const endResize = (e: PointerEvent) => {
+      if (isResizing) {
+        isResizing = false;
+        try { handle2dCorner.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+    };
+    handle2dCorner.addEventListener('pointerup', endResize);
+    handle2dCorner.addEventListener('pointercancel', endResize);
+
+    // Anchor Move
+    handle2dDrag.addEventListener('pointerdown', (e) => {
+      if (rulerEngine.isLocked) return;
+      isMoving = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      boxLeft = rulerEngine.caliper2D.x1;
+      boxTop = rulerEngine.caliper2D.y1;
+      boxWidth = rulerEngine.caliper2D.x2 - rulerEngine.caliper2D.x1;
+      boxHeight = rulerEngine.caliper2D.y2 - rulerEngine.caliper2D.y1;
+      handle2dDrag.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    handle2dDrag.addEventListener('pointermove', (e) => {
+      if (!isMoving || rulerEngine.isLocked) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      const newL = Math.max(30, boxLeft + dx);
+      const newT = Math.max(30, boxTop + dy);
+
+      rulerEngine.caliper2D.x1 = newL;
+      rulerEngine.caliper2D.y1 = newT;
+      rulerEngine.caliper2D.x2 = newL + boxWidth;
+      rulerEngine.caliper2D.y2 = newT + boxHeight;
+      updateUI();
+    });
+
+    const endMove = (e: PointerEvent) => {
+      if (isMoving) {
+        isMoving = false;
+        try { handle2dDrag.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+    };
+    handle2dDrag.addEventListener('pointerup', endMove);
+    handle2dDrag.addEventListener('pointercancel', endMove);
+  }
+
+  // --- 6. CIRCLE & COIN TOOL RENDERING & DRAG ---
+  function renderCircleGrid() {
+    if (!viewCircleCanvas || !circleSvg || !circleBackgroundGrid || !crosshairX || !crosshairY) return;
+
+    const width = viewCircleCanvas.clientWidth;
+    const height = viewCircleCanvas.clientHeight;
+    const cx = width / 2;
+    const cy = height / 2;
+    circleSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    // Center Crosshair
+    crosshairX.setAttribute('x1', '0');
+    crosshairX.setAttribute('y1', cy.toFixed(1));
+    crosshairX.setAttribute('x2', width.toFixed(1));
+    crosshairX.setAttribute('y2', cy.toFixed(1));
+
+    crosshairY.setAttribute('x1', cx.toFixed(1));
+    crosshairY.setAttribute('y1', '0');
+    crosshairY.setAttribute('x2', cx.toFixed(1));
+    crosshairY.setAttribute('y2', height.toFixed(1));
+
+    circleBackgroundGrid.innerHTML = '';
+    const pxPerCm = rulerEngine.ppi / 2.54;
+
+    // Draw concentric 1cm, 2cm, 3cm, 4cm circles
+    for (let cm = 1; cm <= 7; cm++) {
+      const r = cm * pxPerCm;
+      if (r > Math.min(cx, cy) - 10) break;
+
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', cx.toFixed(1));
+      c.setAttribute('cy', cy.toFixed(1));
+      c.setAttribute('r', r.toFixed(1));
+      c.setAttribute('fill', 'none');
+      c.setAttribute('stroke', 'var(--border)');
+      c.setAttribute('stroke-width', '1');
+      c.setAttribute('stroke-dasharray', '2 4');
+      c.setAttribute('opacity', '0.6');
+      circleBackgroundGrid.appendChild(c);
+
+      // Label at right edge of circle
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', (cx + r + 4).toFixed(1));
+      text.setAttribute('y', (cy - 3).toFixed(1));
+      text.setAttribute('fill', 'var(--muted-foreground)');
+      text.setAttribute('font-family', 'JetBrains Mono, monospace');
+      text.setAttribute('font-size', '9');
+      text.textContent = `Ø ${cm * 2} cm`;
+      circleBackgroundGrid.appendChild(text);
+    }
+  }
+
+  function setupCircleHandlers() {
+    if (!handleCircleRadius || !viewCircleCanvas) return;
+
+    let isDragging = false;
+
+    handleCircleRadius.addEventListener('pointerdown', (e) => {
+      if (rulerEngine.isLocked) return;
+      isDragging = true;
+      handleCircleRadius.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    handleCircleRadius.addEventListener('pointermove', (e) => {
+      if (!isDragging || !viewCircleCanvas || rulerEngine.isLocked) return;
+      const rect = viewCircleCanvas.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const dist = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2);
+      rulerEngine.circleRadius = Math.max(10, Math.min(Math.min(cx, cy) - 20, dist));
+      updateUI();
+    });
+
+    const endDrag = (e: PointerEvent) => {
+      if (isDragging) {
+        isDragging = false;
+        try { handleCircleRadius.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+    };
+    handleCircleRadius.addEventListener('pointerup', endDrag);
+    handleCircleRadius.addEventListener('pointercancel', endDrag);
+
+    // Slider listener
+    sliderCircleDiameter?.addEventListener('input', (e) => {
+      const mm = parseFloat((e.target as HTMLInputElement).value);
+      rulerEngine.setCircleDiameterMm(mm);
+    });
+
+    // Coin presets
+    coinPresetButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mm = parseFloat(btn.getAttribute('data-diameter') || '25');
+        rulerEngine.setCircleDiameterMm(mm);
+      });
+    });
+  }
+
+  // --- 7. PROTRACTOR / ANGLE TOOL RENDERING & DRAG ---
+  function renderProtractor() {
+    if (!viewAngleCanvas || !protractorSvg || !protractorMarkings || !protractorPivot) return;
+
+    const width = viewAngleCanvas.clientWidth;
+    const height = viewAngleCanvas.clientHeight;
+    const cx = width / 2;
+    const cy = height / 2;
+    protractorSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    protractorPivot.setAttribute('cx', cx.toFixed(1));
+    protractorPivot.setAttribute('cy', cy.toFixed(1));
+
+    protractorMarkings.innerHTML = '';
+    const radius = Math.min(cx, cy) - 30;
+
+    // Protractor Arc Base Circle
+    const baseCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    baseCircle.setAttribute('cx', cx.toFixed(1));
+    baseCircle.setAttribute('cy', cy.toFixed(1));
+    baseCircle.setAttribute('r', radius.toFixed(1));
+    baseCircle.setAttribute('fill', 'none');
+    baseCircle.setAttribute('stroke', 'var(--border)');
+    baseCircle.setAttribute('stroke-width', '1.5');
+    protractorMarkings.appendChild(baseCircle);
+
+    // Degree tick marks every 5 and 10 degrees
+    for (let deg = 0; deg < 360; deg += 5) {
+      const is10 = deg % 10 === 0;
+      const is90 = deg % 90 === 0;
+      const tickLen = is90 ? 18 : (is10 ? 12 : 6);
+      const rad = (deg * Math.PI) / 180;
+
+      const x1 = cx + (radius - tickLen) * Math.cos(rad);
+      const y1 = cy + (radius - tickLen) * Math.sin(rad);
+      const x2 = cx + radius * Math.cos(rad);
+      const y2 = cy + radius * Math.sin(rad);
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', x1.toFixed(1));
+      line.setAttribute('y1', y1.toFixed(1));
+      line.setAttribute('x2', x2.toFixed(1));
+      line.setAttribute('y2', y2.toFixed(1));
+      line.setAttribute('stroke', is90 ? 'var(--primary)' : (is10 ? 'var(--foreground)' : 'var(--border)'));
+      line.setAttribute('stroke-width', is10 ? '1.5' : '1');
+      protractorMarkings.appendChild(line);
+
+      // Degree Numbers for multiples of 30
+      if (deg % 30 === 0) {
+        const textRad = (deg * Math.PI) / 180;
+        const tx = cx + (radius - 24) * Math.cos(textRad);
+        const ty = cy + (radius - 24) * Math.sin(textRad);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', tx.toFixed(1));
+        text.setAttribute('y', (ty + 3).toFixed(1));
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', 'var(--muted-foreground)');
+        text.setAttribute('font-family', 'JetBrains Mono, monospace');
+        text.setAttribute('font-size', '9');
+        text.setAttribute('font-weight', is90 ? '700' : '500');
+        text.textContent = `${deg}°`;
+        protractorMarkings.appendChild(text);
+      }
+    }
+  }
+
+  function setupAngleHandlers() {
+    if (!handleAngleArm1 || !handleAngleArm2 || !viewAngleCanvas) return;
+
+    let activeArm: 1 | 2 | null = null;
+
+    const onPointerDown = (armNum: 1 | 2, el: HTMLElement, e: PointerEvent) => {
+      if (rulerEngine.isLocked) return;
+      activeArm = armNum;
+      el.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    };
+
+    handleAngleArm1.addEventListener('pointerdown', (e) => onPointerDown(1, handleAngleArm1, e));
+    handleAngleArm2.addEventListener('pointerdown', (e) => onPointerDown(2, handleAngleArm2, e));
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!activeArm || !viewAngleCanvas || rulerEngine.isLocked) return;
+      const rect = viewAngleCanvas.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      let deg = (Math.atan2(y - cy, x - cx) * 180) / Math.PI;
+      if (deg < 0) deg += 360;
+
+      // Snap to whole degrees
+      deg = Math.round(deg * 2) / 2;
+
+      if (activeArm === 1) rulerEngine.angleArm1 = deg;
+      else rulerEngine.angleArm2 = deg;
+
+      updateUI();
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (activeArm) {
+        const el = activeArm === 1 ? handleAngleArm1 : handleAngleArm2;
+        try { el.releasePointerCapture(e.pointerId); } catch (_) {}
+        activeArm = null;
+      }
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+
+    // Canvas Protractor Degree Slider listener
+    sliderAngleDegree?.addEventListener('input', (e) => {
+      const deg = parseFloat((e.target as HTMLInputElement).value);
+      rulerEngine.setAngleDegrees(deg);
+      updateUI();
+    });
+
+    // Canvas Protractor Presets
+    btnCanvasAnglePresets.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const deg = parseFloat(btn.getAttribute('data-angle') || '45');
+        rulerEngine.setAngleDegrees(deg);
+        updateUI();
+      });
+    });
+
+    // Canvas Protractor Fine-tuning Steppers
+    const stepCanvasAngle = (delta: number) => {
+      rulerEngine.stepAngleDegrees(delta);
+      updateUI();
+    };
+    btnCanvasAngleMinus5?.addEventListener('click', () => stepCanvasAngle(-5));
+    btnCanvasAngleMinus1?.addEventListener('click', () => stepCanvasAngle(-1));
+    btnCanvasAnglePlus1?.addEventListener('click', () => stepCanvasAngle(1));
+    btnCanvasAnglePlus5?.addEventListener('click', () => stepCanvasAngle(5));
+  }
+
+  // --- 8. MASTER UI UPDATE ---
+  function updateUI() {
+    updateLockUI();
+
+    // 1D Ruler View Update
+    if (rulerEngine.activeTool === '1d') {
+      const pA = rulerEngine.caliperStart;
+      const pB = rulerEngine.caliperEnd;
+      const minP = Math.min(pA, pB);
+      const maxP = Math.max(pA, pB);
+      const length = maxP - minP;
+
+      if (rulerEngine.orientation === 'horizontal') {
+        if (caliperPointerA) caliperPointerA.style.transform = `translateX(${pA}px)`;
+        if (caliperPointerB) caliperPointerB.style.transform = `translateX(${pB}px)`;
+        if (caliperHighlightArea) {
+          caliperHighlightArea.style.left = `${minP}px`;
+          caliperHighlightArea.style.width = `${length}px`;
+          caliperHighlightArea.style.top = '0';
+          caliperHighlightArea.style.bottom = '0';
+          caliperHighlightArea.style.height = '100%';
+        }
+      }
+
+      const live = rulerEngine.getLiveMeasurement();
+      if (rulerFloatDimension) rulerFloatDimension.textContent = live.formattedPrimary;
+
+      // Floating measurement pill collision avoidance: hide when pins are very close (< 65px)
+      const floatPill = document.getElementById('ruler-float-dimension-pill');
+      if (floatPill) {
+        if (length < 65) {
+          floatPill.style.opacity = '0';
+        } else {
+          floatPill.style.opacity = '1';
+        }
+      }
+
+      // Update ARIA attributes on caliper pointer sliders
+      const pxPerCm = rulerEngine.ppi / 2.54;
+      if (caliperPointerA) {
+        caliperPointerA.setAttribute('aria-valuenow', Math.round(pA).toString());
+        caliperPointerA.setAttribute('aria-valuetext', `${(pA / pxPerCm).toFixed(2)} cm`);
+      }
+      if (caliperPointerB) {
+        caliperPointerB.setAttribute('aria-valuenow', Math.round(pB).toString());
+        caliperPointerB.setAttribute('aria-valuetext', `${(pB / pxPerCm).toFixed(2)} cm`);
+      }
+
+      if (readoutTitleText) readoutTitleText.textContent = 'Hasil Pengukuran Real-Time';
+      if (readoutSubtitleText) readoutSubtitleText.textContent = '• Jarak Antara Penanda A & B';
+      if (readoutPrimaryValue) {
+        if (rulerEngine.unit === 'cm') readoutPrimaryValue.textContent = live.cm;
+        else if (rulerEngine.unit === 'mm') readoutPrimaryValue.textContent = live.mm;
+        else readoutPrimaryValue.textContent = live.inch;
+      }
+      if (readoutPrimaryUnit) readoutPrimaryUnit.textContent = rulerEngine.unit;
+      if (readoutFractionBadge) {
+        readoutFractionBadge.classList.remove('hidden');
+        readoutFractionBadge.textContent = `≈ ${live.fraction}`;
+      }
+
+      if (metricCm) metricCm.textContent = `${live.cm} cm`;
+      if (metricMm) metricMm.textContent = `${live.mm} mm`;
+      if (metricInch) metricInch.textContent = `${live.inch} in`;
+      if (metricPx) metricPx.textContent = `${live.px} px`;
+    }
+
+    // 2D Ruler View Update
+    else if (rulerEngine.activeTool === '2d') {
+      const m2d = rulerEngine.get2DMeasurements();
+      const x1 = Math.min(rulerEngine.caliper2D.x1, rulerEngine.caliper2D.x2);
+      const y1 = Math.min(rulerEngine.caliper2D.y1, rulerEngine.caliper2D.y2);
+      const w = Math.abs(rulerEngine.caliper2D.x2 - rulerEngine.caliper2D.x1);
+      const h = Math.abs(rulerEngine.caliper2D.y2 - rulerEngine.caliper2D.y1);
+
+      if (caliperBox2d) {
+        caliperBox2d.style.left = `${x1}px`;
+        caliperBox2d.style.top = `${y1}px`;
+        caliperBox2d.style.width = `${w}px`;
+        caliperBox2d.style.height = `${h}px`;
+      }
+
+      if (badge2dDimensions) badge2dDimensions.textContent = `${m2d.widthCm} × ${m2d.heightCm} cm`;
+      if (badge2dArea) badge2dArea.textContent = `Luas: ${m2d.areaCm2} cm² • Diag: ${m2d.diagCm} cm`;
+
+      if (readoutTitleText) readoutTitleText.textContent = 'Dimensi Objek 2D';
+      if (readoutSubtitleText) readoutSubtitleText.textContent = `• Luas: ${m2d.areaCm2} cm²`;
+      if (readoutPrimaryValue) readoutPrimaryValue.textContent = `${m2d.widthCm} × ${m2d.heightCm}`;
+      if (readoutPrimaryUnit) readoutPrimaryUnit.textContent = 'cm';
+      if (readoutFractionBadge) readoutFractionBadge.classList.add('hidden');
+
+      if (metric2dW) metric2dW.textContent = `${m2d.widthCm} cm`;
+      if (metric2dH) metric2dH.textContent = `${m2d.heightCm} cm`;
+      if (metric2dArea) metric2dArea.textContent = `${m2d.areaCm2} cm²`;
+      if (metric2dDiag) metric2dDiag.textContent = `${m2d.diagCm} cm`;
+    }
+
+    // Circle View Update
+    else if (rulerEngine.activeTool === 'circle') {
+      const circ = rulerEngine.getCircleMeasurements();
+      const cx = (viewCircleCanvas?.clientWidth || 400) / 2;
+      const cy = (viewCircleCanvas?.clientHeight || 400) / 2;
+      const r = rulerEngine.circleRadius;
+
+      if (dynamicCaliperCircle) {
+        dynamicCaliperCircle.setAttribute('cx', cx.toFixed(1));
+        dynamicCaliperCircle.setAttribute('cy', cy.toFixed(1));
+        dynamicCaliperCircle.setAttribute('r', r.toFixed(1));
+      }
+
+      if (circleDiameterLine) {
+        circleDiameterLine.setAttribute('x1', (cx - r).toFixed(1));
+        circleDiameterLine.setAttribute('y1', cy.toFixed(1));
+        circleDiameterLine.setAttribute('x2', (cx + r).toFixed(1));
+        circleDiameterLine.setAttribute('y2', cy.toFixed(1));
+      }
+
+      if (handleCircleRadius) {
+        handleCircleRadius.style.left = `${cx + r - 14}px`;
+        handleCircleRadius.style.top = `${cy - 14}px`;
+      }
+
+      if (circleBadgeDiameter) circleBadgeDiameter.textContent = `Ø ${circ.diameterCm} cm (${circ.diameterMm} mm)`;
+      if (circleBadgeSub) circleBadgeSub.textContent = `Keliling: ${circ.circumferenceCm} cm • r = ${(circ.radiusPx / rulerEngine.ppi * 2.54).toFixed(2)} cm`;
+      if (sliderCircleDiameter) sliderCircleDiameter.value = circ.diameterMm;
+      if (circleSliderLabel) circleSliderLabel.textContent = `${circ.diameterMm} mm`;
+
+      if (readoutTitleText) readoutTitleText.textContent = 'Diameter Benda Bulat';
+      if (readoutSubtitleText) readoutSubtitleText.textContent = `• Keliling: ${circ.circumferenceCm} cm`;
+      if (readoutPrimaryValue) readoutPrimaryValue.textContent = circ.diameterCm;
+      if (readoutPrimaryUnit) readoutPrimaryUnit.textContent = 'cm';
+      if (readoutFractionBadge) {
+        readoutFractionBadge.classList.remove('hidden');
+        readoutFractionBadge.textContent = `Ø ${circ.fractionIn}`;
+      }
+
+      if (metricCircleDia) metricCircleDia.textContent = `${circ.diameterCm} cm`;
+      if (metricCircleRad) metricCircleRad.textContent = `${(circ.diameterCm / 2).toFixed(2)} cm`;
+      if (metricCircleCirc) metricCircleCirc.textContent = `${circ.circumferenceCm} cm`;
+      if (metricCircleArea) metricCircleArea.textContent = `${circ.areaCm2} cm²`;
+    }
+
+    // Angle / Protractor View Update
+    else if (rulerEngine.activeTool === 'angle') {
+      const ang = rulerEngine.getAngleMeasurements();
+      const cx = (viewAngleCanvas?.clientWidth || 400) / 2;
+      const cy = (viewAngleCanvas?.clientHeight || 400) / 2;
+      const armLen = Math.min(cx, cy) - 30;
+
+      const rad1 = (rulerEngine.angleArm1 * Math.PI) / 180;
+      const rad2 = (rulerEngine.angleArm2 * Math.PI) / 180;
+
+      const x1 = cx + armLen * Math.cos(rad1);
+      const y1 = cy + armLen * Math.sin(rad1);
+      const x2 = cx + armLen * Math.cos(rad2);
+      const y2 = cy + armLen * Math.sin(rad2);
+
+      if (angleArm1Line) {
+        angleArm1Line.setAttribute('x1', cx.toFixed(1));
+        angleArm1Line.setAttribute('y1', cy.toFixed(1));
+        angleArm1Line.setAttribute('x2', x1.toFixed(1));
+        angleArm1Line.setAttribute('y2', y1.toFixed(1));
+      }
+
+      if (angleArm2Line) {
+        angleArm2Line.setAttribute('x1', cx.toFixed(1));
+        angleArm2Line.setAttribute('y1', cy.toFixed(1));
+        angleArm2Line.setAttribute('x2', x2.toFixed(1));
+        angleArm2Line.setAttribute('y2', y2.toFixed(1));
+      }
+
+      if (handleAngleArm1) {
+        handleAngleArm1.style.left = `${x1 - 14}px`;
+        handleAngleArm1.style.top = `${y1 - 14}px`;
+      }
+
+      if (handleAngleArm2) {
+        handleAngleArm2.style.left = `${x2 - 14}px`;
+        handleAngleArm2.style.top = `${y2 - 14}px`;
+      }
+
+      // Draw Arc wedge
+      if (angleArcPath) {
+        const arcR = armLen * 0.45;
+        const ax1 = cx + arcR * Math.cos(rad1);
+        const ay1 = cy + arcR * Math.sin(rad1);
+        const ax2 = cx + arcR * Math.cos(rad2);
+        const ay2 = cy + arcR * Math.sin(rad2);
+        const largeArc = parseFloat(ang.degrees) > 180 ? 1 : 0;
+        angleArcPath.setAttribute('d', `M ${cx} ${cy} L ${ax1} ${ay1} A ${arcR} ${arcR} 0 ${largeArc} 1 ${ax2} ${ay2} Z`);
+      }
+
+      if (angleDegreesReadout) angleDegreesReadout.textContent = `${ang.degrees}°`;
+      if (angleSubReadout) angleSubReadout.textContent = `${ang.classification} • ${ang.radians} rad`;
+
+      if (readoutTitleText) readoutTitleText.textContent = 'Besar Sudut Busur Derajat';
+      if (readoutSubtitleText) readoutSubtitleText.textContent = `• ${ang.classification}`;
+      if (readoutPrimaryValue) readoutPrimaryValue.textContent = ang.degrees;
+      if (readoutPrimaryUnit) readoutPrimaryUnit.textContent = '°';
+      if (readoutFractionBadge) {
+        readoutFractionBadge.classList.remove('hidden');
+        readoutFractionBadge.textContent = `${ang.radians} rad`;
+      }
+
+      if (metricAngleDeg) metricAngleDeg.textContent = `${ang.degrees}°`;
+      if (metricAngleRad) metricAngleRad.textContent = `${ang.radians} rad`;
+      if (metricAngleType) metricAngleType.textContent = ang.classification;
+
+      // Sync angle manual inputs and sliders if not actively focused
+      if (inputManualAngle && document.activeElement !== inputManualAngle) {
+        inputManualAngle.value = ang.degrees;
+      }
+      if (sliderAngleDegree && document.activeElement !== sliderAngleDegree) {
+        sliderAngleDegree.value = ang.degrees;
+      }
+      if (canvasAngleSliderLabel) {
+        canvasAngleSliderLabel.textContent = `${ang.degrees}°`;
+      }
+    }
+
+    // Sync 1D, 2D, and Circle manual inputs if not actively focused
+    if (rulerEngine.activeTool === '1d') {
+      const live = rulerEngine.getLiveMeasurement();
+      if (inputManual1d && document.activeElement !== inputManual1d) {
+        if (rulerEngine.unit === 'cm') inputManual1d.value = live.cm;
+        else if (rulerEngine.unit === 'mm') inputManual1d.value = live.mm;
+        else inputManual1d.value = live.inch;
+      }
+      if (labelManual1dUnit) labelManual1dUnit.textContent = rulerEngine.unit;
+
+      // Dynamically adapt manual stepper button labels and values based on active unit
+      const stepConfigs: Record<string, Array<{ text: string, step: number, title: string }>> = {
+        inch: [
+          { text: '-1"', step: -25.4, title: 'Kurangi 1 inci' },
+          { text: '-1/8"', step: -3.175, title: 'Kurangi 1/8 inci' },
+          { text: '+1/8"', step: 3.175, title: 'Tambah 1/8 inci' },
+          { text: '+1"', step: 25.4, title: 'Tambah 1 inci' }
+        ],
+        mm: [
+          { text: '-10 mm', step: -10, title: 'Kurangi 10 mm' },
+          { text: '-1 mm', step: -1, title: 'Kurangi 1 mm' },
+          { text: '+1 mm', step: 1, title: 'Tambah 1 mm' },
+          { text: '+10 mm', step: 10, title: 'Tambah 10 mm' }
+        ],
+        cm: [
+          { text: '-1 cm', step: -10, title: 'Kurangi 1 cm' },
+          { text: '-1 mm', step: -1, title: 'Kurangi 1 mm' },
+          { text: '+1 mm', step: 1, title: 'Tambah 1 mm' },
+          { text: '+1 cm', step: 10, title: 'Tambah 1 cm' }
+        ]
+      };
+      const cfg = stepConfigs[rulerEngine.unit] || stepConfigs.cm;
+      btnStep1d.forEach((btn, idx) => {
+        if (cfg[idx]) {
+          btn.textContent = cfg[idx].text;
+          btn.setAttribute('data-step', cfg[idx].step.toString());
+          btn.setAttribute('title', cfg[idx].title);
+        }
+      });
+
+      // Update top quick step labels for 1D mode
+      if (btnQuickStepMinus && btnQuickStepPlus) {
+        if (rulerEngine.unit === 'inch') {
+          btnQuickStepMinus.textContent = '-1/16"';
+          btnQuickStepPlus.textContent = '+1/16"';
+        } else {
+          btnQuickStepMinus.textContent = '-1 mm';
+          btnQuickStepPlus.textContent = '+1 mm';
+        }
+      }
+    } else if (rulerEngine.activeTool === '2d') {
+      const m2d = rulerEngine.get2DMeasurements();
+      if (inputManual2dW && document.activeElement !== inputManual2dW) {
+        inputManual2dW.value = m2d.widthCm;
+      }
+      if (inputManual2dH && document.activeElement !== inputManual2dH) {
+        inputManual2dH.value = m2d.heightCm;
+      }
+    } else if (rulerEngine.activeTool === 'circle') {
+      const circ = rulerEngine.getCircleMeasurements();
+      if (inputManualCircle && document.activeElement !== inputManualCircle) {
+        inputManualCircle.value = circ.diameterMm;
+      }
+    }
+
+    // Status Bar & PPI Display with transparent accuracy copy
+    if (calibStatusText) {
+      calibStatusText.textContent = rulerEngine.isCalibrated ? `Terkalibrasi Presisi (${rulerEngine.calibrationMethod})` : `Estimasi Layar (~${Math.round(rulerEngine.ppi)} PPI)`;
+    }
+    if (calibStatusIndicator) {
+      calibStatusIndicator.className = rulerEngine.isCalibrated ? 'w-2 h-2 rounded-full bg-emerald-500' : 'w-2 h-2 rounded-full bg-amber-400';
+    }
+    if (screenPpiDisplay) screenPpiDisplay.textContent = `${rulerEngine.ppi.toFixed(1)} PPI`;
+    if (navCalibIndicator) {
+      if (rulerEngine.isCalibrated) navCalibIndicator.classList.add('hidden');
+      else navCalibIndicator.classList.remove('hidden');
+    }
+
+    // Unit Pills Styling
+    unitButtons.forEach(btn => {
+      const u = btn.getAttribute('data-unit-btn');
+      if (u === rulerEngine.unit) {
+        btn.className = 'px-2.5 sm:px-3.5 py-1 text-xs sm:text-sm font-semibold rounded-lg transition-all unit-btn bg-(--card) text-(--foreground) shadow-xs border border-(--border)';
+      } else {
+        btn.className = 'px-2.5 sm:px-3.5 py-1 text-xs sm:text-sm font-medium text-(--muted-foreground) rounded-lg transition-all unit-btn hover:text-(--foreground)';
+      }
+    });
+  }
+
+  // --- 9. BUTTON & CONTROLS SETUP ---
+  // Unit buttons
+  unitButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const u = btn.getAttribute('data-unit-btn');
+      if (u) rulerEngine.setUnit(u);
+    });
+  });
+
+  // Flip 0
+  btnFlipZero?.addEventListener('click', () => {
+    rulerEngine.toggleFlipZero();
+  });
+
+  // Reset Caliper
+  btnResetCaliper?.addEventListener('click', () => {
+    const pxPer5Cm = (5 / 2.54) * rulerEngine.ppi;
+    rulerEngine.caliperStart = 40;
+    rulerEngine.caliperEnd = 40 + pxPer5Cm;
+    rulerEngine.circleRadius = Math.round((1.5 / 2.54) * rulerEngine.ppi);
+    rulerEngine.caliper2D = {
+      x1: 40,
+      y1: 40,
+      x2: 40 + pxPer5Cm,
+      y2: 40 + (3.5 / 2.54) * rulerEngine.ppi
+    };
+    rulerEngine.angleArm1 = 0;
+    rulerEngine.angleArm2 = 45;
+    updateUI();
+  });
+
+  // Top Quick Stepper adjustments (-1 unit, +1 unit)
+  const onQuickStep = (direction: -1 | 1) => {
+    if (rulerEngine.activeTool === '1d') {
+      const maxLimit = rulerEngine.orientation === 'horizontal' ? (view1dCanvas?.clientWidth || 800) : (view1dCanvas?.clientHeight || 600);
+      const stepDeltaMm = rulerEngine.unit === 'inch' ? direction * (25.4 / 16) : direction * 1;
+      rulerEngine.step1DLengthMm(stepDeltaMm, maxLimit);
+    } else if (rulerEngine.activeTool === '2d') {
+      const maxLimit = view2dCanvas?.clientWidth || 800;
+      rulerEngine.step2DWidthMm(direction * 1, maxLimit);
+    } else if (rulerEngine.activeTool === 'circle') {
+      rulerEngine.stepCircleDiameterMm(direction * 1);
+    } else if (rulerEngine.activeTool === 'angle') {
+      rulerEngine.stepAngleDegrees(direction * 1);
+    }
+    updateUI();
+  };
+
+  btnQuickStepMinus?.addEventListener('click', () => onQuickStep(-1));
+  btnQuickStepPlus?.addEventListener('click', () => onQuickStep(1));
+
+  // --- MANUAL PRECISION CONTROLS LISTENERS ---
+  // 1D Mode Steppers & Manual Input
+  btnStep1d.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const stepMm = parseFloat(btn.getAttribute('data-step') || '0');
+      const maxLimit = rulerEngine.orientation === 'horizontal' ? (view1dCanvas?.clientWidth || 800) : (view1dCanvas?.clientHeight || 600);
+      rulerEngine.step1DLengthMm(stepMm, maxLimit);
+      updateUI();
+    });
+  });
+
+  const apply1DManualInput = () => {
+    if (!inputManual1d) return;
+    const val = parseFloat(inputManual1d.value);
+    if (isNaN(val) || val <= 0) return;
+    let mm = val * 10;
+    if (rulerEngine.unit === 'mm') mm = val;
+    else if (rulerEngine.unit === 'inch') mm = val * 25.4;
+    const maxLimit = rulerEngine.orientation === 'horizontal' ? (view1dCanvas?.clientWidth || 800) : (view1dCanvas?.clientHeight || 600);
+    rulerEngine.set1DLengthMm(mm, maxLimit);
+    updateUI();
+  };
+  inputManual1d?.addEventListener('change', apply1DManualInput);
+  inputManual1d?.addEventListener('input', apply1DManualInput);
+  inputManual1d?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') apply1DManualInput();
+  });
+
+  // 2D Mode Steppers & Manual Inputs
+  btnStep2dW.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const stepMm = parseFloat(btn.getAttribute('data-step') || '0');
+      const maxLimit = view2dCanvas?.clientWidth || 800;
+      rulerEngine.step2DWidthMm(stepMm, maxLimit);
+      updateUI();
+    });
+  });
+
+  btnStep2dH.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const stepMm = parseFloat(btn.getAttribute('data-step') || '0');
+      const maxLimit = view2dCanvas?.clientHeight || 600;
+      rulerEngine.step2DHeightMm(stepMm, maxLimit);
+      updateUI();
+    });
+  });
+
+  const apply2DWManualInput = () => {
+    if (!inputManual2dW) return;
+    const val = parseFloat(inputManual2dW.value);
+    if (isNaN(val) || val <= 0) return;
+    const maxLimit = view2dCanvas?.clientWidth || 800;
+    rulerEngine.set2DWidthMm(val * 10, maxLimit);
+    updateUI();
+  };
+  inputManual2dW?.addEventListener('change', apply2DWManualInput);
+  inputManual2dW?.addEventListener('input', apply2DWManualInput);
+  inputManual2dW?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') apply2DWManualInput();
+  });
+
+  const apply2DHManualInput = () => {
+    if (!inputManual2dH) return;
+    const val = parseFloat(inputManual2dH.value);
+    if (isNaN(val) || val <= 0) return;
+    const maxLimit = view2dCanvas?.clientHeight || 600;
+    rulerEngine.set2DHeightMm(val * 10, maxLimit);
+    updateUI();
+  };
+  inputManual2dH?.addEventListener('change', apply2DHManualInput);
+  inputManual2dH?.addEventListener('input', apply2DHManualInput);
+  inputManual2dH?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') apply2DHManualInput();
+  });
+
+  // Circle Mode Steppers & Manual Input
+  btnStepCircle.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const stepMm = parseFloat(btn.getAttribute('data-step') || '0');
+      rulerEngine.stepCircleDiameterMm(stepMm);
+      updateUI();
+    });
+  });
+
+  const applyCircleManualInput = () => {
+    if (!inputManualCircle) return;
+    const val = parseFloat(inputManualCircle.value);
+    if (isNaN(val) || val <= 0) return;
+    rulerEngine.setCircleDiameterMm(val);
+    updateUI();
+  };
+  inputManualCircle?.addEventListener('change', applyCircleManualInput);
+  inputManualCircle?.addEventListener('input', applyCircleManualInput);
+  inputManualCircle?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') applyCircleManualInput();
+  });
+
+  // Angle Mode Steppers & Manual Input
+  btnStepAngle.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const stepDeg = parseFloat(btn.getAttribute('data-step') || '0');
+      rulerEngine.stepAngleDegrees(stepDeg);
+      updateUI();
+    });
+  });
+
+  const applyAngleManualInput = () => {
+    if (!inputManualAngle) return;
+    const val = parseFloat(inputManualAngle.value);
+    if (isNaN(val)) return;
+    rulerEngine.setAngleDegrees(val);
+    updateUI();
+  };
+  inputManualAngle?.addEventListener('change', applyAngleManualInput);
+  inputManualAngle?.addEventListener('input', applyAngleManualInput);
+  inputManualAngle?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') applyAngleManualInput();
+  });
+
+  btnQuickAnglePills.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const deg = parseFloat(btn.getAttribute('data-angle') || '45');
+      rulerEngine.setAngleDegrees(deg);
+      updateUI();
+    });
+  });
+
+  // Copy measurement
+  btnCopyMeasurement?.addEventListener('click', async () => {
+    let textToCopy = '';
+    if (rulerEngine.activeTool === '1d') {
+      const live = rulerEngine.getLiveMeasurement();
+      textToCopy = `${live.formattedPrimary} (${live.mm} mm, ${live.inch} in)`;
+    } else if (rulerEngine.activeTool === '2d') {
+      const m2d = rulerEngine.get2DMeasurements();
+      textToCopy = `Dimensi: ${m2d.widthCm} x ${m2d.heightCm} cm (Luas: ${m2d.areaCm2} cm², Diagonal: ${m2d.diagCm} cm)`;
+    } else if (rulerEngine.activeTool === 'circle') {
+      const circ = rulerEngine.getCircleMeasurements();
+      textToCopy = `Diameter Lingkaran: ${circ.diameterCm} cm (${circ.diameterMm} mm), Keliling: ${circ.circumferenceCm} cm, Luas: ${circ.areaCm2} cm²`;
+    } else {
+      const ang = rulerEngine.getAngleMeasurements();
+      textToCopy = `Sudut: ${ang.degrees}° (${ang.classification}, ${ang.radians} rad)`;
+    }
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      if (copyIconDefault && copyIconCheck && copyBtnText) {
+        copyIconDefault.classList.add('hidden');
+        copyIconCheck.classList.remove('hidden');
+        copyBtnText.textContent = 'Tersalin!';
+        setTimeout(() => {
+          copyIconDefault.classList.remove('hidden');
+          copyIconCheck.classList.add('hidden');
+          copyBtnText.textContent = 'Salin Ukuran';
+        }, 2000);
+      }
+    } catch (_) {
+      prompt('Salin hasil pengukuran:', textToCopy);
+    }
+  });
+
+  // Preset Selector
+  devicePresetSelect?.addEventListener('change', (e) => {
+    const target = e.target as HTMLSelectElement;
+    const val = target.value;
+    if (val === 'auto') {
+      rulerEngine.resetCalibration();
+    } else {
+      const ppi = parseFloat(val);
+      if (!isNaN(ppi)) {
+        const optionLabel = target.options[target.selectedIndex]?.text || '';
+        rulerEngine.setPpi(ppi, optionLabel.split('(')[0].trim());
+      }
+    }
+  });
+
+  // Modal Open/Close
+  function openModal() {
+    tempPpi = rulerEngine.ppi;
+    updateModalCardVisual(tempPpi);
+    calibrationModal?.classList.remove('hidden');
+    calibrationModal?.classList.add('flex');
+  }
+
+  function closeModal() {
+    calibrationModal?.classList.add('hidden');
+    calibrationModal?.classList.remove('flex');
+  }
+
+  btnOpenCalib?.addEventListener('click', openModal);
+  btnQuickCalib?.addEventListener('click', openModal);
+  btnCloseModal?.addEventListener('click', closeModal);
+  btnCancelCalib?.addEventListener('click', closeModal);
+
+  // Tab switching in modal
+  calibTabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-tab-target');
+      calibTabButtons.forEach(b => {
+        b.className = 'calib-tab-btn flex-1 py-2 text-xs sm:text-sm font-medium text-(--muted-foreground) hover:text-(--foreground) rounded-lg transition-all';
+      });
+      btn.className = 'calib-tab-btn flex-1 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-(--card) text-(--foreground) shadow-xs transition-all';
+
+      calibTabContents.forEach(c => {
+        if (c.id === targetId) c.classList.remove('hidden');
+        else c.classList.add('hidden');
+      });
+    });
+  });
+
+  function updateModalCardVisual(ppi: number) {
+    const cardPxWidth = Math.round(ppi * CARD_STANDARD.widthInch);
+    const cardPxHeight = Math.round(ppi * CARD_STANDARD.heightInch);
+
+    if (visualCalibCard) {
+      visualCalibCard.style.width = `${cardPxWidth}px`;
+      visualCalibCard.style.height = `${cardPxHeight}px`;
+    }
+    if (cardWidthSlider) cardWidthSlider.value = cardPxWidth.toString();
+    if (cardSliderValLabel) cardSliderValLabel.textContent = `${cardPxWidth} px (${ppi.toFixed(1)} PPI)`;
+    if (calibCardWidthPx) calibCardWidthPx.textContent = `${cardPxWidth} px`;
+    if (inputManualPpi) inputManualPpi.value = ppi.toFixed(1);
+  }
+
+  cardWidthSlider?.addEventListener('input', (e) => {
+    const widthPx = parseFloat((e.target as HTMLInputElement).value);
+    tempPpi = widthPx / CARD_STANDARD.widthInch;
+    updateModalCardVisual(tempPpi);
+  });
+
+  btnApplyDiagonal?.addEventListener('click', () => {
+    if (!inputDiagonalInches) return;
+    const diag = parseFloat(inputDiagonalInches.value);
+    if (!isNaN(diag) && diag > 2 && diag < 85) {
+      const w = window.screen.width;
+      const h = window.screen.height;
+      tempPpi = Math.sqrt(w * w + h * h) / diag;
+      updateModalCardVisual(tempPpi);
+      saveCalibration(`Diagonal ${diag}"`);
+    }
+  });
+
+  quickDiagButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const diagStr = btn.getAttribute('data-diag');
+      if (diagStr && inputDiagonalInches) {
+        inputDiagonalInches.value = diagStr;
+        const diag = parseFloat(diagStr);
+        const w = window.screen.width;
+        const h = window.screen.height;
+        tempPpi = Math.sqrt(w * w + h * h) / diag;
+        updateModalCardVisual(tempPpi);
+      }
+    });
+  });
+
+  btnPpiMinus1?.addEventListener('click', () => { tempPpi = Math.max(30, tempPpi - 1); updateModalCardVisual(tempPpi); });
+  btnPpiMinus01?.addEventListener('click', () => { tempPpi = Math.max(30, tempPpi - 0.1); updateModalCardVisual(tempPpi); });
+  btnPpiPlus01?.addEventListener('click', () => { tempPpi = Math.min(900, tempPpi + 0.1); updateModalCardVisual(tempPpi); });
+  btnPpiPlus1?.addEventListener('click', () => { tempPpi = Math.min(900, tempPpi + 1); updateModalCardVisual(tempPpi); });
+  inputManualPpi?.addEventListener('input', (e) => {
+    const val = parseFloat((e.target as HTMLInputElement).value);
+    if (!isNaN(val) && val >= 30 && val <= 900) {
+      tempPpi = val;
+      updateModalCardVisual(tempPpi);
+    }
+  });
+
+  function saveCalibration(method = 'e-KTP / Kartu ATM') {
+    rulerEngine.setPpi(tempPpi, method);
+    closeModal();
+  }
+
+  btnSaveCalib?.addEventListener('click', () => saveCalibration('e-KTP / Kartu ATM'));
+  btnResetCalibDefault?.addEventListener('click', () => {
+    rulerEngine.resetCalibration();
+    closeModal();
+  });
+
+  // Listen to engine updates
+  rulerEngine.subscribe(() => {
+    renderRulerTicks();
+    render2DRulerTicks();
+    renderCircleGrid();
+    renderProtractor();
+    updateUI();
+  });
+
+  // Orientation toggle
+  btnToggleOrientation?.addEventListener('click', () => {
+    const nextOrient = rulerEngine.orientation === 'horizontal' ? 'vertical' : 'horizontal';
+    rulerEngine.setOrientation(nextOrient);
+    if (view1dCanvas) {
+      if (nextOrient === 'vertical') {
+        view1dCanvas.classList.remove('h-56', 'sm:h-64');
+        view1dCanvas.classList.add('h-[480px]', 'sm:h-[540px]');
+      } else {
+        view1dCanvas.classList.add('h-56', 'sm:h-64');
+        view1dCanvas.classList.remove('h-[480px]', 'sm:h-[540px]');
+      }
+    }
+  });
+
+  // Dual-scale toggle (cm + inch simultaneously on 1D ruler)
+  const btnToggleDualScale = document.getElementById('btn-toggle-dual-scale');
+  btnToggleDualScale?.addEventListener('click', () => {
+    const nextMode = rulerEngine.scaleMode === 'dual' ? 'single' : 'dual';
+    rulerEngine.setScaleMode(nextMode);
+    if (nextMode === 'dual') {
+      btnToggleDualScale.classList.add('bg-indigo-500', 'text-white', 'border-indigo-500');
+    } else {
+      btnToggleDualScale.classList.remove('bg-indigo-500', 'text-white', 'border-indigo-500');
+    }
+    renderRulerTicks();
+    updateUI();
+  });
+
+
+  const btnToggleEdgeMode = document.getElementById('btn-toggle-edge-mode');
+  const btnCloseEdgeMode = document.getElementById('btn-close-edge-mode');
+  const edgeRulersOverlay = document.getElementById('edge-rulers-overlay');
+  const edgeToggleButtons = document.querySelectorAll<HTMLButtonElement>('.edge-toggle-btn');
+
+  const edgeRulerTop = document.getElementById('edge-ruler-top') as SVGSVGElement | null;
+  const edgeRulerBottom = document.getElementById('edge-ruler-bottom') as SVGSVGElement | null;
+  const edgeRulerLeft = document.getElementById('edge-ruler-left') as SVGSVGElement | null;
+  const edgeRulerRight = document.getElementById('edge-ruler-right') as SVGSVGElement | null;
+
+  const edgeBgTop = document.getElementById('edge-bg-top');
+  const edgeBgBottom = document.getElementById('edge-bg-bottom');
+  const edgeBgLeft = document.getElementById('edge-bg-left');
+  const edgeBgRight = document.getElementById('edge-bg-right');
+
+  const edgeTicksTop = document.getElementById('edge-ticks-top');
+  const edgeTicksBottom = document.getElementById('edge-ticks-bottom');
+  const edgeTicksLeft = document.getElementById('edge-ticks-left');
+  const edgeTicksRight = document.getElementById('edge-ticks-right');
+
+  const edgeSurface = document.getElementById('edge-surface');
+  const edgeGuidesGroup = document.getElementById('edge-guides-group');
+  const edgeCrosshairH = document.getElementById('edge-crosshair-h');
+  const edgeCrosshairV = document.getElementById('edge-crosshair-v');
+  const edgeCursorReadout = document.getElementById('edge-cursor-readout');
+  const btnEdgeCrosshair = document.getElementById('btn-edge-crosshair');
+  const btnEdgeClearGuides = document.getElementById('btn-edge-clear-guides');
+  const edgeWelcomeHint = document.getElementById('edge-welcome-hint');
+
+  const activeEdges = {
+    top: true,
+    bottom: false,
+    left: true,
+    right: false
+  };
+  let crosshairActive = false;
+
+  let edgeUnit: 'cm' | 'inch' = 'cm';
+  let edgeFlipX = false;
+  let edgeFlipY = false;
+
+  const edgeUnitButtons = document.querySelectorAll<HTMLButtonElement>('.edge-unit-btn');
+  const btnEdgeFlipX = document.getElementById('btn-edge-flip-x');
+  const btnEdgeFlipY = document.getElementById('btn-edge-flip-y');
+  const edgeHudDimensions = document.getElementById('edge-hud-dimensions');
+  const edgeHudPixels = document.getElementById('edge-hud-pixels');
+
+  function renderEdgeRulers() {
+    if (!edgeRulersOverlay || edgeRulersOverlay.classList.contains('hidden')) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const ppi = rulerEngine.ppi;
+    const pxPerMm = ppi / 25.4;
+    const textFill = 'var(--foreground)';
+
+    // Update edge elements & background tracks visibility
+    if (edgeRulerTop) edgeRulerTop.style.display = activeEdges.top ? 'block' : 'none';
+    if (edgeBgTop) edgeBgTop.style.display = activeEdges.top ? 'block' : 'none';
+    if (edgeRulerBottom) edgeRulerBottom.style.display = activeEdges.bottom ? 'block' : 'none';
+    if (edgeBgBottom) edgeBgBottom.style.display = activeEdges.bottom ? 'block' : 'none';
+    if (edgeRulerLeft) edgeRulerLeft.style.display = activeEdges.left ? 'block' : 'none';
+    if (edgeBgLeft) edgeBgLeft.style.display = activeEdges.left ? 'block' : 'none';
+    if (edgeRulerRight) edgeRulerRight.style.display = activeEdges.right ? 'block' : 'none';
+    if (edgeBgRight) edgeBgRight.style.display = activeEdges.right ? 'block' : 'none';
+
+    // Hide welcome hint if any edge is active
+    const hasAnyEdge = activeEdges.top || activeEdges.bottom || activeEdges.left || activeEdges.right;
+    if (edgeWelcomeHint) edgeWelcomeHint.style.display = hasAnyEdge ? 'none' : 'flex';
+
+    // Update button active styles
+    edgeToggleButtons.forEach(btn => {
+      const edgeKey = btn.getAttribute('data-edge-btn') as 'top' | 'bottom' | 'left' | 'right';
+      if (activeEdges[edgeKey]) {
+        btn.className = 'edge-toggle-btn px-2.5 py-1 rounded-xl text-xs font-semibold border border-indigo-500 bg-indigo-500 text-white shadow-xs transition-all flex items-center gap-1 cursor-pointer';
+      } else {
+        btn.className = 'edge-toggle-btn px-2.5 py-1 rounded-xl text-xs font-semibold border border-(--border) bg-(--card) text-(--foreground) hover:border-indigo-500 transition-all flex items-center gap-1 cursor-pointer';
+      }
+    });
+
+    // Update Edge Unit Buttons styling
+    edgeUnitButtons.forEach(btn => {
+      const u = btn.getAttribute('data-edge-unit');
+      if (u === edgeUnit) {
+        btn.className = 'edge-unit-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-(--card) text-(--foreground) shadow-xs border border-(--border) cursor-pointer';
+      } else {
+        btn.className = 'edge-unit-btn px-2.5 py-1 rounded-lg text-xs font-medium text-(--muted-foreground) hover:text-(--foreground) transition-all cursor-pointer';
+      }
+    });
+
+    // Update Directional Flip Buttons styling
+    if (btnEdgeFlipX) {
+      if (edgeFlipX) {
+        btnEdgeFlipX.className = 'px-2 py-1 rounded-xl border border-indigo-500 bg-indigo-500 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer';
+      } else {
+        btnEdgeFlipX.className = 'px-2 py-1 rounded-xl border border-(--border) bg-(--card) text-(--muted-foreground) hover:text-(--foreground) hover:border-indigo-500 text-xs font-medium transition-all cursor-pointer';
+      }
+    }
+    if (btnEdgeFlipY) {
+      if (edgeFlipY) {
+        btnEdgeFlipY.className = 'px-2 py-1 rounded-xl border border-indigo-500 bg-indigo-500 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer';
+      } else {
+        btnEdgeFlipY.className = 'px-2 py-1 rounded-xl border border-(--border) bg-(--card) text-(--muted-foreground) hover:text-(--foreground) hover:border-indigo-500 text-xs font-medium transition-all cursor-pointer';
+      }
+    }
+
+    // Real-Time Screen Bounds HUD Calculation
+    const wCm = (w / pxPerMm) / 10;
+    const hCm = (h / pxPerMm) / 10;
+    const wIn = w / ppi;
+    const hIn = h / ppi;
+
+    if (edgeHudDimensions) {
+      if (edgeUnit === 'cm') {
+        edgeHudDimensions.textContent = `${wCm.toFixed(1)} cm × ${hCm.toFixed(1)} cm`;
+      } else {
+        edgeHudDimensions.textContent = `${wIn.toFixed(2)}" × ${hIn.toFixed(2)}"`;
+      }
+    }
+    if (edgeHudPixels) {
+      edgeHudPixels.textContent = `${w} × ${h} CSS px`;
+    }
+
+    // 1. TOP EDGE
+    if (activeEdges.top && edgeRulerTop && edgeTicksTop) {
+      edgeRulerTop.setAttribute('viewBox', `0 0 ${w} 44`);
+      edgeTicksTop.innerHTML = '';
+      const x0 = edgeFlipX ? w : 0;
+
+      // Origin 0 mark & label
+      const originLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      originLine.setAttribute('x1', x0.toFixed(1));
+      originLine.setAttribute('y1', '0');
+      originLine.setAttribute('x2', x0.toFixed(1));
+      originLine.setAttribute('y2', '26');
+      originLine.setAttribute('stroke', edgeUnit === 'cm' ? 'var(--primary)' : 'var(--cyan-glow)');
+      originLine.setAttribute('stroke-width', '3');
+      edgeTicksTop.appendChild(originLine);
+
+      const originText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      originText.setAttribute('x', edgeFlipX ? (w - 6).toFixed(1) : '6');
+      originText.setAttribute('y', '36');
+      originText.setAttribute('text-anchor', edgeFlipX ? 'end' : 'start');
+      originText.setAttribute('fill', edgeUnit === 'cm' ? 'var(--primary)' : 'var(--cyan-glow)');
+      originText.setAttribute('font-family', 'JetBrains Mono, monospace');
+      originText.setAttribute('font-size', '10');
+      originText.setAttribute('font-weight', '800');
+      originText.textContent = edgeUnit === 'cm' ? '0 cm' : '0 in';
+      edgeTicksTop.appendChild(originText);
+
+      if (edgeUnit === 'cm') {
+        const totalMm = Math.ceil(w / pxPerMm);
+        for (let mm = 1; mm <= totalMm; mm++) {
+          const x = edgeFlipX ? w - mm * pxPerMm : mm * pxPerMm;
+          if (x < -10 || x > w + 10) continue;
+          let isCm = mm % 10 === 0;
+          let isHalfCm = mm % 5 === 0 && !isCm;
+          let tickH = isCm ? 18 : (isHalfCm ? 12 : 6);
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', x.toFixed(1));
+          line.setAttribute('y1', '0');
+          line.setAttribute('x2', x.toFixed(1));
+          line.setAttribute('y2', tickH.toString());
+          line.setAttribute('stroke', isCm ? 'var(--primary)' : (isHalfCm ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)'));
+          line.setAttribute('stroke-width', isCm ? '1.5' : '1');
+          edgeTicksTop.appendChild(line);
+
+          if (isCm && Math.abs(x - x0) > 28 && (edgeFlipX ? x > 15 : x < w - 15)) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x.toFixed(1));
+            text.setAttribute('y', '32');
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-weight', '700');
+            text.textContent = (mm / 10).toString();
+            edgeTicksTop.appendChild(text);
+          }
+        }
+      } else {
+        const total16ths = Math.ceil((w / ppi) * 16);
+        for (let i = 1; i <= total16ths; i++) {
+          const x = edgeFlipX ? w - (i / 16) * ppi : (i / 16) * ppi;
+          if (x < -10 || x > w + 10) continue;
+          const isInch = i % 16 === 0;
+          const isHalf = i % 8 === 0 && !isInch;
+          const isQuarter = i % 4 === 0 && !isHalf && !isInch;
+          const isEighth = i % 2 === 0 && !isQuarter && !isHalf && !isInch;
+          let tickH = isInch ? 20 : (isHalf ? 15 : (isQuarter ? 10 : (isEighth ? 7 : 5)));
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', x.toFixed(1));
+          line.setAttribute('y1', '0');
+          line.setAttribute('x2', x.toFixed(1));
+          line.setAttribute('y2', tickH.toString());
+          line.setAttribute('stroke', isInch ? 'var(--cyan-glow)' : (isHalf || isQuarter ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)'));
+          line.setAttribute('stroke-width', isInch ? '1.5' : '1');
+          edgeTicksTop.appendChild(line);
+
+          if (isInch && Math.abs(x - x0) > 30 && (edgeFlipX ? x > 15 : x < w - 15)) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x.toFixed(1));
+            text.setAttribute('y', '32');
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-weight', '700');
+            text.textContent = `${i / 16}"`;
+            edgeTicksTop.appendChild(text);
+          }
+        }
+      }
+    }
+
+    // 2. BOTTOM EDGE
+    if (activeEdges.bottom && edgeRulerBottom && edgeTicksBottom) {
+      edgeRulerBottom.setAttribute('viewBox', `0 0 ${w} 44`);
+      edgeTicksBottom.innerHTML = '';
+      const x0 = edgeFlipX ? w : 0;
+
+      // Origin 0 mark & label
+      const originLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      originLine.setAttribute('x1', x0.toFixed(1));
+      originLine.setAttribute('y1', '44');
+      originLine.setAttribute('x2', x0.toFixed(1));
+      originLine.setAttribute('y2', '18');
+      originLine.setAttribute('stroke', edgeUnit === 'cm' ? 'var(--primary)' : 'var(--cyan-glow)');
+      originLine.setAttribute('stroke-width', '3');
+      edgeTicksBottom.appendChild(originLine);
+
+      const originText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      originText.setAttribute('x', edgeFlipX ? (w - 6).toFixed(1) : '6');
+      originText.setAttribute('y', '14');
+      originText.setAttribute('text-anchor', edgeFlipX ? 'end' : 'start');
+      originText.setAttribute('fill', edgeUnit === 'cm' ? 'var(--primary)' : 'var(--cyan-glow)');
+      originText.setAttribute('font-family', 'JetBrains Mono, monospace');
+      originText.setAttribute('font-size', '10');
+      originText.setAttribute('font-weight', '800');
+      originText.textContent = edgeUnit === 'cm' ? '0 cm' : '0 in';
+      edgeTicksBottom.appendChild(originText);
+
+      if (edgeUnit === 'cm') {
+        const totalMm = Math.ceil(w / pxPerMm);
+        for (let mm = 1; mm <= totalMm; mm++) {
+          const x = edgeFlipX ? w - mm * pxPerMm : mm * pxPerMm;
+          if (x < -10 || x > w + 10) continue;
+          let isCm = mm % 10 === 0;
+          let isHalfCm = mm % 5 === 0 && !isCm;
+          let tickH = isCm ? 18 : (isHalfCm ? 12 : 6);
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', x.toFixed(1));
+          line.setAttribute('y1', '44');
+          line.setAttribute('x2', x.toFixed(1));
+          line.setAttribute('y2', (44 - tickH).toString());
+          line.setAttribute('stroke', isCm ? 'var(--primary)' : (isHalfCm ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)'));
+          line.setAttribute('stroke-width', isCm ? '1.5' : '1');
+          edgeTicksBottom.appendChild(line);
+
+          if (isCm && Math.abs(x - x0) > 28 && (edgeFlipX ? x > 15 : x < w - 15)) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x.toFixed(1));
+            text.setAttribute('y', '18');
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-weight', '700');
+            text.textContent = (mm / 10).toString();
+            edgeTicksBottom.appendChild(text);
+          }
+        }
+      } else {
+        const total16ths = Math.ceil((w / ppi) * 16);
+        for (let i = 1; i <= total16ths; i++) {
+          const x = edgeFlipX ? w - (i / 16) * ppi : (i / 16) * ppi;
+          if (x < -10 || x > w + 10) continue;
+          const isInch = i % 16 === 0;
+          const isHalf = i % 8 === 0 && !isInch;
+          const isQuarter = i % 4 === 0 && !isHalf && !isInch;
+          const isEighth = i % 2 === 0 && !isQuarter && !isHalf && !isInch;
+          let tickH = isInch ? 20 : (isHalf ? 15 : (isQuarter ? 10 : (isEighth ? 7 : 5)));
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', x.toFixed(1));
+          line.setAttribute('y1', '44');
+          line.setAttribute('x2', x.toFixed(1));
+          line.setAttribute('y2', (44 - tickH).toString());
+          line.setAttribute('stroke', isInch ? 'var(--cyan-glow)' : (isHalf || isQuarter ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)'));
+          line.setAttribute('stroke-width', isInch ? '1.5' : '1');
+          edgeTicksBottom.appendChild(line);
+
+          if (isInch && Math.abs(x - x0) > 30 && (edgeFlipX ? x > 15 : x < w - 15)) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x.toFixed(1));
+            text.setAttribute('y', '18');
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-weight', '700');
+            text.textContent = `${i / 16}"`;
+            edgeTicksBottom.appendChild(text);
+          }
+        }
+      }
+    }
+
+    // 3. LEFT EDGE
+    if (activeEdges.left && edgeRulerLeft && edgeTicksLeft) {
+      edgeRulerLeft.setAttribute('viewBox', `0 0 44 ${h}`);
+      edgeTicksLeft.innerHTML = '';
+      const y0 = edgeFlipY ? h : 0;
+
+      // Origin 0 mark & label
+      const originLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      originLine.setAttribute('x1', '0');
+      originLine.setAttribute('y1', y0.toFixed(1));
+      originLine.setAttribute('x2', '26');
+      originLine.setAttribute('y2', y0.toFixed(1));
+      originLine.setAttribute('stroke', edgeUnit === 'cm' ? 'var(--primary)' : 'var(--cyan-glow)');
+      originLine.setAttribute('stroke-width', '3');
+      edgeTicksLeft.appendChild(originLine);
+
+      const originText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      originText.setAttribute('x', '6');
+      originText.setAttribute('y', edgeFlipY ? (h - 10).toFixed(1) : '16');
+      originText.setAttribute('text-anchor', 'start');
+      originText.setAttribute('fill', edgeUnit === 'cm' ? 'var(--primary)' : 'var(--cyan-glow)');
+      originText.setAttribute('font-family', 'JetBrains Mono, monospace');
+      originText.setAttribute('font-size', '9');
+      originText.setAttribute('font-weight', '800');
+      originText.textContent = edgeUnit === 'cm' ? '0 cm' : '0 in';
+      edgeTicksLeft.appendChild(originText);
+
+      if (edgeUnit === 'cm') {
+        const totalMm = Math.ceil(h / pxPerMm);
+        for (let mm = 1; mm <= totalMm; mm++) {
+          const y = edgeFlipY ? h - mm * pxPerMm : mm * pxPerMm;
+          if (y < -10 || y > h + 10) continue;
+          let isCm = mm % 10 === 0;
+          let isHalfCm = mm % 5 === 0 && !isCm;
+          let tickW = isCm ? 18 : (isHalfCm ? 12 : 6);
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', '0');
+          line.setAttribute('y1', y.toFixed(1));
+          line.setAttribute('x2', tickW.toString());
+          line.setAttribute('y2', y.toFixed(1));
+          line.setAttribute('stroke', isCm ? 'var(--primary)' : (isHalfCm ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)'));
+          line.setAttribute('stroke-width', isCm ? '1.5' : '1');
+          edgeTicksLeft.appendChild(line);
+
+          if (isCm && Math.abs(y - y0) > 28 && (edgeFlipY ? y > 15 : y < h - 15)) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', '26');
+            text.setAttribute('y', (y + 3).toFixed(1));
+            text.setAttribute('text-anchor', 'start');
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-weight', '700');
+            text.textContent = (mm / 10).toString();
+            edgeTicksLeft.appendChild(text);
+          }
+        }
+      } else {
+        const total16ths = Math.ceil((h / ppi) * 16);
+        for (let i = 1; i <= total16ths; i++) {
+          const y = edgeFlipY ? h - (i / 16) * ppi : (i / 16) * ppi;
+          if (y < -10 || y > h + 10) continue;
+          const isInch = i % 16 === 0;
+          const isHalf = i % 8 === 0 && !isInch;
+          const isQuarter = i % 4 === 0 && !isHalf && !isInch;
+          const isEighth = i % 2 === 0 && !isQuarter && !isHalf && !isInch;
+          let tickW = isInch ? 20 : (isHalf ? 15 : (isQuarter ? 10 : (isEighth ? 7 : 5)));
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', '0');
+          line.setAttribute('y1', y.toFixed(1));
+          line.setAttribute('x2', tickW.toString());
+          line.setAttribute('y2', y.toFixed(1));
+          line.setAttribute('stroke', isInch ? 'var(--cyan-glow)' : (isHalf || isQuarter ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)'));
+          line.setAttribute('stroke-width', isInch ? '1.5' : '1');
+          edgeTicksLeft.appendChild(line);
+
+          if (isInch && Math.abs(y - y0) > 30 && (edgeFlipY ? y > 15 : y < h - 15)) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', '26');
+            text.setAttribute('y', (y + 3).toFixed(1));
+            text.setAttribute('text-anchor', 'start');
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-weight', '700');
+            text.textContent = `${i / 16}"`;
+            edgeTicksLeft.appendChild(text);
+          }
+        }
+      }
+    }
+
+    // 4. RIGHT EDGE
+    if (activeEdges.right && edgeRulerRight && edgeTicksRight) {
+      edgeRulerRight.setAttribute('viewBox', `0 0 44 ${h}`);
+      edgeTicksRight.innerHTML = '';
+      const y0 = edgeFlipY ? h : 0;
+
+      // Origin 0 mark & label
+      const originLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      originLine.setAttribute('x1', '44');
+      originLine.setAttribute('y1', y0.toFixed(1));
+      originLine.setAttribute('x2', '18');
+      originLine.setAttribute('y2', y0.toFixed(1));
+      originLine.setAttribute('stroke', edgeUnit === 'cm' ? 'var(--primary)' : 'var(--cyan-glow)');
+      originLine.setAttribute('stroke-width', '3');
+      edgeTicksRight.appendChild(originLine);
+
+      const originText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      originText.setAttribute('x', '38');
+      originText.setAttribute('y', edgeFlipY ? (h - 10).toFixed(1) : '16');
+      originText.setAttribute('text-anchor', 'end');
+      originText.setAttribute('fill', edgeUnit === 'cm' ? 'var(--primary)' : 'var(--cyan-glow)');
+      originText.setAttribute('font-family', 'JetBrains Mono, monospace');
+      originText.setAttribute('font-size', '9');
+      originText.setAttribute('font-weight', '800');
+      originText.textContent = edgeUnit === 'cm' ? '0 cm' : '0 in';
+      edgeTicksRight.appendChild(originText);
+
+      if (edgeUnit === 'cm') {
+        const totalMm = Math.ceil(h / pxPerMm);
+        for (let mm = 1; mm <= totalMm; mm++) {
+          const y = edgeFlipY ? h - mm * pxPerMm : mm * pxPerMm;
+          if (y < -10 || y > h + 10) continue;
+          let isCm = mm % 10 === 0;
+          let isHalfCm = mm % 5 === 0 && !isCm;
+          let tickW = isCm ? 18 : (isHalfCm ? 12 : 6);
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', '44');
+          line.setAttribute('y1', y.toFixed(1));
+          line.setAttribute('x2', (44 - tickW).toString());
+          line.setAttribute('y2', y.toFixed(1));
+          line.setAttribute('stroke', isCm ? 'var(--primary)' : (isHalfCm ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)'));
+          line.setAttribute('stroke-width', isCm ? '1.5' : '1');
+          edgeTicksRight.appendChild(line);
+
+          if (isCm && Math.abs(y - y0) > 28 && (edgeFlipY ? y > 15 : y < h - 15)) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', '16');
+            text.setAttribute('y', (y + 3).toFixed(1));
+            text.setAttribute('text-anchor', 'end');
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-weight', '700');
+            text.textContent = (mm / 10).toString();
+            edgeTicksRight.appendChild(text);
+          }
+        }
+      } else {
+        const total16ths = Math.ceil((h / ppi) * 16);
+        for (let i = 1; i <= total16ths; i++) {
+          const y = edgeFlipY ? h - (i / 16) * ppi : (i / 16) * ppi;
+          if (y < -10 || y > h + 10) continue;
+          const isInch = i % 16 === 0;
+          const isHalf = i % 8 === 0 && !isInch;
+          const isQuarter = i % 4 === 0 && !isHalf && !isInch;
+          const isEighth = i % 2 === 0 && !isQuarter && !isHalf && !isInch;
+          let tickW = isInch ? 20 : (isHalf ? 15 : (isQuarter ? 10 : (isEighth ? 7 : 5)));
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', '44');
+          line.setAttribute('y1', y.toFixed(1));
+          line.setAttribute('x2', (44 - tickW).toString());
+          line.setAttribute('y2', y.toFixed(1));
+          line.setAttribute('stroke', isInch ? 'var(--cyan-glow)' : (isHalf || isQuarter ? 'var(--ruler-tick-major)' : 'var(--ruler-tick)'));
+          line.setAttribute('stroke-width', isInch ? '1.5' : '1');
+          edgeTicksRight.appendChild(line);
+
+          if (isInch && Math.abs(y - y0) > 30 && (edgeFlipY ? y > 15 : y < h - 15)) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', '16');
+            text.setAttribute('y', (y + 3).toFixed(1));
+            text.setAttribute('text-anchor', 'end');
+            text.setAttribute('fill', textFill);
+            text.setAttribute('font-family', 'JetBrains Mono, monospace');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-weight', '700');
+            text.textContent = `${i / 16}"`;
+            edgeTicksRight.appendChild(text);
+          }
+        }
+      }
+    }
+  }
+
+  function openEdgeMode() {
+    if (edgeRulersOverlay) {
+      edgeRulersOverlay.classList.remove('hidden');
+      edgeRulersOverlay.classList.add('flex');
+      renderEdgeRulers();
+    }
+  }
+
+  function closeEdgeMode() {
+    if (edgeRulersOverlay) {
+      edgeRulersOverlay.classList.add('hidden');
+      edgeRulersOverlay.classList.remove('flex');
+    }
+  }
+
+  btnToggleEdgeMode?.addEventListener('click', openEdgeMode);
+  btnCloseEdgeMode?.addEventListener('click', closeEdgeMode);
+
+  // Toggle individual edges (Top, Bottom, Left, Right)
+  edgeToggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const edge = btn.getAttribute('data-edge-btn') as 'top' | 'bottom' | 'left' | 'right';
+      if (edge) {
+        activeEdges[edge] = !activeEdges[edge];
+        renderEdgeRulers();
+      }
+    });
+  });
+
+  // Edge Unit Selector (cm vs inch)
+  edgeUnitButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const u = btn.getAttribute('data-edge-unit') as 'cm' | 'inch';
+      if (u && u !== edgeUnit) {
+        edgeUnit = u;
+        renderEdgeRulers();
+      }
+    });
+  });
+
+  // Directional Flip X (Horizontal)
+  btnEdgeFlipX?.addEventListener('click', () => {
+    edgeFlipX = !edgeFlipX;
+    renderEdgeRulers();
+  });
+
+  // Directional Flip Y (Vertical)
+  btnEdgeFlipY?.addEventListener('click', () => {
+    edgeFlipY = !edgeFlipY;
+    renderEdgeRulers();
+  });
+
+  // Crosshair toggle
+  btnEdgeCrosshair?.addEventListener('click', () => {
+    crosshairActive = !crosshairActive;
+    if (crosshairActive) {
+      btnEdgeCrosshair.classList.add('bg-indigo-500', 'text-white', 'border-indigo-500');
+      edgeCrosshairH?.classList.remove('hidden');
+      edgeCrosshairV?.classList.remove('hidden');
+      edgeCursorReadout?.classList.remove('hidden');
+    } else {
+      btnEdgeCrosshair.classList.remove('bg-indigo-500', 'text-white', 'border-indigo-500');
+      edgeCrosshairH?.classList.add('hidden');
+      edgeCrosshairV?.classList.add('hidden');
+      edgeCursorReadout?.classList.add('hidden');
+    }
+  });
+
+  // Surface pointer tracking & guide lines
+  edgeSurface?.addEventListener('pointermove', (e) => {
+    if (!crosshairActive) return;
+    const x = e.clientX;
+    const y = e.clientY;
+
+    if (edgeCrosshairH) edgeCrosshairH.style.top = `${y}px`;
+    if (edgeCrosshairV) edgeCrosshairV.style.left = `${x}px`;
+
+    if (edgeCursorReadout) {
+      edgeCursorReadout.style.left = `${x}px`;
+      edgeCursorReadout.style.top = `${y}px`;
+      const xCm = (x / rulerEngine.ppi * 2.54).toFixed(2);
+      const yCm = (y / rulerEngine.ppi * 2.54).toFixed(2);
+      edgeCursorReadout.textContent = `X: ${xCm} cm | Y: ${yCm} cm`;
+    }
+  });
+
+  // Add guide line on surface click
+  edgeSurface?.addEventListener('click', (e) => {
+    if (!edgeGuidesGroup || (e.target as HTMLElement).closest('#btn-close-edge-mode') || (e.target as HTMLElement).closest('.glass-panel')) return;
+    const x = e.clientX;
+    const y = e.clientY;
+
+    // Drop horizontal guide line
+    const hLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    hLine.setAttribute('x1', '0');
+    hLine.setAttribute('y1', y.toString());
+    hLine.setAttribute('x2', window.innerWidth.toString());
+    hLine.setAttribute('y2', y.toString());
+    hLine.setAttribute('stroke', '#38bdf8');
+    hLine.setAttribute('stroke-width', '1.5');
+    hLine.setAttribute('stroke-dasharray', '4 4');
+    edgeGuidesGroup.appendChild(hLine);
+
+    // Drop vertical guide line
+    const vLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    vLine.setAttribute('x1', x.toString());
+    vLine.setAttribute('y1', '0');
+    vLine.setAttribute('x2', x.toString());
+    vLine.setAttribute('y2', window.innerHeight.toString());
+    vLine.setAttribute('stroke', '#38bdf8');
+    vLine.setAttribute('stroke-width', '1.5');
+    vLine.setAttribute('stroke-dasharray', '4 4');
+    edgeGuidesGroup.appendChild(vLine);
+  });
+
+  // Clear guides
+  btnEdgeClearGuides?.addEventListener('click', () => {
+    if (edgeGuidesGroup) edgeGuidesGroup.innerHTML = '';
+  });
+
+  // Window resize & keyboard Escape
+  window.addEventListener('resize', () => {
+    renderEdgeRulers();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (edgeRulersOverlay && !edgeRulersOverlay.classList.contains('hidden')) {
+        closeEdgeMode();
+      }
+    }
+  });
+
+  // --- SETUP DRAG & INTERACTION HANDLERS ---
+  setup1DDrag(caliperPointerA, true);
+  setup1DDrag(caliperPointerB, false);
+  setup2DHandlers();
+  setupCircleHandlers();
+  setupAngleHandlers();
+
+  // Initial draw & tool select
+  switchTool(rulerEngine.activeTool || '1d');
+  updateUI();
+</script>

@@ -1,0 +1,16 @@
+{
+  "name": "Penggaris Online - Ukuran Asli Akurat",
+  "short_name": "Penggaris",
+  "description": "Alat penggaris online interaktif ukuran nyata akurat di layar HP, tablet, dan laptop. Mendukung cm, mm, dan inci dengan kalibrasi KTP/ATM.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

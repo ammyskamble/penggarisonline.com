@@ -1,0 +1,271 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  lang?: string;
+  hreflangs?: { lang: string; url: string }[];
+  keywords?: string;
+}
+
+const {
+  title = "Penggaris Online HP CM - Ukuran Asli 1:1 Akurat di Layar Telepon & Laptop",
+  description = "Penggaris online hp cm akurat ukuran asli 1:1 di layar telepon & laptop. Penggaris sesuai skala dengan kalibrasi KTP/ATM, pengukur 2D, lingkaran & mode tepi layar.",
+  canonical = "https://penggarisonline.com",
+  lang = "id",
+  hreflangs = [
+    { lang: 'id', url: 'https://penggarisonline.com' },
+    { lang: 'x-default', url: 'https://penggarisonline.com' }
+  ],
+  keywords = "penggaris online hp cm, penguasa online, penggaris cm, penggaris telepon, penggaris sesuai skala, penggaris, penggaris di layar, penggaris digital, mistar online, ruler online indonesia"
+} = Astro.props;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": `${canonical}#webapp`,
+      "name": "Penggaris Online HP CM",
+      "alternateName": ["Penguasa Online", "Penggaris Telepon", "Penggaris di Layar", "Penggaris CM"],
+      "url": canonical,
+      "description": description,
+      "inLanguage": lang,
+      "applicationCategory": "UtilitiesApplication",
+      "applicationSubCategory": "MeasurementTool",
+      "operatingSystem": "All (Android, iOS, Windows, macOS, Linux, ChromeOS)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      },
+      "featureList": [
+        "Penggaris online hp cm ukuran asli 1:1 di layar",
+        "Kalibrasi penggaris sesuai skala kartu ATM & e-KTP Indonesia (85.60 mm)",
+        "Dukungan penggaris cm, milimeter (mm), dan inci (desimal & pecahan)",
+        "Penggaris telepon interaktif dengan penanda jangka sorong digital",
+        "Penggaris 2D luas bidang, pengukur diameter lingkaran, dan busur derajat",
+        "Mode penggaris tepi layar (screen edge ruler) untuk bezel fisik",
+        "Preset resolusi layar smartphone terpopuler di Indonesia"
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "Cara Menggunakan Penggaris Online HP CM Sesuai Skala di Layar Telepon",
+      "description": "Panduan langkah demi langkah mengukur benda nyata menggunakan penggaris di layar smartphone atau laptop dengan akurasi 1:1.",
+      "inLanguage": lang,
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Buka Penggaris Online HP CM di Browser",
+          "text": "Buka situs penggarisonline.com di peramban ponsel atau komputer Anda tanpa perlu mengunduh aplikasi tambahan."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Kalibrasi Penggaris Sesuai Skala",
+          "text": "Tekan tombol Kalibrasi, letakkan kartu e-KTP atau kartu ATM di layar, lalu sesuaikan slider agar ukuran garis virtual cocok 100% dengan fisik kartu (85.60 mm)."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Pilih Satuan Penggaris CM atau Inci",
+          "text": "Pilih satuan ukuran yang Anda perlukan: Sentimeter (cm), Milimeter (mm), atau Inci (inch)."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Letakkan Objek dan Geser Penanda Jangka Sorong",
+          "text": "Tempelkan benda yang ingin diukur di atas layar penggaris, lalu geser Penanda A dan Penanda B untuk membaca ukuran panjang, lebar, atau diameter secara instan."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": lang,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah ada alat pengukur cm di HP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, Anda dapat menggunakan platform web Penggaris Online HP CM (penggarisonline.com) langsung melalui browser ponsel pintar tanpa mengunduh aplikasi tambahan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara mengukur panjang dengan HP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Buka penggarisonline.com, kalibrasi skala 1:1 menggunakan kartu ATM atau e-KTP (85.60 mm), letakkan benda di permukaan layar, dan geser penanda digital untuk membaca panjangnya seketika."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Aplikasi apa yang bisa mengukur cm secara online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Platform web penggarisonline.com adalah alat ukur cm online yang dapat digunakan langsung tanpa instalasi, mendukung kalibrasi e-KTP, jangka sorong, 2D, dan busur derajat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Berapa ukuran 1,5 cm di penggaris?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1,5 cm di penggaris adalah garis sedang yang terletak tepat di tengah antara angka 1 dan angka 2. Setara dengan 15 mm atau sekitar 0.5906 inci (19/32\")."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara mengukur dengan HP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan metode layar (on-screen ruler) di penggarisonline.com untuk benda kecil berpresisi tinggi (0-15 cm), atau gunakan sensor kamera AR untuk ruangan dan perabotan besar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Di mana saya bisa menemukan penggaris milimeter online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Penggaris milimeter online dapat diakses langsung di penggarisonline.com, di mana setiap centimeter dibagi menjadi 10 subdivisi milimeter presisi tinggi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Aplikasi apa yang bisa mengukur panjang di Android?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pengguna Android dapat menggunakan web penggarisonline.com, Google Measure AR, CamToPlan, atau Ruler. Penggaris online web tidak membebani memori penyimpanan perangkat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah ada penggaris online yang menggunakan kamera?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ada aplikasi kamera AR/WebXR untuk mengukur ruangan, namun untuk benda berukuran di bawah 20 cm, penggaris layar sentuh jauh lebih akurat karena bebas distorsi lensa."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mengukur cm pakai apa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pengukuran cm dapat menggunakan mistar fisik, jangka sorong, meteran pita, penggaris online layar HP, atau software desain seperti Adobe Photoshop (Ctrl+R, Ruler Tool I) dan Adobe Illustrator (Measure Tool)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara menghitung cm tanpa penggaris?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan patokan fisik standar: kartu e-KTP/ATM memiliki panjang tepat 8.56 cm, lebar kuku telunjuk dewasa sekitar 1 cm, dan ruas pertama telunjuk sekitar 2.5 cm."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah ada aplikasi Measure untuk Android?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Google Measure sebelumnya tersedia untuk Android berbasis ARCore. Saat ini pengguna dapat menggunakan web penggarisonline.com secara instan di browser Chrome."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara mengukur panjang secara online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Buka penggarisonline.com, lakukan kalibrasi kartu ATM agar skala 1:1, tempelkan benda pada layar, dan gunakan penanda jangka sorong digital untuk melihat hasilnya otomatis."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "https://penggarisonline.com"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang={lang} class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="google" content="notranslate" />
+    <meta http-equiv="Content-Language" content={lang} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#4f46e5" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Geo & Language Targeting (Indonesia) -->
+    <meta name="geo.region" content="ID" />
+    <meta name="geo.country" content="Indonesia" />
+    <meta name="geo.placename" content="Indonesia" />
+    <meta name="language" content={lang === 'id' ? 'Indonesian' : 'English'} />
+    {hreflangs.map(h => (
+      <link rel="alternate" hreflang={h.lang} href={h.url} />
+    ))}
+
+    <!-- Open Graph / Facebook / WhatsApp / Telegram -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content="Penggaris Online HP CM" />
+    <meta property="og:image" content="https://penggarisonline.com/og-image.png" />
+    <meta property="og:image:secure_url" content="https://penggarisonline.com/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Penggaris Online HP CM - Penguasa Online Ukuran Asli 1:1 di Layar Telepon" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://penggarisonline.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Penggaris Online HP CM - Penguasa Online Ukuran Asli 1:1 di Layar Telepon" />
+
+    <!-- Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <!-- Anti-FOUC Theme Script -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('penggaris_theme') || 
+          (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-(--background) text-(--foreground) transition-colors duration-200">
+    <slot />
+  </body>
+</html>

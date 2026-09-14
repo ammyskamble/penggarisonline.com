@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: oklch(0.978 0.005 250);
+    --foreground: oklch(0.18 0.02 260);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.18 0.02 260);
+    --muted: oklch(0.94 0.008 250);
+    --muted-foreground: oklch(0.46 0.03 260);
+    --border: oklch(0.89 0.012 250);
+    --input: oklch(0.89 0.012 250);
+    --ring: oklch(0.52 0.22 260);
+    --primary: oklch(0.52 0.22 260);
+    --primary-foreground: oklch(0.99 0 0);
+    --accent: oklch(0.94 0.04 220);
+    --accent-foreground: oklch(0.35 0.18 250);
+    --cyan-glow: oklch(0.78 0.15 210);
+    --success: oklch(0.62 0.17 145);
+    --ruler-tick: oklch(0.68 0.015 250);
+    --ruler-tick-major: oklch(0.35 0.03 260);
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: oklch(0.12 0.015 260);
+    --foreground: oklch(0.98 0.005 250);
+    --card: oklch(0.155 0.018 260);
+    --card-foreground: oklch(0.98 0.005 250);
+    --muted: oklch(0.19 0.02 260);
+    --muted-foreground: oklch(0.68 0.02 260);
+    --border: oklch(0.24 0.02 260);
+    --input: oklch(0.24 0.02 260);
+    --ring: oklch(0.65 0.22 255);
+    --primary: oklch(0.65 0.22 255);
+    --primary-foreground: oklch(0.10 0.02 260);
+    --accent: oklch(0.24 0.05 240);
+    --accent-foreground: oklch(0.85 0.12 220);
+    --cyan-glow: oklch(0.75 0.18 205);
+    --success: oklch(0.68 0.18 145);
+    --ruler-tick: oklch(0.55 0.025 260);
+    --ruler-tick-major: oklch(0.82 0.02 260);
+  }
+
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Tabular numbers for non-jittering realtime measurements */
+.font-mono-tabular {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Custom Ruler styling */
+.ruler-ticks {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: color-mix(in oklch, var(--card) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+.glass-pill {
+  background: color-mix(in oklch, var(--muted) 80%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
+}
+
+/* Smooth custom range slider */
+input[type="range"] {
+  accent-color: var(--primary);
+}
+
+/* Prevent accidental pull to refresh when using ruler on mobile */
+html, body {
+  overscroll-behavior-y: contain;
+}

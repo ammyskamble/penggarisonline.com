@@ -1,0 +1,225 @@
+---
+// FAQSection.astro
+// Comprehensive SEO-Friendly FAQ Section covering all 12 targeted questions with Photoshop/Illustrator guides & math formulas
+
+interface FAQItem {
+  q: string;
+  shortAnswer: string;
+  hasPhotoshopIllustrator?: boolean;
+  hasMathFormula?: boolean;
+  mathFormula?: string;
+  mathExplanation?: string;
+  steps?: string[];
+  fullHtml?: string;
+}
+
+const faqs: FAQItem[] = [
+  {
+    q: 'Apakah ada alat pengukur cm di HP?',
+    shortAnswer: 'Ya, ada! Anda dapat menggunakan platform web Penggaris Online HP CM (penggarisonline.com) langsung melalui peramban (browser) ponsel Anda tanpa perlu mengunduh aplikasi apa pun dari toko aplikasi. Ponsel modern juga mendukung aplikasi berbasis AR (Augmented Reality) atau web mistar digital dengan kalibrasi skala 1:1.'
+  },
+  {
+    q: 'Bagaimana cara mengukur panjang dengan HP?',
+    shortAnswer: 'Mengukur panjang objek menggunakan HP sangat mudah dan dapat dilakukan dalam 3 langkah:',
+    steps: [
+      'Buka situs penggarisonline.com pada browser peramban ponsel pintar Anda.',
+      'Lakukan kalibrasi 1 langkah menggunakan kartu standar (e-KTP atau kartu ATM berukuran 85.60 mm) agar penggaris di layar memiliki skala 1:1 yang presisi.',
+      'Tempelkan objek yang ingin diukur di permukaan layar, lalu geser Penanda A dan Penanda B untuk menjepit benda dan membaca hasil panjangnya secara instan.'
+    ]
+  },
+  {
+    q: 'Aplikasi apa yang bisa mengukur cm secara online?',
+    shortAnswer: 'Platform web penggarisonline.com adalah alat ukur cm online terbaik di Indonesia. Situs ini tidak membutuhkan unduhan, dapat berjalan 100% secara offline setelah dimuat, mendukung kalibrasi kartu ATM/e-KTP standar ISO 7810 ID-1, serta dilengkapi jangka sorong digital, pengukur 2D luas bidang, pengukur diameter lingkaran, dan busur derajat.'
+  },
+  {
+    q: 'Berapa ukuran 1,5 cm di penggaris?',
+    shortAnswer: 'Pada penggaris mistar standar, ukuran 1,5 cm adalah jarak dari titik nol (0) ke garis penanda sedang yang berada tepat di tengah-tengah antara angka 1 dan angka 2. Jarak ini setara dengan 15 garis strip milimeter (mm).',
+    hasMathFormula: true,
+    mathFormula: '1.5\\text{ cm} = 15\\text{ mm} = \\frac{1.5}{2.54}\\text{ inci} \\approx 0.5906\\text{ inci} \\approx \\frac{19}{32}\\text{ inci}',
+    mathExplanation: 'Rumus konversi: Panjang (mm) = cm × 10. Konversi ke inci: 1.5 ÷ 2.54 = 0.59055... inci (dibulatkan ke pecahan terdekat 19/32").'
+  },
+  {
+    q: 'Bagaimana cara mengukur dengan HP?',
+    shortAnswer: 'Terdapat dua metode utama untuk mengukur menggunakan smartphone:',
+    steps: [
+      'Metode Layar Sentuh (On-Screen Ruler): Letakkan benda berukuran kecil (seperti sekrup, cincin, kunci, kartu nama, atau perhiasan) langsung di atas kaca layar penggarisonline.com untuk akurasi sub-milimeter.',
+      'Metode Kamera & AR (Augmented Reality): Gunakan sensor kamera dan teknologi ARCore/ARKit untuk mengukur dimensi objek besar seperti perabotan, meja, atau jarak ruangan.'
+    ]
+  },
+  {
+    q: 'Di mana saya bisa menemukan penggaris milimeter online?',
+    shortAnswer: 'Anda dapat menemukan penggaris milimeter online presisi langsung di situs penggarisonline.com. Skala mistar digital ini membagi setiap 1 centimeter menjadi 10 subdivisi milimeter (1 mm) bergaris presisi dengan penanda setengah centimeter (5 mm) yang kontras dan jelas.'
+  },
+  {
+    q: 'Aplikasi apa yang bisa mengukur panjang di Android?',
+    shortAnswer: 'Untuk pengguna Android, Anda bisa menggunakan platform web penggarisonline.com (tanpa instalasi), Google Measure (ARCore), CamToPlan, AR Ruler App, atau aplikasi Ruler buatan Tue Nguyen Minh. Penggaris online web penggarisonline.com lebih disukai karena hemat memori ponsel dan tidak membutuhkan izin kamera berlebih.'
+  },
+  {
+    q: 'Apakah ada penggaris online yang menggunakan kamera?',
+    shortAnswer: 'Ya, terdapat aplikasi web berbasis WebXR dan aplikasi seluler yang memanfaatkan kamera ponsel untuk mengukur ruangan dan dinding. Namun, untuk benda kecil dengan ketelitian tinggi (< 20 cm), penggaris di layar (screen ruler) jauh lebih akurat dibandingkan kamera ponsel yang rentan terhadap distorsi lensa cembung dan pencahayaan.'
+  },
+  {
+    q: 'Mengukur cm pakai apa?',
+    shortAnswer: 'Untuk mengukur sentimeter (cm), Anda dapat menggunakan berbagai alat ukur fisik dan digital:',
+    hasPhotoshopIllustrator: true,
+    steps: [
+      'Penggaris Fisik Tradisional: Mistar plastik, kayu, atau penggaris baja presisi.',
+      'Penggaris Online Layar HP: Situs penggarisonline.com untuk pengukuran darurat tanpa mistar fisik.',
+      'Jangka Sorong (Vernier Caliper): Untuk ketebalan mikro dan diameter dalam/luar silinder.',
+      'Meteran Gulung (Pita Ukur): Untuk mengukur kain, pakaian, dan perabotan rumah.'
+    ]
+  },
+  {
+    q: 'Bagaimana cara menghitung cm tanpa penggaris?',
+    shortAnswer: 'Jika Anda tidak membawa penggaris fisik, Anda dapat memanfaatkan patokan dimensi benda sehari-hari dan software komputer berikut:',
+    hasMathFormula: true,
+    mathFormula: '1\\text{ Kartu e-KTP / ATM} = 85.60\\text{ mm} \\times 53.98\\text{ mm} = 8.56\\text{ cm} \\times 5.40\\text{ cm}',
+    hasPhotoshopIllustrator: true,
+    steps: [
+      'Kartu e-KTP atau Kartu ATM: Panjang kartu standar ISO 7810 tepat 8.56 cm, dan lebarnya 5.4 cm.',
+      'Lebar Ujung Kuku Jari Telunjuk: Rata-rata orang dewasa memiliki lebar kuku telunjuk sekitar 1 cm (10 mm).',
+      'Ruas Pertama Jari Telunjuk: Jarak dari ujung kuku ke sendi ruas jari pertama adalah sekitar 2.5 cm (1 inci).',
+      'Uang Kertas Rupiah: Panjang uang kertas Rp 100.000 emisi 2022 adalah sekitar 15.1 cm dengan lebar 6.5 cm.'
+    ]
+  },
+  {
+    q: 'Apakah ada aplikasi Measure untuk Android?',
+    shortAnswer: 'Sebelumnya Google menyediakan aplikasi resmi bernama Google Measure berbasis ARCore untuk Android. Meskipun Google telah menghentikan pembaruan resmi aplikasi tersebut di Google Play Store, Anda tetap dapat mengukur secara instan menggunakan browser Anda melalui penggarisonline.com atau mengunduh aplikasi alternatif ARCore seperti AR Ruler.'
+  },
+  {
+    q: 'Bagaimana cara mengukur panjang secara online?',
+    shortAnswer: 'Cara paling praktis adalah membuka situs penggarisonline.com di perangkat Anda, lakukan kalibrasi skala 1:1 menggunakan kartu e-KTP atau ATM, letakkan benda di permukaan layar, lalu gunakan jangka sorong digital interaktif untuk membaca panjang dalam satuan cm, mm, atau inci secara otomatis.'
+  }
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": `${item.shortAnswer} ${item.mathFormula ? `Formula: ${item.mathFormula}. ` : ''} ${item.steps ? item.steps.join(' ') : ''}`
+    }
+  }))
+};
+---
+
+<section id="faq-section" class="py-12 sm:py-16 border-t border-(--border) bg-(--card)/40">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <!-- Section Header -->
+    <div class="text-center space-y-3">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-widest border border-indigo-500/20">
+        💡 Pusat Informasi & Bantuan
+      </span>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-(--foreground) tracking-tight">
+        Pertanyaan Populer Seputar Penggaris Online & Pengukuran HP
+      </h2>
+      <p class="text-xs sm:text-sm text-(--muted-foreground) max-w-2xl mx-auto">
+        Jawaban lengkap untuk pertanyaan umum seputar cara mengukur cm di HP, konversi skala milimeter, hingga panduan teknis Adobe Photoshop dan Illustrator.
+      </p>
+    </div>
+
+    <!-- FAQ Accordion List -->
+    <div class="space-y-4" id="faq-accordion">
+      {faqs.map((faq, index) => (
+        <details
+          class="group rounded-2xl border border-(--border) bg-(--card) p-5 transition-all duration-200 open:border-indigo-500/40 open:shadow-md [&_summary::-webkit-details-marker]:hidden"
+          data-faq-index={index}
+        >
+          <summary class="flex items-center justify-between cursor-pointer font-bold text-sm sm:text-base text-(--foreground) hover:text-indigo-600 dark:hover:text-cyan-400 transition-colors list-none gap-4">
+            <span class="flex items-center gap-3">
+              <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 text-xs font-mono font-bold flex items-center justify-center shrink-0">
+                {index + 1}
+              </span>
+              <span>{faq.q}</span>
+            </span>
+            <span class="w-7 h-7 rounded-full bg-(--muted) flex items-center justify-center shrink-0 text-xs font-bold transition-transform duration-200 group-open:rotate-180 text-(--muted-foreground)">
+              ↓
+            </span>
+          </summary>
+
+          <div class="mt-4 pt-4 border-t border-(--border)/60 text-xs sm:text-sm text-(--muted-foreground) leading-relaxed space-y-3">
+            <p>{faq.shortAnswer}</p>
+
+            {/* Step-by-Step List (if present) */}
+            {faq.steps && (
+              <ul class="space-y-2 pl-2">
+                {faq.steps.map((step, sIdx) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-indigo-500 dark:text-cyan-400 font-bold shrink-0">▸</span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Clean Math Formula Box (if present) */}
+            {faq.hasMathFormula && (
+              <div class="my-3 p-4 rounded-xl bg-(--muted)/50 border border-(--border) space-y-2">
+                <div class="text-[11px] font-bold text-(--foreground) uppercase tracking-wider flex items-center gap-1.5">
+                  <span>🧮</span>
+                  <span>Formula Matematis Konversi</span>
+                </div>
+                <div class="font-mono text-xs sm:text-sm text-indigo-600 dark:text-cyan-300 bg-(--card) p-2.5 rounded-lg border border-(--border)/60 overflow-x-auto">
+                  {faq.mathFormula}
+                </div>
+                {faq.mathExplanation && (
+                  <p class="text-[11px] text-(--muted-foreground) italic">
+                    {faq.mathExplanation}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Photoshop & Illustrator Guide Box (if present) */}
+            {faq.hasPhotoshopIllustrator && (
+              <div class="mt-4 p-4 rounded-2xl bg-gradient-to-br from-indigo-500/5 to-cyan-500/5 border border-indigo-500/20 space-y-3">
+                <div class="font-bold text-xs sm:text-sm text-(--foreground) flex items-center gap-2">
+                  <span>🎨</span>
+                  <span>Panduan Mengukur Ukuran CM di Adobe Photoshop & Illustrator</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  {/* Photoshop Guide */}
+                  <div class="p-3 rounded-xl bg-(--card) border border-(--border) space-y-1.5">
+                    <div class="font-bold text-indigo-500 dark:text-cyan-400 flex items-center gap-1.5">
+                      <span class="w-4 h-4 rounded bg-indigo-500/10 text-center font-black">Ps</span>
+                      <span>Adobe Photoshop</span>
+                    </div>
+                    <ol class="list-decimal list-inside space-y-1 text-(--muted-foreground)">
+                      <li>Tekan <kbd class="px-1 py-0.5 rounded bg-(--muted) font-mono text-[10px]">Ctrl + R</kbd> untuk menampilkan Ruler.</li>
+                      <li>Klik kanan pada penggaris dan pilih satuan <strong>Centimeters</strong>.</li>
+                      <li>Gunakan <strong>Ruler Tool</strong> (tekan <kbd class="px-1 py-0.5 rounded bg-(--muted) font-mono text-[10px]">I</kbd>).</li>
+                      <li>Buka panel <strong>Info (F8)</strong> untuk melihat panjang ($D$) presisi.</li>
+                      <li>Pilih menu <em>View &gt; Print Size</em> untuk ukuran cetak 100% fisik.</li>
+                    </ol>
+                  </div>
+
+                  {/* Illustrator Guide */}
+                  <div class="p-3 rounded-xl bg-(--card) border border-(--border) space-y-1.5">
+                    <div class="font-bold text-amber-500 dark:text-amber-400 flex items-center gap-1.5">
+                      <span class="w-4 h-4 rounded bg-amber-500/10 text-center font-black">Ai</span>
+                      <span>Adobe Illustrator</span>
+                    </div>
+                    <ol class="list-decimal list-inside space-y-1 text-(--muted-foreground)">
+                      <li>Tekan <kbd class="px-1 py-0.5 rounded bg-(--muted) font-mono text-[10px]">Ctrl + R</kbd> untuk mengaktifkan Ruler.</li>
+                      <li>Klik kanan penggaris dan pilih <strong>Centimeters</strong>.</li>
+                      <li>Gunakan <strong>Measure Tool</strong> (di bawah Eyedropper).</li>
+                      <li>Klik dan seret di kanvas; jendela <strong>Info (F8)</strong> menampilkan jarak.</li>
+                      <li>Gunakan panel Transform (<kbd class="px-1 py-0.5 rounded bg-(--muted) font-mono text-[10px]">Shift + F8</kbd>) untuk membaca lebar dan tinggi ($W$ &amp; $H$).</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  {/* Schema.org FAQPage JSON-LD for Google Rich Snippets */}
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+</section>

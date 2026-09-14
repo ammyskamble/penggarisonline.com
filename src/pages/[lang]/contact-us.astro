@@ -1,0 +1,40 @@
+---
+// src/pages/[lang]/contact-us.astro
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import ContactContent from '../../components/legal/ContactContent.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'id' } },
+    { params: { lang: 'en' } }
+  ];
+}
+
+const { lang } = Astro.params;
+const isId = lang === 'id';
+
+const title = isId
+  ? "Hubungi Kami - Penggaris Online HP CM"
+  : "Contact Us - Precision Online Ruler";
+
+const description = isId
+  ? "Hubungi tim Penggaris Online HP CM (penggarisonline.com) untuk pertanyaan kalibrasi, laporan bug, saran fitur baru, atau kemitraan."
+  : "Contact the Penggaris Online team for calibration inquiries, bug reports, feature suggestions, or business partnerships.";
+
+const canonical = `https://penggarisonline.com/${lang}/contact-us`;
+const hreflangs = [
+  { lang: 'id', url: 'https://penggarisonline.com/id/contact-us' },
+  { lang: 'en', url: 'https://penggarisonline.com/en/contact-us' },
+  { lang: 'x-default', url: 'https://penggarisonline.com/contact-us' }
+];
+---
+
+<Layout title={title} description={description} canonical={canonical} lang={lang} hreflangs={hreflangs}>
+  <Navbar />
+  <main class="flex-1 w-full">
+    <ContactContent lang={lang} />
+  </main>
+  <Footer currentLang={lang} />
+</Layout>

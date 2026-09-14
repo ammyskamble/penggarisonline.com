@@ -1,0 +1,196 @@
+---
+// ContactContent.astro
+interface Props {
+  lang?: string;
+}
+const { lang = 'id' } = Astro.props;
+const isId = lang === 'id';
+---
+
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10">
+  <div class="space-y-3 text-center sm:text-left border-b border-(--border) pb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider border border-indigo-500/20">
+      <span>✉️</span>
+      <span>{isId ? 'Layanan Pengguna & Kemitraan' : 'Customer Support & Inquiries'}</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-(--foreground) tracking-tight">
+      {isId ? 'Hubungi Kami (Contact Us)' : 'Contact Us'}
+    </h1>
+    <p class="text-xs sm:text-sm text-(--muted-foreground)">
+      {isId
+        ? 'Punya pertanyaan mengenai kalibrasi penggaris, saran fitur baru, atau kerja sama? Tim kami siap membantu Anda.'
+        : 'Have questions regarding calibration, feature requests, or partnerships? Reach out to our team.'}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+    <!-- Contact Form (2 Cols) -->
+    <div class="lg:col-span-2 p-6 sm:p-8 rounded-3xl bg-(--card) border border-(--border) shadow-sm space-y-6">
+      <div class="space-y-1">
+        <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+          {isId ? 'Kirim Pesan Langsung' : 'Send Us a Message'}
+        </h2>
+        <p class="text-xs text-(--muted-foreground)">
+          {isId ? 'Isi formulir di bawah ini. Kami akan membalas ke email Anda dalam waktu 1x24 jam.' : 'Fill out the form below. We typically respond within 24 hours.'}
+        </p>
+      </div>
+
+      <!-- Interactive Form -->
+      <form id="contact-form" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label for="contact-name" class="block text-xs font-semibold text-(--foreground)">
+              {isId ? 'Nama Lengkap' : 'Full Name'} <span class="text-rose-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="contact-name"
+              required
+              placeholder={isId ? 'Contoh: Budi Santoso' : 'e.g. John Doe'}
+              class="w-full px-3.5 py-2.5 rounded-xl bg-(--muted)/40 border border-(--border) focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-xs sm:text-sm text-(--foreground) outline-none transition-all"
+            />
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="contact-email" class="block text-xs font-semibold text-(--foreground)">
+              {isId ? 'Alamat Email' : 'Email Address'} <span class="text-rose-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="contact-email"
+              required
+              placeholder={isId ? 'nama@email.com' : 'name@example.com'}
+              class="w-full px-3.5 py-2.5 rounded-xl bg-(--muted)/40 border border-(--border) focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-xs sm:text-sm text-(--foreground) outline-none transition-all"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="contact-subject" class="block text-xs font-semibold text-(--foreground)">
+            {isId ? 'Subjek Pesan' : 'Subject'} <span class="text-rose-500">*</span>
+          </label>
+          <select
+            id="contact-subject"
+            required
+            class="w-full px-3.5 py-2.5 rounded-xl bg-(--card) border border-(--border) focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-xs sm:text-sm text-(--foreground) outline-none transition-all"
+          >
+            <option value="pertanyaan_kalibrasi">{isId ? 'Pertanyaan Mengenai Kalibrasi Layar' : 'Screen Calibration Inquiries'}</option>
+            <option value="laporan_bug">{isId ? 'Laporan Masalah / Bug di Perangkat' : 'Bug Report / Device Feedback'}</option>
+            <option value="saran_fitur">{isId ? 'Saran & Permintaan Fitur Baru' : 'Feature Request / Suggestions'}</option>
+            <option value="kerja_sama">{isId ? 'Kerja Sama / Media / Iklan' : 'Partnership / Business Inquiries'}</option>
+            <option value="lainnya">{isId ? 'Lain-lain' : 'Other'}</option>
+          </select>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="contact-message" class="block text-xs font-semibold text-(--foreground)">
+            {isId ? 'Pesan Anda' : 'Your Message'} <span class="text-rose-500">*</span>
+          </label>
+          <textarea
+            id="contact-message"
+            rows="5"
+            required
+            placeholder={isId ? 'Tuliskan detail pertanyaan atau masukan Anda di sini...' : 'Type your detailed inquiry here...'}
+            class="w-full px-3.5 py-2.5 rounded-xl bg-(--muted)/40 border border-(--border) focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-xs sm:text-sm text-(--foreground) outline-none transition-all resize-y"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          id="btn-submit-contact"
+          class="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white text-xs sm:text-sm font-bold shadow-md shadow-indigo-600/30 transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span>📤</span>
+          <span>{isId ? 'Kirim Pesan Sekarang' : 'Send Message Now'}</span>
+        </button>
+
+        <!-- Feedback Banner -->
+        <div id="contact-success-banner" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs space-y-1 animate-fade-in">
+          <div class="font-bold flex items-center gap-1.5">
+            <span>✅</span>
+            <span>{isId ? 'Pesan Berhasil Terkirim!' : 'Message Sent Successfully!'}</span>
+          </div>
+          <p>
+            {isId ? 'Terima kasih atas pesan Anda. Tim kami akan segera menindaklanjuti dan membalas melalui email Anda.' : 'Thank you for reaching out. We will review your message and reply via email shortly.'}
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Side Contact Details (1 Col) -->
+    <div class="space-y-4">
+      <div class="p-6 rounded-3xl glass-panel border border-(--border) space-y-4">
+        <h3 class="font-bold text-sm text-(--foreground)">
+          {isId ? 'Kontak Langsung' : 'Direct Contact'}
+        </h3>
+        <div class="space-y-3 text-xs text-(--muted-foreground)">
+          <div class="flex items-start gap-2.5">
+            <span class="text-base mt-0.5">✉️</span>
+            <div>
+              <span class="font-semibold text-(--foreground)">Email Bantuan:</span>
+              <a href="mailto:kontak@penggarisonline.com" class="block text-indigo-500 dark:text-cyan-400 hover:underline">
+                kontak@penggarisonline.com
+              </a>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-base mt-0.5">⏱️</span>
+            <div>
+              <span class="font-semibold text-(--foreground)">{isId ? 'Waktu Respons:' : 'Response Time:'}</span>
+              <p>{isId ? 'Maksimal 1 x 24 Jam Kerja' : 'Within 24 Business Hours'}</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-base mt-0.5">📍</span>
+            <div>
+              <span class="font-semibold text-(--foreground)">{isId ? 'Lokasi Layanan:' : 'Location:'}</span>
+              <p>Jakarta, Indonesia (WIB / UTC+7)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Help Card -->
+      <div class="p-6 rounded-3xl bg-(--card) border border-(--border) space-y-3">
+        <h3 class="font-bold text-sm text-(--foreground)">
+          {isId ? 'Butuh Jawaban Cepat?' : 'Need Instant Answers?'}
+        </h3>
+        <p class="text-xs text-(--muted-foreground) leading-relaxed">
+          {isId
+            ? 'Pertanyaan Anda mungkin sudah terjawab di halaman Tanya Jawab kami.'
+            : 'Your inquiry may already be answered in our comprehensive FAQ section.'}
+        </p>
+        <a
+          href="/#faq-section"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-cyan-400 hover:underline"
+        >
+          <span>{isId ? 'Lihat Pusat Bantuan FAQ' : 'Explore FAQ Section'}</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const successBanner = document.getElementById('contact-success-banner');
+  const submitBtn = document.getElementById('btn-submit-contact') as HTMLButtonElement | null;
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!submitBtn) return;
+
+    // Simulate sending state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>⏳</span><span>Mengirim Pesan...</span>';
+
+    setTimeout(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>📤</span><span>Kirim Pesan Lagi</span>';
+      successBanner?.classList.remove('hidden');
+      form.reset();
+    }, 800);
+  });
+</script>

@@ -1,0 +1,24 @@
+---
+// src/pages/about-us.astro
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import AboutContent from '../components/legal/AboutContent.astro';
+
+const title = "Tentang Kami - Penggaris Online HP CM";
+const description = "Tentang Penggaris Online HP CM (penggarisonline.com). Pelajari misi kami menghadirkan mistar digital ukuran asli 1:1 akurat berstandar ISO di Indonesia.";
+const canonical = "https://penggarisonline.com/about-us";
+const hreflangs = [
+  { lang: 'id', url: 'https://penggarisonline.com/about-us' },
+  { lang: 'en', url: 'https://penggarisonline.com/en/about-us' },
+  { lang: 'x-default', url: 'https://penggarisonline.com/about-us' }
+];
+---
+
+<Layout title={title} description={description} canonical={canonical} lang="id" hreflangs={hreflangs}>
+  <Navbar />
+  <main class="flex-1 w-full">
+    <AboutContent lang="id" />
+  </main>
+  <Footer currentLang="id" />
+</Layout>

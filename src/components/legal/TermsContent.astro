@@ -1,0 +1,80 @@
+---
+// TermsContent.astro
+interface Props {
+  lang?: string;
+}
+const { lang = 'id' } = Astro.props;
+const isId = lang === 'id';
+---
+
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8">
+  <div class="space-y-3 text-center sm:text-left border-b border-(--border) pb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider border border-indigo-500/20">
+      <span>⚖️</span>
+      <span>{isId ? 'Ketentuan Layanan Resmi' : 'Terms & Conditions of Service'}</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-(--foreground) tracking-tight">
+      {isId ? 'Syarat & Ketentuan (Terms & Conditions)' : 'Terms & Conditions'}
+    </h1>
+    <p class="text-xs sm:text-sm text-(--muted-foreground)">
+      {isId ? 'Berlaku sejak 14 September 2026 • Harap dibaca secara saksama sebelum menggunakan penggarisonline.com' : 'Effective September 14, 2026 • Please read carefully before using penggarisonline.com'}
+    </p>
+  </div>
+
+  <div class="prose prose-sm sm:prose-base dark:prose-invert max-w-none space-y-6 text-sm text-(--muted-foreground) leading-relaxed">
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '1. Penerimaan Ketentuan' : '1. Acceptance of Terms'}
+      </h2>
+      <p>
+        {isId
+          ? 'Dengan mengakses dan menggunakan situs web Penggaris Online HP CM (penggarisonline.com), Anda menyetujui untuk terikat oleh seluruh Syarat dan Ketentuan ini. Jika Anda tidak menyetujui bagian mana pun dari ketentuan ini, Anda disarankan untuk tidak melanjutkan penggunaan situs ini.'
+          : 'By accessing or utilizing the Penggaris Online HP CM (penggarisonline.com) website, you agree to be legally bound by these Terms and Conditions. If you do not agree with any provision herein, please cease using this service.'}
+      </p>
+    </section>
+
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '2. Lisensi Penggunaan & Akses Bebas Biaya' : '2. Permitted Use & Zero-Cost License'}
+      </h2>
+      <p>
+        {isId
+          ? 'Layanan penggaris digital ini disediakan secara gratis untuk keperluan pribadi, pendidikan, komersial ringan, maupun profesional. Anda diberikan lisensi non-eksklusif, bebas royalti, dan dapat dibatalkan untuk menggunakan penggaris di peramban Anda. Dilarang keras menyalin kode sumber secara tidak sah, merekayasa balik (reverse engineer), atau melakukan scraping otomatis yang membebani infrastruktur server kami.'
+          : 'This digital measurement utility is provided free of charge for personal, academic, small-business, and commercial use. You are granted a revocable, non-exclusive license to utilize the web tools. Unauthorized scraping, source code duplication, or automated denial-of-service attempts are strictly prohibited.'}
+      </p>
+    </section>
+
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '3. Batasan Tanggung Jawab & Akurasi Pengukuran' : '3. Precision Disclaimer & Limitation of Liability'}
+      </h2>
+      <p>
+        {isId
+          ? 'Meskipun alat ini telah diuji memiliki presisi tinggi setara mistar fisik setelah melalui kalibrasi kartu ATM/e-KTP standar, Penggaris Online HP CM disediakan "sebagaimana adanya" (as is). Akurasi akhir dapat dipengaruhi oleh faktor eksternal seperti pengaturan zoom browser pengguna, ketebalan casing pelindung ponsel, atau jenis pelindung layar (tempered glass). Untuk kebutuhan medis, navigasi aeronautika, kalibrasi laboratorium bersertifikasi SNI/ISO legal, pengguna disarankan selalu memverifikasi dengan instrumen metrologi terkalibrasi resmi.'
+          : 'While our calibration engine achieves sub-millimeter precision equivalent to physical steel rulers upon ISO card calibration, this tool is provided on an "AS IS" basis. Physical accuracy may be affected by browser zoom scaling, screen protector bevels, or protective cases. For high-stakes industrial, legal metrology, or medical applications, always cross-check with certified laboratory tools.'}
+      </p>
+    </section>
+
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '4. Hak Kekayaan Intelektual' : '4. Intellectual Property Rights'}
+      </h2>
+      <p>
+        {isId
+          ? 'Seluruh elemen desain antarmuka, logo, ilustrasi vektor, dan algoritma perhitungan jangka sorong di penggarisonline.com dilindungi oleh hak cipta dan peraturan kekayaan intelektual Republik Indonesia.'
+          : 'All interface elements, custom styling, branding, and mathematical algorithms on penggarisonline.com are proprietary intellectual property protected under applicable intellectual property laws.'}
+      </p>
+    </section>
+
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '5. Hukum yang Berlaku' : '5. Governing Law'}
+      </h2>
+      <p>
+        {isId
+          ? 'Syarat dan Ketentuan ini diatur dan ditafsirkan sesuai dengan hukum Negara Kesatuan Republik Indonesia. Setiap perselisihan yang timbul akan diselesaikan secara musyawarah untuk mufakat.'
+          : 'These Terms and Conditions shall be governed by and construed in accordance with the laws of the Republic of Indonesia.'}
+      </p>
+    </section>
+  </div>
+</article>
