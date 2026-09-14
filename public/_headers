@@ -17,21 +17,6 @@
   X-Robots-Tag: noindex
   Cache-Control: no-cache, no-store, must-revalidate
 
-/sitemap_index.xml
-  Content-Type: application/xml; charset=utf-8
-  X-Robots-Tag: noindex
-  Cache-Control: no-cache, no-store, must-revalidate
-
-/sitemap-0.xml
-  Content-Type: application/xml; charset=utf-8
-  X-Robots-Tag: noindex
-  Cache-Control: no-cache, no-store, must-revalidate
-
-/sitemap-custom.xml
-  Content-Type: application/xml; charset=utf-8
-  X-Robots-Tag: noindex
-  Cache-Control: no-cache, no-store, must-revalidate
-
 /site.webmanifest
   Content-Type: application/manifest+json; charset=utf-8
   Cache-Control: public, max-age=86400
