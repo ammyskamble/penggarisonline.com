@@ -64,7 +64,8 @@ Disallow: /404
 Disallow: /500
 
 # ==============================================================================
-# 6. XML Sitemaps (Primary Custom Domain & Cloudflare Pages Domain)
+# 6. XML Sitemaps (Cloudflare Pages Production & Primary Custom Domain)
 # ==============================================================================
-Sitemap: https://penggarisonline.com/sitemap.xml
 Sitemap: https://penggarisonline.pages.dev/sitemap.xml
+Sitemap: https://penggarisonline.com/sitemap.xml
+Sitemap: https://penggarisonline.com/sitemap-custom.xml

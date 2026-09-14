@@ -1,0 +1,248 @@
+---
+// src/pages/sitemap.astro
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const title = "Peta Situs (Sitemap) - Penggaris Online HP CM";
+const description = "Peta situs lengkap Penggaris Online HP CM (penggarisonline.com). Indeks navigasi seluruh alat ukur, kalibrasi, panduan FAQ, dan dokumen legalitas.";
+const canonical = "https://penggarisonline.pages.dev/sitemap";
+const hreflangs = [
+  { lang: 'id', url: 'https://penggarisonline.pages.dev/sitemap' },
+  { lang: 'en', url: 'https://penggarisonline.pages.dev/en/sitemap' },
+  { lang: 'x-default', url: 'https://penggarisonline.pages.dev/sitemap' }
+];
+---
+
+<Layout title={title} description={description} canonical={canonical} lang="id" hreflangs={hreflangs}>
+  <Navbar />
+  
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10 w-full">
+    <!-- Header -->
+    <div class="space-y-3 text-center sm:text-left border-b border-(--border) pb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider border border-indigo-500/20">
+        <span>🗺️</span>
+        <span>Indeks Navigasi &amp; SEO Google Search Console</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-(--foreground) tracking-tight">
+        Peta Situs (HTML Sitemap)
+      </h1>
+      <p class="text-sm text-(--muted-foreground) max-w-2xl leading-relaxed">
+        Daftar seluruh halaman, modul instrumen penggaris digital, kalkulator konversi, dan dokumen legalitas resmi di <span class="font-semibold text-(--foreground)">penggarisonline.com</span> untuk memudahkan penjelajahan pengguna dan perayap web Googlebot.
+      </p>
+    </div>
+
+    <!-- Sitemap Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Card 1: Main Tools & Modes -->
+      <div class="p-6 rounded-2xl bg-(--card) border border-(--border) space-y-4 shadow-sm hover:border-indigo-500/40 transition-colors">
+        <div class="flex items-center gap-2 text-indigo-600 dark:text-cyan-400 font-bold text-base">
+          <span>📐</span>
+          <h2>Alat &amp; Mode Penggaris</h2>
+        </div>
+        <ul class="space-y-2.5 text-xs text-(--muted-foreground)">
+          <li>
+            <a href="/" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="font-semibold text-(--foreground) group-hover:underline">Beranda Penggaris Online HP</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-(--muted) border border-(--border)">1:1</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#kalibrasi" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Kalibrasi Kartu ATM / e-KTP</span>
+              <span class="text-[10px] text-emerald-500 font-bold">85.6 mm</span>
+            </a>
+          </li>
+          <li>
+            <a href="/" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Jangka Sorong (Vernier Caliper)</span>
+              <span class="text-[10px] text-indigo-500">Dual Pin</span>
+            </a>
+          </li>
+          <li>
+            <a href="/" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Pengukur Luas 2D (Area Bidang)</span>
+              <span class="text-[10px] text-amber-500">W × H</span>
+            </a>
+          </li>
+          <li>
+            <a href="/" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Pengukur Lingkaran &amp; Diameter</span>
+              <span class="text-[10px] text-cyan-500">Ø + π</span>
+            </a>
+          </li>
+          <li>
+            <a href="/" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Mode Penggaris Tepi Layar</span>
+              <span class="text-[10px] text-purple-500">Edge</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 2: Legal & Policies -->
+      <div class="p-6 rounded-2xl bg-(--card) border border-(--border) space-y-4 shadow-sm hover:border-indigo-500/40 transition-colors">
+        <div class="flex items-center gap-2 text-indigo-600 dark:text-cyan-400 font-bold text-base">
+          <span>🛡️</span>
+          <h2>Kebijakan Legal &amp; Kepatuhan</h2>
+        </div>
+        <ul class="space-y-2.5 text-xs text-(--muted-foreground)">
+          <li>
+            <a href="/privacy-policy" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="font-semibold text-(--foreground) group-hover:underline">Kebijakan Privasi (Privacy Policy)</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">AdSense</span>
+            </a>
+          </li>
+          <li>
+            <a href="/terms-conditions" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Syarat &amp; Ketentuan (Terms)</span>
+              <span class="text-[10px]">Anti-Bot</span>
+            </a>
+          </li>
+          <li>
+            <a href="/disclaimer" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Penafian Resmi (Disclaimer)</span>
+              <span class="text-[10px]">Toleransi</span>
+            </a>
+          </li>
+          <li>
+            <a href="/cookie-policy" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Kebijakan Kuki (Cookie Policy)</span>
+              <span class="text-[10px]">GDPR</span>
+            </a>
+          </li>
+          <li>
+            <a href="/about-us" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Tentang Kami (About Us)</span>
+              <span class="text-[10px]">Profil</span>
+            </a>
+          </li>
+          <li>
+            <a href="/contact-us" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Hubungi Kami (Contact Us)</span>
+              <span class="text-[10px]">Email</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 3: Educational Content & FAQs -->
+      <div class="p-6 rounded-2xl bg-(--card) border border-(--border) space-y-4 shadow-sm hover:border-indigo-500/40 transition-colors">
+        <div class="flex items-center gap-2 text-indigo-600 dark:text-cyan-400 font-bold text-base">
+          <span>❓</span>
+          <h2>Panduan &amp; Tanya Jawab (FAQ)</h2>
+        </div>
+        <ul class="space-y-2.5 text-xs text-(--muted-foreground)">
+          <li>
+            <a href="/#faq" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="font-semibold text-(--foreground) group-hover:underline">Pusat FAQ Penggaris Online</span>
+              <span class="text-[10px] text-indigo-500">12 Tanya</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#faq" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Mengukur CM Pakai HP</span>
+              <span class="text-[10px]">Panduan</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#faq" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Rumus Konversi CM, MM, &amp; Inci</span>
+              <span class="text-[10px] font-mono">1 in = 2.54 cm</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#faq" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Langkah Kalibrasi Photoshop &amp; AI</span>
+              <span class="text-[10px]">Desain</span>
+            </a>
+          </li>
+          <li>
+            <a href="/#faq" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">Penggaris AR &amp; Kamera Android</span>
+              <span class="text-[10px]">Info</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 4: XML Feeds for Search Engines -->
+      <div class="p-6 rounded-2xl bg-(--card) border border-(--border) space-y-4 shadow-sm hover:border-indigo-500/40 transition-colors">
+        <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-base">
+          <span>🤖</span>
+          <h2>Berkas Mesin Pencari (Googlebot)</h2>
+        </div>
+        <ul class="space-y-2.5 text-xs text-(--muted-foreground)">
+          <li>
+            <a href="/sitemap.xml" target="_blank" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group font-mono">
+              <span class="font-semibold text-(--foreground) group-hover:underline">/sitemap.xml</span>
+              <span class="text-[10px] text-emerald-500 font-bold">XML Feed</span>
+            </a>
+          </li>
+          <li>
+            <a href="/robots.txt" target="_blank" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group font-mono">
+              <span class="font-semibold text-(--foreground) group-hover:underline">/robots.txt</span>
+              <span class="text-[10px] text-indigo-500 font-bold">Directives</span>
+            </a>
+          </li>
+          <li>
+            <a href="/manifest.json" target="_blank" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group font-mono">
+              <span class="group-hover:underline">/manifest.json</span>
+              <span class="text-[10px] text-amber-500">PWA App</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 5: Language Directories -->
+      <div class="p-6 rounded-2xl bg-(--card) border border-(--border) space-y-4 shadow-sm hover:border-indigo-500/40 transition-colors">
+        <div class="flex items-center gap-2 text-indigo-600 dark:text-cyan-400 font-bold text-base">
+          <span>🌐</span>
+          <h2>Struktur Internasional (i18n)</h2>
+        </div>
+        <ul class="space-y-2.5 text-xs text-(--muted-foreground)">
+          <li>
+            <a href="/" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="font-semibold text-(--foreground) group-hover:underline">🇮🇩 Bahasa Indonesia (Utama)</span>
+              <span class="text-[10px]">id-ID</span>
+            </a>
+          </li>
+          <li>
+            <a href="/en/about-us" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">🇬🇧 English - About Us</span>
+              <span class="text-[10px]">en-US</span>
+            </a>
+          </li>
+          <li>
+            <a href="/en/privacy-policy" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">🇬🇧 English - Privacy Policy</span>
+              <span class="text-[10px]">en-US</span>
+            </a>
+          </li>
+          <li>
+            <a href="/en/terms-conditions" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">🇬🇧 English - Terms</span>
+              <span class="text-[10px]">en-US</span>
+            </a>
+          </li>
+          <li>
+            <a href="/en/disclaimer" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">🇬🇧 English - Disclaimer</span>
+              <span class="text-[10px]">en-US</span>
+            </a>
+          </li>
+          <li>
+            <a href="/en/cookie-policy" class="hover:text-indigo-600 dark:hover:text-cyan-400 flex items-center justify-between group">
+              <span class="group-hover:underline">🇬🇧 English - Cookie Policy</span>
+              <span class="text-[10px]">en-US</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer currentLang="id" />
+</Layout>

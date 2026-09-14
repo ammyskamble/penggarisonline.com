@@ -10,17 +10,26 @@ interface Props {
   keywords?: string;
 }
 
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://penggarisonline.pages.dev';
+
 const {
   title = "Penggaris Online HP CM - Ukuran Asli 1:1 Akurat di Layar Telepon & Laptop",
   description = "Penggaris online hp cm akurat ukuran asli 1:1 di layar telepon & laptop. Penggaris sesuai skala dengan kalibrasi KTP/ATM, pengukur 2D, lingkaran & mode tepi layar.",
-  canonical = "https://penggarisonline.com",
+  canonical = `${siteUrl}`,
   lang = "id",
   hreflangs = [
-    { lang: 'id', url: 'https://penggarisonline.com' },
-    { lang: 'x-default', url: 'https://penggarisonline.com' }
+    { lang: 'id', url: `${siteUrl}` },
+    { lang: 'x-default', url: `${siteUrl}` }
   ],
   keywords = "penggaris online hp cm, penguasa online, penggaris cm, penggaris telepon, penggaris sesuai skala, penggaris, penggaris di layar, penggaris digital, mistar online, ruler online indonesia"
 } = Astro.props;
+
+const activeCanonical = canonical.startsWith('http') ? canonical.replace('https://penggarisonline.com', siteUrl) : `${siteUrl}${canonical}`;
+const activeHreflangs = hreflangs.map(h => ({
+  lang: h.lang,
+  url: h.url.replace('https://penggarisonline.com', siteUrl)
+}));
+const activeOgImage = `${siteUrl}/og-image.png`;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -208,7 +217,7 @@ const structuredData = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
-    <link rel="canonical" href={canonical} />
+    <link rel="canonical" href={activeCanonical} />
     <meta name="theme-color" content="#4f46e5" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.json" />
@@ -218,19 +227,19 @@ const structuredData = {
     <meta name="geo.country" content="Indonesia" />
     <meta name="geo.placename" content="Indonesia" />
     <meta name="language" content={lang === 'id' ? 'Indonesian' : 'English'} />
-    {hreflangs.map(h => (
+    {activeHreflangs.map(h => (
       <link rel="alternate" hreflang={h.lang} href={h.url} />
     ))}
 
     <!-- Open Graph / Facebook / WhatsApp / Telegram -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={activeCanonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:site_name" content="Penggaris Online HP CM" />
-    <meta property="og:image" content="https://penggarisonline.com/og-image.png" />
-    <meta property="og:image:secure_url" content="https://penggarisonline.com/og-image.png" />
+    <meta property="og:image" content={activeOgImage} />
+    <meta property="og:image:secure_url" content={activeOgImage} />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -238,10 +247,10 @@ const structuredData = {
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:url" content={activeCanonical} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://penggarisonline.com/og-image.png" />
+    <meta name="twitter:image" content={activeOgImage} />
     <meta name="twitter:image:alt" content="Penggaris Online HP CM - Penguasa Online Ukuran Asli 1:1 di Layar Telepon" />
 
     <!-- Fonts: Inter & JetBrains Mono -->
