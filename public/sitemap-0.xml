@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://penggarisonline.pages.dev/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://penggarisonline.pages.dev/" />
+  </url>
+
+  <!-- HTML Sitemap Page -->
+  <url>
+    <loc>https://penggarisonline.pages.dev/sitemap</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/sitemap" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/sitemap" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/id/sitemap</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/id/sitemap" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/sitemap" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/en/sitemap</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/sitemap" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/sitemap" />
+  </url>
+
+  <!-- About Us -->
+  <url>
+    <loc>https://penggarisonline.pages.dev/about-us</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/about-us" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/about-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://penggarisonline.pages.dev/about-us" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/id/about-us</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/id/about-us" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/about-us" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/en/about-us</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/about-us" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/about-us" />
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://penggarisonline.pages.dev/privacy-policy</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://penggarisonline.pages.dev/privacy-policy" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/id/privacy-policy</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/id/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/privacy-policy" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/en/privacy-policy</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/privacy-policy" />
+  </url>
+
+  <!-- Terms & Conditions -->
+  <url>
+    <loc>https://penggarisonline.pages.dev/terms-conditions</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/terms-conditions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/terms-conditions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://penggarisonline.pages.dev/terms-conditions" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/id/terms-conditions</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/id/terms-conditions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/terms-conditions" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/en/terms-conditions</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/terms-conditions" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/terms-conditions" />
+  </url>
+
+  <!-- Disclaimer -->
+  <url>
+    <loc>https://penggarisonline.pages.dev/disclaimer</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/disclaimer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/disclaimer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://penggarisonline.pages.dev/disclaimer" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/id/disclaimer</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/id/disclaimer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/disclaimer" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/en/disclaimer</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/disclaimer" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/disclaimer" />
+  </url>
+
+  <!-- Cookie Policy -->
+  <url>
+    <loc>https://penggarisonline.pages.dev/cookie-policy</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://penggarisonline.pages.dev/cookie-policy" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/id/cookie-policy</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/id/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/cookie-policy" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/en/cookie-policy</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/cookie-policy" />
+  </url>
+
+  <!-- Contact Us -->
+  <url>
+    <loc>https://penggarisonline.pages.dev/contact-us</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/contact-us" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/contact-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://penggarisonline.pages.dev/contact-us" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/id/contact-us</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/id/contact-us" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/contact-us" />
+  </url>
+  <url>
+    <loc>https://penggarisonline.pages.dev/en/contact-us</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://penggarisonline.pages.dev/en/contact-us" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://penggarisonline.pages.dev/contact-us" />
+  </url>
+
+</urlset>
