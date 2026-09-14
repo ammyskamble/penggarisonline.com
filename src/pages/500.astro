@@ -1,0 +1,139 @@
+---
+// src/pages/500.astro
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const title = "500 - Kesalahan Server Internal | Penggaris Online HP CM";
+const description = "Terjadi gangguan sistem internal pada penggarisonline.com. Silakan muat ulang halaman atau kembali ke beranda.";
+const canonical = "https://penggarisonline.com/500";
+---
+
+<Layout title={title} description={description} canonical={canonical} lang="id">
+  <Navbar />
+  
+  <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <div class="max-w-2xl w-full text-center space-y-8">
+      
+      <!-- Creative Ruler-themed 500 Visual Graphic -->
+      <div class="relative mx-auto w-full max-w-md p-6 rounded-3xl bg-(--card) border border-(--border) shadow-2xl overflow-hidden backdrop-blur-xl">
+        <!-- Glowing gradient background orb -->
+        <div class="absolute -top-16 -right-16 w-32 h-32 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-red-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="space-y-4 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider border border-amber-500/20">
+            <span class="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            <span>Error 500 • Gangguan Sistem Pengukuran</span>
+          </div>
+
+          <!-- Big Digits with Warning State -->
+          <div class="flex items-center justify-center gap-2 text-7xl sm:text-8xl font-black tracking-tighter text-(--foreground) select-none">
+            <span class="bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 bg-clip-text text-transparent">5</span>
+            <div class="relative flex flex-col items-center justify-center">
+              <span class="text-amber-500 dark:text-amber-400">0</span>
+              <span class="absolute text-[10px] font-mono -bottom-2 text-red-500 font-bold tracking-normal uppercase bg-(--background) px-1 rounded border border-red-500/30">
+                Calib Err
+              </span>
+            </div>
+            <span class="bg-gradient-to-br from-red-500 via-orange-500 to-amber-500 bg-clip-text text-transparent">0</span>
+          </div>
+
+          <!-- Diagnostic Bar -->
+          <div class="w-full bg-(--muted) h-10 rounded-xl border border-(--border) flex items-center justify-between px-3 font-mono text-[10px] text-(--muted-foreground) overflow-hidden relative">
+            <span class="font-bold text-amber-500">Status: 500</span>
+            <div class="flex-1 mx-3 border-b-2 border-dotted border-amber-500/50 flex items-center justify-center">
+              <span class="bg-(--card) px-2 text-[9px] text-amber-500 font-bold uppercase tracking-widest border border-amber-500/20 rounded">
+                ⚡ Internal Error
+              </span>
+            </div>
+            <span class="font-bold text-red-500">Retry Req</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Messaging -->
+      <div class="space-y-3">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-(--foreground) tracking-tight">
+          Terjadi Gangguan pada Sistem Internal
+        </h1>
+        <p class="text-sm sm:text-base text-(--muted-foreground) max-w-lg mx-auto leading-relaxed">
+          Server atau peramban web mengalami kendala saat memproses halaman ini. Silakan coba muat ulang halaman atau atur ulang preferensi lokal jika masalah berlanjut.
+        </p>
+        <p class="text-xs text-(--muted-foreground) italic">
+          An unexpected server error occurred. Please try reloading the page.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <button
+          type="button"
+          onclick="window.location.reload()"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold text-sm shadow-lg shadow-amber-500/25 transition-all cursor-pointer transform active:scale-95"
+        >
+          <svg class="w-4 h-4 animate-spin-hover" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+          <span>Muat Ulang Halaman (Reload)</span>
+        </button>
+
+        <a
+          href="/"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-(--card) hover:bg-(--muted) text-(--foreground) font-semibold text-sm border border-(--border) transition-all"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Kembali ke Beranda</span>
+        </a>
+
+        <button
+          type="button"
+          id="btn-reset-cache"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-(--muted) hover:bg-red-500/10 hover:text-red-500 text-(--muted-foreground) font-semibold text-sm border border-(--border) transition-all cursor-pointer"
+        >
+          <span>🧹 Reset Cache Penggaris</span>
+        </button>
+      </div>
+
+      <!-- Quick Helpful Links -->
+      <div class="pt-6 border-t border-(--border) text-xs text-(--muted-foreground) space-y-2">
+        <p class="font-medium text-(--foreground)">Butuh bantuan teknis?</p>
+        <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          <a href="/contact-us" class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">Laporkan Masalah</a>
+          <span>•</span>
+          <a href="/about-us" class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">Tentang Kami</a>
+          <span>•</span>
+          <a href="/privacy-policy" class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">Kebijakan Privasi</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer currentLang="id" />
+
+  <script is:inline>
+    const resetBtn = document.getElementById('btn-reset-cache');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        try {
+          const keysToRemove = [];
+          for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith('penggaris_')) {
+              keysToRemove.push(k);
+            }
+          }
+          keysToRemove.forEach(k => localStorage.removeItem(k));
+          alert('Pengaturan preferensi lokal penggaris berhasil direset. Halaman akan dimuat ulang ke beranda.');
+          window.location.href = '/';
+        } catch (e) {
+          window.location.href = '/';
+        }
+      });
+    }
+  </script>
+</Layout>

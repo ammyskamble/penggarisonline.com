@@ -1,0 +1,118 @@
+---
+// src/pages/404.astro
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const title = "404 - Halaman Tidak Ditemukan | Penggaris Online HP CM";
+const description = "Halaman yang Anda cari tidak ditemukan atau berada di luar jangkauan skala pengukuran Penggaris Online HP CM.";
+const canonical = "https://penggarisonline.com/404";
+---
+
+<Layout title={title} description={description} canonical={canonical} lang="id">
+  <Navbar />
+  
+  <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <div class="max-w-2xl w-full text-center space-y-8">
+      
+      <!-- Creative Ruler-themed 404 Visual Graphic -->
+      <div class="relative mx-auto w-full max-w-md p-6 rounded-3xl bg-(--card) border border-(--border) shadow-2xl overflow-hidden backdrop-blur-xl">
+        <!-- Glowing gradient background orb -->
+        <div class="absolute -top-16 -left-16 w-32 h-32 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-16 -right-16 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <!-- Measurement Scale Graphic with 404 Break -->
+        <div class="space-y-4 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider border border-red-500/20">
+            <span class="inline-block w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            <span>Error 404 • Di Luar Skala Mistar</span>
+          </div>
+
+          <!-- Big Digits with Ruler Texture -->
+          <div class="flex items-center justify-center gap-2 text-7xl sm:text-8xl font-black tracking-tighter text-(--foreground) select-none">
+            <span class="bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent">4</span>
+            <div class="relative flex flex-col items-center justify-center">
+              <span class="text-indigo-500 dark:text-cyan-400">0</span>
+              <!-- Broken tick mark overlay -->
+              <span class="absolute text-[10px] font-mono -bottom-2 text-amber-500 font-bold tracking-normal uppercase bg-(--background) px-1 rounded border border-amber-500/30">
+                NaN cm
+              </span>
+            </div>
+            <span class="bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">4</span>
+          </div>
+
+          <!-- Stylized Ruler Bar Indicator -->
+          <div class="w-full bg-(--muted) h-10 rounded-xl border border-(--border) flex items-center justify-between px-3 font-mono text-[10px] text-(--muted-foreground) overflow-hidden relative">
+            <span class="font-bold text-indigo-500">0 cm</span>
+            <div class="flex-1 mx-3 border-b-2 border-dashed border-red-500/50 relative flex items-center justify-center">
+              <span class="bg-(--card) px-2 text-[9px] text-red-500 font-bold uppercase tracking-widest border border-red-500/20 rounded">
+                ⚡ Skala Terputus
+              </span>
+            </div>
+            <span class="font-bold text-red-500">∞ cm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Messaging -->
+      <div class="space-y-3">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-(--foreground) tracking-tight">
+          Halaman Berada di Luar Jangkauan Pengukuran
+        </h1>
+        <p class="text-sm sm:text-base text-(--muted-foreground) max-w-lg mx-auto leading-relaxed">
+          Tautan atau halaman web yang Anda tuju telah dipindahkan, diganti alamatnya, atau tidak terdaftar dalam koordinat <span class="font-semibold text-(--foreground)">penggarisonline.com</span>.
+        </p>
+        <p class="text-xs text-(--muted-foreground) italic">
+          The requested page could not be located or has been relocated.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <a
+          href="/"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm shadow-lg shadow-indigo-500/25 transition-all transform active:scale-95"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Kembali ke Penggaris Utama</span>
+        </a>
+
+        <a
+          href="/#faq"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-(--card) hover:bg-(--muted) text-(--foreground) font-semibold text-sm border border-(--border) transition-all"
+        >
+          <span>❓ Pusat Bantuan &amp; FAQ</span>
+        </a>
+
+        <a
+          href="/contact-us"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-(--card) hover:bg-(--muted) text-(--foreground) font-semibold text-sm border border-(--border) transition-all"
+        >
+          <span>💬 Hubungi Kami</span>
+        </a>
+      </div>
+
+      <!-- Quick Helpful Links -->
+      <div class="pt-6 border-t border-(--border) text-xs text-(--muted-foreground) space-y-2">
+        <p class="font-medium text-(--foreground)">Atau telusuri tautan penting lainnya:</p>
+        <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          <a href="/about-us" class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">Tentang Kami</a>
+          <span>•</span>
+          <a href="/privacy-policy" class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">Kebijakan Privasi</a>
+          <span>•</span>
+          <a href="/terms-conditions" class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">Syarat &amp; Ketentuan</a>
+          <span>•</span>
+          <a href="/disclaimer" class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">Penafian</a>
+          <span>•</span>
+          <a href="/cookie-policy" class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">Kebijakan Kuki</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer currentLang="id" />
+</Layout>
