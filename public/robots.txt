@@ -1,0 +1,70 @@
+# robots.txt for penggarisonline.com & penggarisonline.pages.dev
+# Optimized for Google Search Console, Googlebot, and Google AdSense Crawlers
+
+# ==============================================================================
+# 1. Global Crawler Policy
+# ==============================================================================
+User-agent: *
+Allow: /
+Disallow: /404
+Disallow: /500
+Disallow: /404.html
+Disallow: /500.html
+
+# ==============================================================================
+# 2. Google Search Console & Googlebot
+# ==============================================================================
+User-agent: Googlebot
+Allow: /
+Disallow: /404
+Disallow: /500
+Disallow: /404.html
+Disallow: /500.html
+
+# ==============================================================================
+# 3. Google Images (Allow indexing of measurement diagrams & previews)
+# ==============================================================================
+User-agent: Googlebot-Image
+Allow: /
+Allow: /favicon.svg
+Allow: /og-image.png
+Allow: /og-image.jpg
+
+# ==============================================================================
+# 4. Google AdSense & AdsBot Crawlers (Mandatory for AdSense Approval & Monetization)
+# ==============================================================================
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+User-agent: AdsBot-Google-Mobile-Apps
+Allow: /
+
+# ==============================================================================
+# 5. Other Search Engines (Bing, DuckDuckGo, Yandex)
+# ==============================================================================
+User-agent: Bingbot
+Allow: /
+Disallow: /404
+Disallow: /500
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /404
+Disallow: /500
+
+User-agent: YandexBot
+Allow: /
+Disallow: /404
+Disallow: /500
+
+# ==============================================================================
+# 6. XML Sitemaps (Primary Custom Domain & Cloudflare Pages Domain)
+# ==============================================================================
+Sitemap: https://penggarisonline.com/sitemap.xml
+Sitemap: https://penggarisonline.pages.dev/sitemap.xml
