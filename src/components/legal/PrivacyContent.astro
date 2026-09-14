@@ -11,77 +11,251 @@ const isId = lang === 'id';
   <div class="space-y-3 text-center sm:text-left border-b border-(--border) pb-8">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider border border-indigo-500/20">
       <span>🛡️</span>
-      <span>{isId ? 'Privasi & Keamanan Data' : 'Privacy & Data Protection'}</span>
+      <span>{isId ? 'Privasi & Kepatuhan Kebijakan Iklan' : 'Privacy & AdSense Compliance'}</span>
     </div>
     <h1 class="text-3xl sm:text-4xl font-extrabold text-(--foreground) tracking-tight">
       {isId ? 'Kebijakan Privasi (Privacy Policy)' : 'Privacy Policy'}
     </h1>
     <p class="text-xs sm:text-sm text-(--muted-foreground)">
-      {isId ? 'Terakhir diperbarui: 14 September 2026 • Berlaku efektif untuk seluruh pengguna penggarisonline.com' : 'Last updated: September 14, 2026 • Applies to all users of penggarisonline.com'}
+      {isId ? 'Terakhir diperbarui: 14 September 2026 • Berlaku efektif untuk seluruh pengguna penggarisonline.com' : 'Last updated: September 14, 2026 • Applies to all visitors of penggarisonline.com'}
     </p>
   </div>
 
   <div class="prose prose-sm sm:prose-base dark:prose-invert max-w-none space-y-6 text-sm text-(--muted-foreground) leading-relaxed">
+    <!-- Section 1: Introduction -->
     <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
-      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '1. Komitmen Privasi Kami' : '1. Our Privacy Commitment'}
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>1.</span>
+        <span>{isId ? 'Komitmen Privasi & Arsitektur Klien' : 'Privacy Commitment & Client Architecture'}</span>
       </h2>
       <p>
         {isId 
-          ? 'Selamat datang di Penggaris Online HP CM (penggarisonline.com). Kami sangat menghargai dan memprioritaskan privasi Anda. Aplikasi penggaris digital ini dirancang dengan prinsip arsitektur "Client-Side First", di mana seluruh perhitungan matematika, penyesuaian piksel, dan pengukuran fisik berjalan secara lokal di perangkat peramban Anda.'
-          : 'Welcome to Penggaris Online HP CM (penggarisonline.com). We deeply value and prioritize your privacy. This digital ruler tool is engineered with a "Client-Side First" architectural principle, ensuring that all mathematical computations, pixel scaling, and physical measurements run strictly within your local browser.'}
+          ? 'Selamat datang di Penggaris Online HP CM (penggarisonline.com). Kami berkomitmen tinggi untuk melindungi privasi setiap pengunjung. Aplikasi penggaris digital ini dibangun dengan filosofi "Client-Side First", di mana pengukuran fisik, penyesuaian skala piksel, kalibrasi kartu ID-1, serta pengoperasian jangka sorong dan sudut berjalan 100% secara lokal di peramban web peranti Anda tanpa mengirimkan gambar layar atau data sensor ke server kami.'
+          : 'Welcome to Penggaris Online HP CM (penggarisonline.com). We are deeply dedicated to protecting the privacy of every visitor. This digital ruler utility is built on a "Client-Side First" philosophy: all physical measurements, pixel scaling, ID-1 card calibrations, caliper readouts, and angle calculations run 100% locally in your web browser without transmitting screen visuals or hardware sensor data to our servers.'}
       </p>
     </section>
 
+    <!-- Section 2: Local Storage Data -->
     <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
-      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '2. Data yang Kami Simpan Secara Lokal (LocalStorage)' : '2. Data We Store Locally (LocalStorage)'}
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>2.</span>
+        <span>{isId ? 'Data yang Disimpan di Browser (Web Storage)' : 'Data Stored Locally (Web Storage)'}</span>
       </h2>
       <p>
         {isId
-          ? 'Situs kami TIDAK mengumpulkan data pribadi sensitif seperti nama, nomor identitas KTP, nomor rekening kartu ATM, ataupun lokasi GPS Anda. Satu-satunya data yang disimpan adalah konfigurasi teknis yang disimpan di memori peramban lokal (localStorage) perangkat Anda, yang meliputi:'
-          : 'Our website does NOT collect sensitive personal data such as your name, national ID numbers, ATM card numbers, or GPS location. The only information retained is technical preference data stored inside your local browser storage (localStorage), which includes:'}
+          ? 'Situs kami TIDAK mewajibkan pembuatan akun pengguna, pendaftaran nomor telepon, maupun penyerahan nomor identitas KTP/rekening kartu ATM. Data yang disimpan hanyalah preferensi teknis pada memori peramban Anda (localStorage) demi kenyamanan pemakaian berkelanjutan:'
+          : 'Our website does NOT require user registration, phone numbers, or credit card numbers. The only data stored consists of technical configuration settings retained inside your local browser memory (localStorage) for seamless continued use:'}
       </p>
       <ul class="list-disc list-inside space-y-1.5 pl-2">
-        <li><strong>{isId ? 'Nilai Kalibrasi Layar (PPI):' : 'Calibrated Screen Density (PPI):'}</strong> {isId ? 'Angka kerapatan piksel per inci layar hasil kalibrasi e-KTP/ATM agar Anda tidak perlu mengulang kalibrasi.' : 'The pixel density value derived from calibration so you do not need to re-calibrate on every visit.'}</li>
-        <li><strong>{isId ? 'Preferensi Satuan Ukuran:' : 'Unit Preference:'}</strong> {isId ? 'Pilihan satuan aktif terakhir Anda (cm, mm, atau inci).' : 'Your selected measurement unit (cm, mm, or inches).'}</li>
-        <li><strong>{isId ? 'Preferensi Tema Tampilan:' : 'Theme Preference:'}</strong> {isId ? 'Mode Gelap (Dark Mode) atau Mode Terang (Light Mode).' : 'Dark Mode or Light Mode toggle state.'}</li>
+        <li><strong>{isId ? 'Kerapatan Piksel Layar (PPI):' : 'Calibrated Screen Density (PPI):'}</strong> {isId ? 'Nilai rasio piksel per inci hasil kalibrasi kartu ATM/e-KTP agar mistar tetap akurat 1:1 saat dikunjungi kembali.' : 'The calibrated pixels-per-inch ratio derived from your ID-1 card calibration for persistent 1:1 scale.'}</li>
+        <li><strong>{isId ? 'Preferensi Satuan Ukuran:' : 'Unit Preference:'}</strong> {isId ? 'Satuan pengukuran aktif terakhir (sentimeter cm, milimeter mm, atau inci in).' : 'Your selected measurement unit (centimeters cm, millimeters mm, or inches in).'}</li>
+        <li><strong>{isId ? 'Preferensi Tema Visual:' : 'Visual Theme Preference:'}</strong> {isId ? 'Pilihan Mode Gelap (Dark Mode) atau Mode Terang (Light Mode).' : 'Your preferred Dark Mode or Light Mode interface appearance.'}</li>
+        <li><strong>{isId ? 'Efek Suara Haptik/Audio:' : 'Sound Effects State:'}</strong> {isId ? 'Status aktif/nonaktif suara klik stepper dan getaran haptik.' : 'Toggle state for audio tick feedback and haptic vibration.'}</li>
       </ul>
-    </section>
-
-    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
-      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '3. Penggunaan Kamera dan Perangkat Keras' : '3. Camera and Hardware Access'}
-      </h2>
-      <p>
+      <p class="text-xs text-(--muted-foreground) pt-1">
         {isId
-          ? 'Fitur penggaris utama di situs ini TIDAK memerlukan akses ke kamera, mikrofon, atau berkas file di HP Anda. Seluruh pengukuran dilakukan dengan menempelkan objek secara langsung pada layar kaca peranti Anda. Jika di masa mendatang terdapat fitur Augmented Reality (AR) opsional yang memanfaatkan kamera, sistem akan selalu meminta persetujuan eksplisit (permission prompt) terlebih dahulu.'
-          : 'The core on-screen ruler features on this website do NOT require access to your smartphone camera, microphone, or storage files. All measurements are conducted directly on your screen glass. If optional camera-based AR features are introduced in the future, explicit browser permission will always be requested beforehand.'}
+          ? 'Catatan: Data localStorage ini berada sepenuhnya di peranti Anda dan dapat dihapus kapan saja melalui menu "Hapus Data Penjelajahan / Cache" di peramban Anda.'
+          : 'Note: This localStorage data resides entirely on your device and can be cleared at any time via your browser settings.'}
       </p>
     </section>
 
+    <!-- Section 3: Hardware & Camera Permissions -->
     <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
-      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '4. Kuki (Cookies) dan Layanan Pihak Ketiga' : '4. Cookies and Third-Party Services'}
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>3.</span>
+        <span>{isId ? 'Akses Perangkat Keras, Layar, dan Kamera' : 'Hardware, Screen, and Camera Access'}</span>
       </h2>
       <p>
         {isId
-          ? 'Kami dapat menggunakan kuki analitik standar atau jaringan periklanan pihak ketiga (seperti Google AdSense atau Cloudflare CDN) semata-mata untuk memantau performa kecepatan situs, mencegah serangan siber, dan menjaga agar layanan ini dapat diakses secara 100% gratis oleh seluruh masyarakat Indonesia.'
-          : 'We may utilize standard analytics cookies or third-party content delivery/advertising partners (such as Google AdSense or Cloudflare) solely to monitor website uptime, prevent automated cyber threats, and keep this measurement service 100% free for all users worldwide.'}
+          ? 'Fungsi penggaris online di layar tidak memerlukan akses ke kamera, mikrofon, kontak, ataupun berkas galeri foto Anda. Pengukuran dilakukan murni dengan menempelkan benda fisik ke atas layar kaca ponsel atau laptop. Sensor sentuh (touchscreen) atau kursor mouse hanya diproses untuk menggeser penanda ukur (Pin A & Pin B).'
+          : 'Core on-screen measurement functionality does not require access to your camera, microphone, contacts, or gallery files. Measurements are taken directly against your screen glass. Pointer and touch events are processed solely to slide the measurement pins (Pin A & Pin B).'}
       </p>
     </section>
 
-    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+    <!-- Section 4: Google AdSense & Third-Party Advertising (MANDATORY ADSENSE CLAUSES) -->
+    <section class="space-y-4 p-6 rounded-2xl bg-(--card) border border-(--border) border-l-4 border-l-amber-500">
+      <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-sm">
+        <span>📢</span>
+        <span>{isId ? 'Kepatuhan Kebijakan Iklan Google AdSense & Kuki Pihak Ketiga' : 'Google AdSense & Third-Party Advertising Policy Compliance'}</span>
+      </div>
       <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '5. Hubungi Petugas Privasi' : '5. Contacting Privacy Support'}
+        {isId ? '4. Kebijakan Periklanan Google AdSense & DoubleClick Cookie' : '4. Google AdSense & DoubleClick Cookie Policy'}
       </h2>
       <p>
         {isId
-          ? 'Jika Anda memiliki pertanyaan, saran, atau permintaan klarifikasi mengenai kebijakan privasi ini, silakan hubungi tim kami melalui email resmi:'
-          : 'If you have any questions, inquiries, or suggestions regarding this Privacy Policy, please reach out to our team at:'}
+          ? 'Untuk menjaga agar seluruh fitur penggaris online ini tetap 100% gratis dan dapat diakses bebas oleh seluruh masyarakat, situs kami dapat menayangkan iklan komersial yang disediakan oleh Google AdSense serta mitra teknologi periklanan pihak ketiga bersertifikasi Google.'
+          : 'To ensure our online ruler tools remain 100% free and accessible to all users worldwide, our website displays commercial advertisements served by Google AdSense and certified Google third-party advertising partners.'}
       </p>
-      <div class="p-3 rounded-xl bg-(--muted) font-mono text-xs text-indigo-600 dark:text-cyan-400 font-semibold w-fit">
-        ✉️ privacy@penggarisonline.com / kontak@penggarisonline.com
+      
+      <div class="space-y-3 text-xs sm:text-sm bg-(--muted)/60 p-4 rounded-xl border border-(--border)">
+        <h3 class="font-bold text-(--foreground)">
+          {isId ? 'Klausul Resmi Google AdSense yang Wajib Diketahui Pengguna:' : 'Mandatory Google AdSense Policy Disclosures:'}
+        </h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>
+            <strong>{isId ? 'Vendor Pihak Ketiga & Google:' : 'Third-Party Vendors & Google:'}</strong>
+            {isId
+              ? ' Vendor pihak ketiga, termasuk Google, menggunakan kuki (cookies) untuk menayangkan iklan berdasarkan riwayat kunjungan pengguna sebelumnya ke situs web kami (penggarisonline.com) atau ke situs web lainnya di internet.'
+              : ' Third-party vendors, including Google, use cookies to serve ads based on a user’s prior visits to your website or other websites.'}
+          </li>
+          <li>
+            <strong>{isId ? 'Kuki Periklanan Google (DoubleClick DART Cookie):' : 'Google Advertising Cookies (DoubleClick DART Cookie):'}</strong>
+            {isId
+              ? ' Penggunaan kuki iklan oleh Google memungkinkan Google dan mitranya untuk menayangkan iklan kepada pengguna kami berdasarkan kunjungan mereka ke situs kami dan/atau situs web lain di internet.'
+              : ' Google’s use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.'}
+          </li>
+          <li>
+            <strong>{isId ? 'Hak dan Pilihan Mematikan Iklan yang Dipersonalisasi (Opt-Out):' : 'Personalized Advertising Opt-Out Rights:'}</strong>
+            {isId
+              ? ' Pengguna dapat memilih untuk menonaktifkan (opt out) periklanan yang dipersonalisasi dengan mengunjungi Setelan Iklan Google resmi di '
+              : ' Users may opt out of personalized advertising by visiting Google Ads Settings at '}
+            <a 
+              href="https://adssettings.google.com/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="font-semibold text-indigo-600 dark:text-cyan-400 underline underline-offset-2 hover:opacity-80"
+            >
+              https://adssettings.google.com/
+            </a>
+            {isId
+              ? ' atau pusat pengelolaan iklan Google di '
+              : ' or My Ad Center at '}
+            <a 
+              href="https://myadcenter.google.com/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="font-semibold text-indigo-600 dark:text-cyan-400 underline underline-offset-2 hover:opacity-80"
+            >
+              https://myadcenter.google.com/
+            </a>.
+          </li>
+          <li>
+            <strong>{isId ? 'Pilihan Opt-Out Vendor Pihak Ketiga Lainnya:' : 'Third-Party Vendor Opt-Out Network:'}</strong>
+            {isId
+              ? ' Anda juga dapat memilih untuk menonaktifkan penggunaan kuki periklanan pihak ketiga untuk iklan yang dipersonalisasi secara terpadu dengan mengunjungi situs konsorsium industri resmi di '
+              : ' Alternatively, you can opt out of a third-party vendor’s use of cookies for personalized advertising by visiting '}
+            <a 
+              href="http://www.aboutads.info/choices/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="font-semibold text-indigo-600 dark:text-cyan-400 underline underline-offset-2 hover:opacity-80"
+            >
+              www.aboutads.info/choices/
+            </a>
+            {isId ? ' atau ' : ' or '}
+            <a 
+              href="https://youradchoices.com/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="font-semibold text-indigo-600 dark:text-cyan-400 underline underline-offset-2 hover:opacity-80"
+            >
+              youradchoices.com
+            </a>
+            {isId ? ' (atau untuk wilayah Uni Eropa di ' : ' (or for European Union residents at '}
+            <a 
+              href="https://www.youronlinechoices.eu/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="font-semibold text-indigo-600 dark:text-cyan-400 underline underline-offset-2 hover:opacity-80"
+            >
+              youronlinechoices.eu
+            </a>).
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section 5: Log Files & Infrastructure -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>5.</span>
+        <span>{isId ? 'Berkas Log Server (Server Log Files)' : 'Log Files & Analytics'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Seperti kebanyakan penyedia hosting modern (termasuk Cloudflare CDN yang mengamankan situs kami), penggarisonline.com mengikuti prosedur standar pencatatan berkas log. Informasi yang dicatat mencakup alamat Protokol Internet (IP address), jenis peramban, Penyedia Layanan Internet (ISP), stempel tanggal/waktu, halaman rujukan/keluar, dan jumlah klik navigasi. Informasi ini tidak dikaitkan dengan informasi apa pun yang dapat diidentifikasi secara pribadi dan murni digunakan untuk menganalisis tren, mendeteksi serangan DDoS/bot, serta mengelola stabilitas jaringan.'
+          : 'Like most modern web platforms (including the Cloudflare CDN network securing our site), penggarisonline.com follows standard log file protocols. Log entries include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date/time stamps, referring/exit pages, and click paths. This diagnostic telemetry is not linked to any personally identifiable information and is utilized solely to analyze performance trends, mitigate DDoS threats, and maintain service uptime.'}
+      </p>
+    </section>
+
+    <!-- Section 6: GDPR & European User Rights -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>6.</span>
+        <span>{isId ? 'Hak Perlindungan Data GDPR (Uni Eropa / EEA)' : 'GDPR Data Protection Rights (EU / EEA)'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Bagi pengguna yang berdomisili di Wilayah Ekonomi Eropa (EEA), Anda memiliki hak perlindungan data tertentu di bawah General Data Protection Regulation (GDPR), termasuk hak untuk mengakses data Anda, meminta perbaikan data yang tidak akurat, meminta penghapusan data (right to be forgotten), membatasi pemrosesan, serta hak atas portabilitas data. Karena kami tidak menyimpan database profil pengguna di server kami, Anda memiliki kendali mandiri penuh untuk menghapus seluruh riwayat lokal dengan mengosongkan cache peramban Anda.'
+          : 'For visitors residing in the European Economic Area (EEA), you possess specific data protection rights under the General Data Protection Regulation (GDPR). These encompass the right to access, rectify, erase ("right to be forgotten"), restrict processing, object to data processing, and request data portability. As we do not store personal profiles on backend databases, you maintain complete self-sovereign control by clearing local storage in your browser settings.'}
+      </p>
+    </section>
+
+    <!-- Section 7: CCPA / CPRA California Rights -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>7.</span>
+        <span>{isId ? 'Hak Privasi Konsumen California (CCPA / CPRA)' : 'California Consumer Privacy Act (CCPA / CPRA)'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Di bawah Undang-Undang Privasi Konsumen California (CCPA/CPRA), warga California berhak untuk mengetahui kategori data pribadi yang dikumpulkan, meminta penghapusan data pribadi, serta memilih untuk tidak menjual atau membagikan data pribadi ("Do Not Sell or Share My Personal Information"). Penggaris Online HP CM tidak pernah dan tidak akan pernah menjual informasi identitas pribadi Anda kepada pihak mana pun.'
+          : 'Under the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA), California residents are entitled to know what personal data categories are collected, request data erasure, and opt out of the sale or sharing of personal information ("Do Not Sell or Share My Personal Information"). Penggaris Online HP CM does not sell or barter user personal information.'}
+      </p>
+    </section>
+
+    <!-- Section 8: COPPA Children's Privacy -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>8.</span>
+        <span>{isId ? 'Perlindungan Privasi Anak (COPPA Compliance)' : "Children's Privacy Protection (COPPA)"}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Melindungi privasi anak-anak saat menggunakan internet adalah prioritas utama kami. Layanan penggarisonline.com ditujukan untuk masyarakat umum dan siswa sekolah sebagai sarana bantu belajar matematika dan pengukuran mistar. Kami tidak pernah secara sadar mengumpulkan informasi identitas pribadi apa pun dari anak-anak di bawah usia 13 tahun (atau di bawah usia 16 tahun di yurisdiksi Eropa). Jika orang tua atau wali meyakini bahwa anak mereka memberikan informasi pribadi di situs kami, segera hubungi kami agar kami dapat mengambil tindakan verifikasi.'
+          : 'Protecting children’s safety and privacy online is of paramount importance. Penggaris Online HP CM provides educational measurement tools for students and the general public. We do not knowingly solicit or collect personally identifiable information from children under the age of 13 (or under 16 in certain European jurisdictions). If a parent or guardian believes their child provided personal data on our site, please contact us immediately so we can take appropriate remedial steps.'}
+      </p>
+    </section>
+
+    <!-- Section 9: External Links -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>9.</span>
+        <span>{isId ? 'Tautan ke Situs Pihak Ketiga' : 'Third-Party Hyperlinks'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Situs kami dapat memuat tautan ke situs eksternal atau portal referensi mitra. Harap diperhatikan bahwa situs pihak ketiga tersebut memiliki kebijakan privasi tersendiri yang berada di luar kendali kami. Kami mendorong Anda untuk membaca kebijakan privasi masing-masing situs yang Anda kunjungi.'
+          : 'Our website may contain hyperlinks directing to external partner or reference sites. Please note that external websites operate under distinct privacy policies outside our control. We advise reviewing the privacy terms of any third-party website you navigate to.'}
+      </p>
+    </section>
+
+    <!-- Section 10: Policy Updates & Contact -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>10.</span>
+        <span>{isId ? 'Pembaruan Kebijakan & Kontak Petugas Privasi' : 'Policy Updates & Contact Information'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Kami dapat memperbarui Kebijakan Privasi ini secara berkala untuk mematuhi regulasi periklanan Google terbaru atau undang-undang privasi data digital. Setiap perubahan akan segera dipublikasikan di halaman ini dengan pembaruan tanggal revisi di bagian atas. Apabila Anda memiliki pertanyaan, permohonan klarifikasi, atau keluhan terkait privasi, hubungi kami di:'
+          : 'We may update this Privacy Policy periodically to reflect evolving Google advertising regulations or digital privacy laws. Any modifications will be posted directly on this page with an updated revision date. If you have questions, inquiries, or complaints regarding this policy, please reach out to:'}
+      </p>
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        <a 
+          href="mailto:privacy@penggarisonline.com" 
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-(--muted) hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-cyan-400 font-mono text-xs font-semibold border border-(--border) transition-all"
+        >
+          <span>✉️</span>
+          <span>privacy@penggarisonline.com</span>
+        </a>
+        <a 
+          href="mailto:kontak@penggarisonline.com" 
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-(--muted) hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-cyan-400 font-mono text-xs font-semibold border border-(--border) transition-all"
+        >
+          <span>💬</span>
+          <span>kontak@penggarisonline.com</span>
+        </a>
       </div>
     </section>
   </div>

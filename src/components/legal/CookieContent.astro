@@ -1,0 +1,264 @@
+---
+// CookieContent.astro
+interface Props {
+  lang?: string;
+}
+const { lang = 'id' } = Astro.props;
+const isId = lang === 'id';
+---
+
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8">
+  <div class="space-y-3 text-center sm:text-left border-b border-(--border) pb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider border border-cyan-500/20">
+      <span>🍪</span>
+      <span>{isId ? 'Transparansi Kuki & Pelacak Web' : 'Cookie Policy & Web Tracking'}</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-(--foreground) tracking-tight">
+      {isId ? 'Kebijakan Kuki (Cookie Policy)' : 'Cookie Policy'}
+    </h1>
+    <p class="text-xs sm:text-sm text-(--muted-foreground)">
+      {isId ? 'Terakhir diperbarui: 14 September 2026 • Panduan resmi pengelolaan kuki di penggarisonline.com' : 'Last updated: September 14, 2026 • Official cookie management guide for penggarisonline.com'}
+    </p>
+  </div>
+
+  <div class="prose prose-sm sm:prose-base dark:prose-invert max-w-none space-y-6 text-sm text-(--muted-foreground) leading-relaxed">
+    <!-- Section 1: What is a Cookie -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>1.</span>
+        <span>{isId ? 'Apa Itu Kuki (Cookies) & Web Storage?' : 'What Are Cookies & Web Storage?'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Kuki (cookies) adalah berkas teks kecil yang ditempatkan di komputer atau perangkat seluler Anda oleh peramban (browser) saat Anda mengunjungi suatu situs web. Kuki digunakan secara luas agar situs web dapat berfungsi lebih efisien, mengingat preferensi pengguna, dan menyediakan laporan analitik bagi pemilik situs web.'
+          : 'Cookies are small text fragments deposited onto your computer or smartphone by your web browser when visiting websites. Cookies are ubiquitously utilized to ensure reliable web functionality, preserve customized user settings, and provide diagnostic performance data to site operators.'}
+      </p>
+      <p>
+        {isId
+          ? 'Selain kuki HTTP tradisional, teknologi web modern menggunakan "Web Storage" (localStorage) untuk menyimpan konfigurasi lokal secara instan tanpa mengirimkannya bolak-balik melalui header jaringan internet.'
+          : 'In addition to standard HTTP cookies, modern web architectures employ client-side "Web Storage" (localStorage) to retain user preferences with zero network bandwidth overhead.'}
+      </p>
+    </section>
+
+    <!-- Section 2: Categories of Cookies Used -->
+    <section class="space-y-4 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>2.</span>
+        <span>{isId ? 'Kategori Kuki & Penyimpanan yang Kami Gunakan' : 'Categories of Cookies & Local Storage We Use'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Di penggarisonline.com, kami mengklasifikasikan penyimpanan dan kuki menjadi 3 (tiga) kategori transparan:'
+          : 'At penggarisonline.com, we classify our cookies and browser storage mechanisms into three distinct tiers:'}
+      </p>
+
+      <div class="space-y-3">
+        <!-- Essential / Functional -->
+        <div class="p-4 rounded-xl bg-(--muted)/60 border border-(--border) space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              {isId ? 'Wajib & Esensial' : 'Essential & Functional'}
+            </span>
+            <h3 class="font-bold text-(--foreground) text-sm">
+              {isId ? 'Penyimpanan Preferensi Lokal (Client-Side Storage)' : 'Client Preference Storage (localStorage)'}
+            </h3>
+          </div>
+          <p class="text-xs">
+            {isId
+              ? 'Penyimpanan lokal di browser Anda untuk menyimpan: nilai kalibrasi piksel PPI, satuan aktif (cm/mm/inci), tema warna gelap/terang, dan status kunci pin. Data ini tidak dapat diakses oleh pihak luar dan tidak melacak profil pribadi Anda.'
+              : 'Local browser storage utilized to maintain: calibrated PPI ratio, active measurement units (cm/mm/inches), dark/light theme mode, and marker lock states. This data never leaves your client device.'}
+          </p>
+        </div>
+
+        <!-- Analytics -->
+        <div class="p-4 rounded-xl bg-(--muted)/60 border border-(--border) space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 border border-indigo-500/20">
+              {isId ? 'Keamanan & Kinerja' : 'Security & Diagnostics'}
+            </span>
+            <h3 class="font-bold text-(--foreground) text-sm">
+              {isId ? 'Infrastruktur Cloudflare & Telemetri Anonim' : 'Cloudflare Infrastructure & Edge Security'}
+            </h3>
+          </div>
+          <p class="text-xs">
+            {isId
+              ? 'Digunakan oleh jaringan Cloudflare Pages CDN untuk mengidentifikasi ancaman bot jahat, mencegah serangan DDoS, dan mengoptimalkan kecepatan muat halaman secara global. Kuki ini tidak berisi informasi identitas pribadi.'
+              : 'Utilized by Cloudflare Pages edge network to authenticate non-malicious browser traffic, protect against volumetric DDoS attacks, and speed up global delivery caching. No PII is stored.'}
+          </p>
+        </div>
+
+        <!-- Advertising: Google AdSense & DoubleClick -->
+        <div class="p-4 rounded-xl bg-(--muted)/60 border border-amber-500/30 space-y-2 border-l-4 border-l-amber-500">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold uppercase bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              {isId ? 'Periklanan Google' : 'Advertising & Targeting'}
+            </span>
+            <h3 class="font-bold text-(--foreground) text-sm">
+              {isId ? 'Kuki Google AdSense & DoubleClick DART' : 'Google AdSense & DoubleClick DART Cookies'}
+            </h3>
+          </div>
+          <p class="text-xs leading-relaxed">
+            {isId
+              ? 'Google dan mitra periklanan pihak ketiga menggunakan kuki untuk menayangkan iklan yang relevan, membatasi berapa kali Anda melihat iklan yang sama (frequency capping), mendeteksi klik tidak valid (invalid click prevention), serta mengukur efektivitas kampanye periklanan.'
+              : 'Google and accredited third-party advertising partners deploy cookies to serve contextually relevant advertisements, limit ad exposure repetition (frequency capping), audit invalid clicks, and gauge marketing campaign performance.'}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Google AdSense Opt-Out Disclosures -->
+    <section class="space-y-4 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>3.</span>
+        <span>{isId ? 'Pilihan Menonaktifkan Iklan Personal Google (Opt-Out)' : 'Opting Out of Google Personalized Advertising'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Anda memiliki hak penuh untuk memilih apakah ingin menerima iklan yang dipersonalisasi atau iklan non-personal. Untuk mengelola atau menonaktifkan personalisasi iklan Google, silakan kunjungi portal resmi berikut:'
+          : 'You maintain absolute discretion over whether you wish to receive personalized or non-personalized advertisements. To manage or opt out of Google personalized advertising, please visit:'}
+      </p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+        <a 
+          href="https://adssettings.google.com/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="p-3.5 rounded-xl bg-(--muted) hover:bg-indigo-500/10 border border-(--border) transition-all block group"
+        >
+          <div class="font-bold text-xs text-indigo-600 dark:text-cyan-400 group-hover:underline">
+            Google Ads Settings →
+          </div>
+          <p class="text-[11px] text-(--muted-foreground) pt-1">
+            {isId ? 'Kelola preferensi iklan di akun Google Anda' : 'Customize ad preferences across Google platforms'}
+          </p>
+        </a>
+
+        <a 
+          href="https://myadcenter.google.com/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="p-3.5 rounded-xl bg-(--muted) hover:bg-indigo-500/10 border border-(--border) transition-all block group"
+        >
+          <div class="font-bold text-xs text-indigo-600 dark:text-cyan-400 group-hover:underline">
+            Google My Ad Center →
+          </div>
+          <p class="text-[11px] text-(--muted-foreground) pt-1">
+            {isId ? 'Kontrol topik dan merek iklan yang Anda sukai' : 'Control brands and ad topics in search and web'}
+          </p>
+        </a>
+
+        <a 
+          href="http://www.aboutads.info/choices/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="p-3.5 rounded-xl bg-(--muted) hover:bg-indigo-500/10 border border-(--border) transition-all block group"
+        >
+          <div class="font-bold text-xs text-indigo-600 dark:text-cyan-400 group-hover:underline">
+            Digital Advertising Alliance (DAA) →
+          </div>
+          <p class="text-[11px] text-(--muted-foreground) pt-1">
+            {isId ? 'Opt-out kolektif dari ratusan jaringan iklan' : 'Comprehensive opt-out for hundreds of ad networks'}
+          </p>
+        </a>
+
+        <a 
+          href="https://www.youronlinechoices.com/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="p-3.5 rounded-xl bg-(--muted) hover:bg-indigo-500/10 border border-(--border) transition-all block group"
+        >
+          <div class="font-bold text-xs text-indigo-600 dark:text-cyan-400 group-hover:underline">
+            Your Online Choices (EDAA) →
+          </div>
+          <p class="text-[11px] text-(--muted-foreground) pt-1">
+            {isId ? 'Portal preferensi kuki untuk wilayah Eropa' : 'European interactive digital advertising choices'}
+          </p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 4: Browser Management Guides -->
+    <section class="space-y-4 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>4.</span>
+        <span>{isId ? 'Cara Mengatur dan Menghapus Kuki di Peramban Anda' : 'How to Manage and Delete Cookies in Your Browser'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Sebagian besar peramban web modern mengizinkan Anda untuk melihat, memblokir, atau menghapus kuki pihak ketiga melalui menu setelan peramban. Berikut adalah panduan singkat untuk peramban populer:'
+          : 'Most modern web browsers allow you to inspect, block, or purge third-party cookies directly through your browser settings. Follow these instructions for your browser of choice:'}
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <!-- Google Chrome -->
+        <div class="p-4 rounded-xl bg-(--muted)/50 border border-(--border) space-y-1.5">
+          <div class="font-bold text-sm text-(--foreground) flex items-center gap-1.5">
+            <span>🌐</span> Google Chrome
+          </div>
+          <p class="text-(--muted-foreground)">
+            {isId 
+              ? 'Buka Setelan (Settings) > Privasi dan Keamanan (Privacy and Security) > Kuki Pihak Ketiga (Third-party cookies) > Pilih "Blokir kuki pihak ketiga" atau kelola izin situs.'
+              : 'Navigate to Settings > Privacy and security > Third-party cookies > Select "Block third-party cookies" or manage site-specific permissions.'}
+          </p>
+        </div>
+
+        <!-- Apple Safari -->
+        <div class="p-4 rounded-xl bg-(--muted)/50 border border-(--border) space-y-1.5">
+          <div class="font-bold text-sm text-(--foreground) flex items-center gap-1.5">
+            <span>🧭</span> Apple Safari (iOS / macOS)
+          </div>
+          <p class="text-(--muted-foreground)">
+            {isId
+              ? 'Pada iPhone/iPad: Buka Pengaturan > Safari > Lanjutan > Matikan atau Blokir Semua Kuki. Pada Mac: Safari > Preferensi > Privasi > Centang "Cegah pelacakan lintas situs".'
+              : 'On iPhone/iPad: Go to Settings > Safari > Advanced > Block All Cookies. On macOS: Safari > Preferences > Privacy > Check "Prevent cross-site tracking".'}
+          </p>
+        </div>
+
+        <!-- Mozilla Firefox -->
+        <div class="p-4 rounded-xl bg-(--muted)/50 border border-(--border) space-y-1.5">
+          <div class="font-bold text-sm text-(--foreground) flex items-center gap-1.5">
+            <span>🦊</span> Mozilla Firefox
+          </div>
+          <p class="text-(--muted-foreground)">
+            {isId
+              ? 'Buka Menu > Pengaturan (Settings) > Privasi & Keamanan > Pada "Perlindungan Pelacakan yang Disempurnakan", pilih mode Standar atau Ketat.'
+              : 'Open Menu > Settings > Privacy & Security > Under "Enhanced Tracking Protection", select Standard or Strict mode.'}
+          </p>
+        </div>
+
+        <!-- Microsoft Edge -->
+        <div class="p-4 rounded-xl bg-(--muted)/50 border border-(--border) space-y-1.5">
+          <div class="font-bold text-sm text-(--foreground) flex items-center gap-1.5">
+            <span>🌀</span> Microsoft Edge
+          </div>
+          <p class="text-(--muted-foreground)">
+            {isId
+              ? 'Buka Pengaturan > Kuki dan Izin Situs > Kelola dan hapus kuki dan data situs > Aktifkan "Blokir kuki pihak ketiga".'
+              : 'Navigate to Settings > Cookies and site permissions > Manage and delete cookies and site data > Toggle "Block third-party cookies".'}
+          </p>
+        </div>
+      </div>
+      <p class="text-[11px] text-(--muted-foreground) pt-1">
+        {isId
+          ? 'Perhatian: Memblokir kuki pihak ketiga tidak akan mengganggu fungsi pengukuran penggaris sentimeter kami, namun dapat mempengaruhi personalisasi iklan yang Anda lihat.'
+          : 'Note: Blocking third-party cookies will not hinder the functionality of our on-screen ruler tools, but will result in non-personalized advertisements.'}
+      </p>
+    </section>
+
+    <!-- Section 5: Updates and Contact -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>5.</span>
+        <span>{isId ? 'Pertanyaan & Kontak Kebijakan Kuki' : 'Inquiries & Contact'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Jika Anda memiliki pertanyaan lebih lanjut mengenai implementasi kuki atau mekanisme penyimpanan data di situs kami, jangan ragu untuk menghubungi kami melalui:'
+          : 'If you have further questions regarding our cookie practices or local storage implementation, please reach out to:'}
+      </p>
+      <div class="p-3.5 rounded-xl bg-(--muted) font-mono text-xs text-indigo-600 dark:text-cyan-400 font-semibold w-fit">
+        ✉️ privacy@penggarisonline.com / kontak@penggarisonline.com
+      </div>
+    </section>
+  </div>
+</article>

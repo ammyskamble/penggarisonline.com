@@ -42,27 +42,37 @@ const prefix = currentLang === 'en' ? '/en' : '';
       <!-- Col 2: Halaman Informasi & Legal -->
       <div class="space-y-3 text-center md:text-left">
         <h3 class="text-xs font-bold uppercase tracking-wider text-(--foreground)">
-          Informasi &amp; Legalitas
+          {currentLang === 'id' ? 'Informasi & Legalitas' : 'Legal & Information'}
         </h3>
         <ul class="space-y-2 text-xs">
           <li>
             <a href={`${prefix}/about-us`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
-              Tentang Kami (About Us)
+              {currentLang === 'id' ? 'Tentang Kami (About Us)' : 'About Us'}
             </a>
           </li>
           <li>
             <a href={`${prefix}/privacy-policy`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
-              Kebijakan Privasi (Privacy Policy)
+              {currentLang === 'id' ? 'Kebijakan Privasi (Privacy Policy)' : 'Privacy Policy'}
             </a>
           </li>
           <li>
             <a href={`${prefix}/terms-conditions`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
-              Syarat &amp; Ketentuan (Terms)
+              {currentLang === 'id' ? 'Syarat & Ketentuan (Terms)' : 'Terms & Conditions'}
+            </a>
+          </li>
+          <li>
+            <a href={`${prefix}/disclaimer`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
+              {currentLang === 'id' ? 'Penafian (Disclaimer)' : 'Disclaimer'}
+            </a>
+          </li>
+          <li>
+            <a href={`${prefix}/cookie-policy`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
+              {currentLang === 'id' ? 'Kebijakan Kuki (Cookie Policy)' : 'Cookie Policy'}
             </a>
           </li>
           <li>
             <a href={`${prefix}/contact-us`} class="hover:text-indigo-500 dark:hover:text-cyan-400 transition-colors">
-              Hubungi Kami (Contact Us)
+              {currentLang === 'id' ? 'Hubungi Kami (Contact Us)' : 'Contact Us'}
             </a>
           </li>
         </ul>

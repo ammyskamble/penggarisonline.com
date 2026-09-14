@@ -1,0 +1,40 @@
+---
+// src/pages/[lang]/cookie-policy.astro
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import CookieContent from '../../components/legal/CookieContent.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'id' } },
+    { params: { lang: 'en' } }
+  ];
+}
+
+const { lang } = Astro.params;
+const isId = lang === 'id';
+
+const title = isId
+  ? "Kebijakan Kuki (Cookie Policy) - Penggaris Online HP CM"
+  : "Cookie Policy - Precision Online Ruler";
+
+const description = isId
+  ? "Kebijakan kuki Penggaris Online HP CM (penggarisonline.com). Penjelasan penyimpanan lokal, kuki pihak ketiga Google AdSense & DoubleClick, serta panduan pengelolaan browser."
+  : "Cookie policy for Penggaris Online HP CM (penggarisonline.com). Local storage clarity, Google AdSense & DoubleClick advertising cookies, and browser management guides.";
+
+const canonical = `https://penggarisonline.com/${lang}/cookie-policy`;
+const hreflangs = [
+  { lang: 'id', url: 'https://penggarisonline.com/id/cookie-policy' },
+  { lang: 'en', url: 'https://penggarisonline.com/en/cookie-policy' },
+  { lang: 'x-default', url: 'https://penggarisonline.com/cookie-policy' }
+];
+---
+
+<Layout title={title} description={description} canonical={canonical} lang={lang} hreflangs={hreflangs}>
+  <Navbar />
+  <main class="flex-1 w-full">
+    <CookieContent lang={lang} />
+  </main>
+  <Footer currentLang={lang} />
+</Layout>

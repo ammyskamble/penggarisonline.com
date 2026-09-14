@@ -1,0 +1,24 @@
+---
+// src/pages/disclaimer.astro
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import DisclaimerContent from '../components/legal/DisclaimerContent.astro';
+
+const title = "Penafian (Disclaimer) - Penggaris Online HP CM";
+const description = "Penafian resmi Penggaris Online HP CM (penggarisonline.com). Batasan akurasi mistar digital, toleransi kalibrasi layar, dan pemisahan materi iklan Google AdSense.";
+const canonical = "https://penggarisonline.com/disclaimer";
+const hreflangs = [
+  { lang: 'id', url: 'https://penggarisonline.com/disclaimer' },
+  { lang: 'en', url: 'https://penggarisonline.com/en/disclaimer' },
+  { lang: 'x-default', url: 'https://penggarisonline.com/disclaimer' }
+];
+---
+
+<Layout title={title} description={description} canonical={canonical} lang="id" hreflangs={hreflangs}>
+  <Navbar />
+  <main class="flex-1 w-full">
+    <DisclaimerContent lang="id" />
+  </main>
+  <Footer currentLang="id" />
+</Layout>

@@ -22,59 +22,124 @@ const isId = lang === 'id';
   </div>
 
   <div class="prose prose-sm sm:prose-base dark:prose-invert max-w-none space-y-6 text-sm text-(--muted-foreground) leading-relaxed">
+    <!-- Section 1: Acceptance of Terms -->
     <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
-      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '1. Penerimaan Ketentuan' : '1. Acceptance of Terms'}
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>1.</span>
+        <span>{isId ? 'Penerimaan Ketentuan Layanan' : 'Acceptance of Terms'}</span>
       </h2>
       <p>
         {isId
-          ? 'Dengan mengakses dan menggunakan situs web Penggaris Online HP CM (penggarisonline.com), Anda menyetujui untuk terikat oleh seluruh Syarat dan Ketentuan ini. Jika Anda tidak menyetujui bagian mana pun dari ketentuan ini, Anda disarankan untuk tidak melanjutkan penggunaan situs ini.'
-          : 'By accessing or utilizing the Penggaris Online HP CM (penggarisonline.com) website, you agree to be legally bound by these Terms and Conditions. If you do not agree with any provision herein, please cease using this service.'}
+          ? 'Dengan mengakses, menjelajahi, atau menggunakan situs web Penggaris Online HP CM (penggarisonline.com), Anda menyatakan bahwa Anda telah membaca, memahami, dan menyetujui untuk terikat secara hukum oleh seluruh Syarat dan Ketentuan ini beserta Kebijakan Privasi dan Penafian kami. Apabila Anda tidak menyetujui salah satu ketentuan ini, mohon untuk tidak melanjutkan penggunaan situs ini.'
+          : 'By accessing, browsing, or utilizing the Penggaris Online HP CM (penggarisonline.com) website, you acknowledge having read, understood, and agreed to be legally bound by these Terms and Conditions, alongside our Privacy Policy and Disclaimer. If you do not accept these terms, please discontinue using this utility immediately.'}
       </p>
     </section>
 
+    <!-- Section 2: Permitted Use & Free License -->
     <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
-      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '2. Lisensi Penggunaan & Akses Bebas Biaya' : '2. Permitted Use & Zero-Cost License'}
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>2.</span>
+        <span>{isId ? 'Lisensi Penggunaan & Akses Layanan Gratis' : 'Permitted Use & Zero-Cost License'}</span>
       </h2>
       <p>
         {isId
-          ? 'Layanan penggaris digital ini disediakan secara gratis untuk keperluan pribadi, pendidikan, komersial ringan, maupun profesional. Anda diberikan lisensi non-eksklusif, bebas royalti, dan dapat dibatalkan untuk menggunakan penggaris di peramban Anda. Dilarang keras menyalin kode sumber secara tidak sah, merekayasa balik (reverse engineer), atau melakukan scraping otomatis yang membebani infrastruktur server kami.'
-          : 'This digital measurement utility is provided free of charge for personal, academic, small-business, and commercial use. You are granted a revocable, non-exclusive license to utilize the web tools. Unauthorized scraping, source code duplication, or automated denial-of-service attempts are strictly prohibited.'}
+          ? 'Layanan instrumen penggaris digital di situs ini disediakan secara gratis untuk keperluan pribadi, belajar di sekolah/kampus, maupun keperluan pekerjaan kreatif harian. Anda diberikan lisensi non-eksklusif, bebas royalti, dan dapat dibatalkan sewaktu-waktu semata-mata untuk mengoperasikan alat ukur melalui antarmuka peramban resmi kami.'
+          : 'This on-screen measurement utility is made available free of charge for personal, academic, and everyday workflow tasks. You are granted a revocable, non-exclusive, non-transferable license to access the measurement tools strictly through modern web browser interfaces.'}
       </p>
     </section>
 
-    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+    <!-- Section 3: Prohibited Conduct & AdSense Invalid Traffic Protection -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border) border-l-4 border-l-red-500">
+      <div class="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold text-sm">
+        <span>🛑</span>
+        <span>{isId ? 'Integritas Lalu Lintas & Kepatuhan Kebijakan Iklan (Anti-Invalid Traffic)' : 'Traffic Integrity & Anti-Invalid Click Compliance'}</span>
+      </div>
       <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '3. Batasan Tanggung Jawab & Akurasi Pengukuran' : '3. Precision Disclaimer & Limitation of Liability'}
+        {isId ? '3. Larangan Penggunaan & Perlindungan Lalu Lintas Iklan' : '3. Prohibited Conduct & Advertising Integrity'}
       </h2>
       <p>
         {isId
-          ? 'Meskipun alat ini telah diuji memiliki presisi tinggi setara mistar fisik setelah melalui kalibrasi kartu ATM/e-KTP standar, Penggaris Online HP CM disediakan "sebagaimana adanya" (as is). Akurasi akhir dapat dipengaruhi oleh faktor eksternal seperti pengaturan zoom browser pengguna, ketebalan casing pelindung ponsel, atau jenis pelindung layar (tempered glass). Untuk kebutuhan medis, navigasi aeronautika, kalibrasi laboratorium bersertifikasi SNI/ISO legal, pengguna disarankan selalu memverifikasi dengan instrumen metrologi terkalibrasi resmi.'
-          : 'While our calibration engine achieves sub-millimeter precision equivalent to physical steel rulers upon ISO card calibration, this tool is provided on an "AS IS" basis. Physical accuracy may be affected by browser zoom scaling, screen protector bevels, or protective cases. For high-stakes industrial, legal metrology, or medical applications, always cross-check with certified laboratory tools.'}
+          ? 'Dalam menggunakan penggarisonline.com, pengguna dilarang keras untuk melakukan tindakan-tindakan berikut demi menjaga keamanan dan kepatuhan penuh terhadap Kebijakan Program Google AdSense:'
+          : 'In utilizing penggarisonline.com, visitors are strictly prohibited from engaging in any of the following activities to maintain full adherence to Google AdSense Program Policies:'}
+      </p>
+      <ul class="list-disc list-inside space-y-1.5 pl-2 text-xs sm:text-sm">
+        <li>
+          <strong>{isId ? 'Klik Iklan Tidak Valid (Invalid Click Activity):' : 'Invalid Ad Clicks:'}</strong>
+          {isId
+            ? ' Mengklik iklan secara berulang-ulang, disengaja, atau menipu, atau menggunakan pihak ketiga/program untuk menghasilkan tayangan atau klik palsu secara artifisial.'
+            : ' Repeatedly or fraudulently clicking on advertisements, or generating artificial ad impressions or clicks through automated scripts or paid traffic exchanges.'}
+        </li>
+        <li>
+          <strong>{isId ? 'Penggunaan Bot & Scraper Otomatis:' : 'Automated Bots & Scraping:'}</strong>
+          {isId
+            ? ' Menggunakan bot, web scraper, crawler jahat, atau proxy anonim untuk membebani server atau menduplikasi basis kode.'
+            : ' Deploying automated bots, scrapers, automated head-less browsers, or proxies that overload server capacity or compromise site operations.'}
+        </li>
+        <li>
+          <strong>{isId ? 'Rekayasa Balik & Penyalinan Kode:' : 'Reverse Engineering:'}</strong>
+          {isId
+            ? ' Melakukan reverse engineering, dekompilasi kode algoritma mistar, atau memuat ulang halaman di dalam iframe situs phishing lain (clickjacking).'
+            : ' Reverse engineering, decompiling measurement algorithms, or embedding pages within unauthorized iframes (clickjacking / framing).'}
+        </li>
+      </ul>
+    </section>
+
+    <!-- Section 4: Precision Disclaimer & Limitation of Liability -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>4.</span>
+        <span>{isId ? 'Batasan Akurasi & Penafian Tanggung Jawab' : 'Accuracy Disclaimer & Limitation of Liability'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Instrumen mistar digital ini disediakan "sebagaimana adanya" (AS IS) tanpa jaminan apa pun, baik tersurat maupun tersirat. Penggaris ini dirancang untuk bantuan visual dan perkiraan dimensi. Akurasi dapat dipengaruhi oleh resolusi monitor, zoom peramban, dan kalibrasi pengguna. Situs kami tidak bertanggung jawab atas kerugian finansial, kesalahan pemotongan material, atau dampak komersial apa pun yang timbul dari ketergantungan pada pengukuran alat ini.'
+          : 'This digital ruler instrument is delivered on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind. Screen dimensions depend on user display scaling, browser zoom settings, and calibration adherence. We disclaim any liability for pecuniary loss, manufacturing discrepancies, or damages resulting from reliance upon on-screen measurement values.'}
       </p>
     </section>
 
+    <!-- Section 5: Intellectual Property & DMCA Procedure -->
     <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
-      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '4. Hak Kekayaan Intelektual' : '4. Intellectual Property Rights'}
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>5.</span>
+        <span>{isId ? 'Hak Cipta & Prosedur Pemberitahuan DMCA' : 'Intellectual Property & DMCA / Copyright Notice'}</span>
       </h2>
       <p>
         {isId
-          ? 'Seluruh elemen desain antarmuka, logo, ilustrasi vektor, dan algoritma perhitungan jangka sorong di penggarisonline.com dilindungi oleh hak cipta dan peraturan kekayaan intelektual Republik Indonesia.'
-          : 'All interface elements, custom styling, branding, and mathematical algorithms on penggarisonline.com are proprietary intellectual property protected under applicable intellectual property laws.'}
+          ? 'Seluruh konten, merek dagang, antarmuka grafis, elemen desain, dan kode sumber interaktif di penggarisonline.com adalah hak kekayaan intelektual milik pengelola situs atau pemberi lisensinya. Jika Anda merupakan pemilik hak cipta dan meyakini bahwa terdapat materi di situs kami yang melanggar hak kekayaan intelektual Anda, silakan ajukan pemberitahuan resmi sesuai prinsip Digital Millennium Copyright Act (DMCA) ke:'
+          : 'All graphical assets, custom vector rulers, UI styling, code algorithms, and branding on penggarisonline.com are proprietary intellectual property. If you believe your copyrighted work has been infringed upon, please send a detailed notice adhering to the Digital Millennium Copyright Act (DMCA) standards to:'}
+      </p>
+      <div class="p-3 rounded-xl bg-(--muted) font-mono text-xs text-indigo-600 dark:text-cyan-400 font-semibold w-fit">
+        ✉️ dmca@penggarisonline.com / legal@penggarisonline.com
+      </div>
+    </section>
+
+    <!-- Section 6: Governing Law -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>6.</span>
+        <span>{isId ? 'Hukum yang Mengatur & Penyelesaian Sengketa' : 'Governing Law & Dispute Resolution'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Syarat dan Ketentuan ini diatur dan ditafsirkan menurut ketentuan hukum Negara Kesatuan Republik Indonesia. Setiap perselisihan yang timbul sehubungan dengan penggunaan situs ini akan diselesaikan terlebih dahulu melalui musyawarah kekeluargaan dengan itikad baik.'
+          : 'These Terms and Conditions shall be governed by and construed in accordance with the laws of the Republic of Indonesia. Any disputes arising in connection with the site shall be pursued primarily through amicable dialogue and good-faith negotiation.'}
       </p>
     </section>
 
+    <!-- Section 7: Amendments & Contact -->
     <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
-      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
-        {isId ? '5. Hukum yang Berlaku' : '5. Governing Law'}
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>7.</span>
+        <span>{isId ? 'Perubahan Ketentuan & Hubungi Kami' : 'Amendments & Contact'}</span>
       </h2>
       <p>
         {isId
-          ? 'Syarat dan Ketentuan ini diatur dan ditafsirkan sesuai dengan hukum Negara Kesatuan Republik Indonesia. Setiap perselisihan yang timbul akan diselesaikan secara musyawarah untuk mufakat.'
-          : 'These Terms and Conditions shall be governed by and construed in accordance with the laws of the Republic of Indonesia.'}
+          ? 'Kami berhak mengubah atau memperbarui Syarat dan Ketentuan ini sewaktu-waktu. Penggunaan berkelanjutan atas situs ini setelah perubahan dipublikasikan merupakan bentuk persetujuan Anda terhadap ketentuan yang diperbarui. Pertanyaan dapat diajukan ke:'
+          : 'We reserve the right to modify these Terms at our discretion. Continued use of this site following any posted revisions constitutes acceptance of those amendments. Inquiries may be directed to:'}
       </p>
+      <div class="p-3 rounded-xl bg-(--muted) font-mono text-xs text-indigo-600 dark:text-cyan-400 font-semibold w-fit">
+        ✉️ kontak@penggarisonline.com
+      </div>
     </section>
   </div>
 </article>

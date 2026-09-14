@@ -1,0 +1,157 @@
+---
+// DisclaimerContent.astro
+interface Props {
+  lang?: string;
+}
+const { lang = 'id' } = Astro.props;
+const isId = lang === 'id';
+---
+
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8">
+  <div class="space-y-3 text-center sm:text-left border-b border-(--border) pb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider border border-amber-500/20">
+      <span>⚠️</span>
+      <span>{isId ? 'Penafian Resmi & Batasan Tanggung Jawab' : 'Disclaimer & Terms of Use'}</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-(--foreground) tracking-tight">
+      {isId ? 'Penafian (Disclaimer)' : 'Disclaimer'}
+    </h1>
+    <p class="text-xs sm:text-sm text-(--muted-foreground)">
+      {isId ? 'Terakhir diperbarui: 14 September 2026 • Harap dibaca sebelum menggunakan instrumen pengukur di penggarisonline.com' : 'Last updated: September 14, 2026 • Please review before using tools on penggarisonline.com'}
+    </p>
+  </div>
+
+  <div class="prose prose-sm sm:prose-base dark:prose-invert max-w-none space-y-6 text-sm text-(--muted-foreground) leading-relaxed">
+    <!-- Section 1: General Educational Utility -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>1.</span>
+        <span>{isId ? 'Tujuan Edukasi & Penggunaan Praktis Harian' : 'Educational & Everyday Utility Purpose'}</span>
+      </h2>
+      <p>
+        {isId 
+          ? 'Instrumen dan utilitas ukur yang tersedia di Penggaris Online HP CM (penggarisonline.com) disediakan semata-mata untuk keperluan informasi umum, edukasi sekolah, prakarya kerajinan (DIY), dan estimasi pengukuran cepat sehari-hari saat Anda tidak membawa penggaris fisik.'
+          : 'The on-screen measurement instruments on Penggaris Online HP CM (penggarisonline.com) are provided solely for general educational, crafting, student learning, and everyday convenience estimation when a physical ruler is unavailable.'}
+      </p>
+    </section>
+
+    <!-- Section 2: Accuracy Factors and Calibration Variance -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>2.</span>
+        <span>{isId ? 'Akurasi Pengukuran & Variansi Kalibrasi Layar' : 'Measurement Accuracy & Physical Calibration Variance'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Meskipun penggaris ini dirancang dengan algoritma rasio aspek tinggi dan opsi kalibrasi kartu berstandar ISO/IEC 7810 ID-1 (seperti e-KTP, SIM, atau kartu ATM) untuk mencapai presisi sub-milimeter, akurasi fisik akhir pada layar peranti Anda bergantung pada beberapa faktor eksternal:'
+          : 'Although this online ruler is built with high-precision scaling algorithms and standard ISO/IEC 7810 ID-1 card calibration (e.g. credit/ATM cards or national IDs) for sub-millimeter precision, true on-screen accuracy remains subject to external technical factors:'}
+      </p>
+      <ul class="list-disc list-inside space-y-2 pl-2">
+        <li>
+          <strong>{isId ? 'Tingkat Pembesaran Layar (Browser Zoom Level):' : 'Browser Zoom Scaling:'}</strong>
+          {isId
+            ? ' Peramban web Anda harus berada pada tingkat zoom tepat 100%. Pengaturan zoom seperti 90%, 110%, 125%, atau 150% pada sistem operasi Windows/macOS/Android akan mengubah proporsi fisik piksel layar secara artifisial.'
+            : ' Your browser zoom must be set to precisely 100%. Operating system scaling factors (e.g. 125% or 150% DPI on Windows/macOS) alter the physical pixel density unless accounted for via our calibration tool.'}
+        </li>
+        <li>
+          <strong>{isId ? 'Pelindung Layar & Bezel Casing (Tempered Glass & Cases):' : 'Screen Protectors & Protective Cases:'}</strong>
+          {isId
+            ? ' Ketebalan kaca pelindung (tempered glass) atau bibir bumper casing pelindung HP yang tebal dapat menciptakan distorsi paralaks optik saat mengamati garis ukur dari sudut kemiringan tertentu.'
+            : ' Thick tempered glass screen protectors or raised phone bumper cases may introduce optical parallax refraction when aligning objects from an off-perpendicular angle.'}
+        </li>
+        <li>
+          <strong>{isId ? 'Kelengkungan Layar (Curved / Waterfall Displays):' : 'Curved / Waterfall Screen Edges:'}</strong>
+          {isId
+            ? ' Ponsel cerdas dengan tepian layar melengkung (curved edge) dapat mengalami peregangan geometris pada area tepi terluar.'
+            : ' Smartphones featuring curved edge displays may exhibit slight non-linear distortion along the extreme outer borders.'}
+        </li>
+      </ul>
+      <p class="text-xs bg-(--muted)/60 p-3.5 rounded-xl border border-(--border)">
+        💡 {isId 
+          ? 'Rekomendasi: Selalu gunakan fitur "Kalibrasi Layar" dengan kartu ATM fisik sebelum melakukan pengukuran penting untuk memastikan peranti Anda terkalibrasi dengan benar.' 
+          : 'Recommendation: Always perform on-screen calibration with a standard physical payment card before conducting critical measurements.'}
+      </p>
+    </section>
+
+    <!-- Section 3: Legal Metrology Exclusion -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>3.</span>
+        <span>{isId ? 'Pengecualian Metrologi Legal & Profesional' : 'Legal Metrology & Professional Exclusion'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Penggaris Online HP CM BUKAN merupakan alat ukur tera resmi yang disertifikasi oleh Badan Standardisasi Nasional (BSN), Direktorat Metrologi Kementerian Perdagangan RI, atau lembaga kalibrasi hukum internasional lainnya. Alat ini TIDAK boleh digunakan sebagai acuan dasar untuk:'
+          : 'Penggaris Online HP CM is NOT a certified metrological instrument approved by legal trade standards organizations or government metrology bureaus. It must NOT be utilized as a governing standard for:'}
+      </p>
+      <ul class="list-disc list-inside space-y-1.5 pl-2">
+        <li>{isId ? 'Transaksi jual-beli komersial yang membutuhkan timbangan/ukuran bersertifikat tera sah.' : 'Commercial trade transactions requiring legally certified weights and measures.'}</li>
+        <li>{isId ? 'Prosedur bedah medis, peresepan ortopedi, atau diagnosa klinis kedokteran.' : 'Surgical, orthopedic, biomedical, or pharmaceutical clinical applications.'}</li>
+        <li>{isId ? 'Perancangan struktur teknik sipil berskala kritis, aeronautika, atau keselamatan kelistrikan tegangan tinggi.' : 'Aeronautics, aerospace engineering, civil structural stress testing, or hazardous high-voltage clearances.'}</li>
+      </ul>
+    </section>
+
+    <!-- Section 4: Advertising & Google AdSense Separation -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border) border-l-4 border-l-indigo-500">
+      <div class="flex items-center gap-2 text-indigo-600 dark:text-cyan-400 font-bold text-sm">
+        <span>📢</span>
+        <span>{isId ? 'Pemisahan Iklan Pihak Ketiga & Google AdSense' : 'Third-Party Advertising & Google AdSense Disclosure'}</span>
+      </div>
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground)">
+        {isId ? '4. Penafian Iklan Sponsor & Materi Komersial' : '4. Advertising & Sponsored Content Disclaimer'}
+      </h2>
+      <p>
+        {isId
+          ? 'Situs ini menampilkan iklan yang disajikan secara otomatis oleh Google AdSense serta jaringan mitra periklanan pihak ketiga. Penayangan materi iklan, banner, atau tautan sponsor di penggarisonline.com BUKAN merupakan bentuk dukungan (endorsement), rekomendasi, garansi, ataupun perwakilan resmi dari pengelola penggarisonline.com terhadap produk, jasa, klaim, atau klausa promosi yang tercantum dalam iklan tersebut.'
+          : 'This website serves advertisements dynamically populated by Google AdSense and accredited third-party ad networks. The appearance of advertisements, commercial banners, or sponsored links does NOT constitute an endorsement, guarantee, representation, or recommendation by penggarisonline.com of any advertised products, services, or claims.'}
+      </p>
+      <p>
+        {isId
+          ? 'Seluruh interaksi, pembelian, atau transaksi yang Anda lakukan dengan pengiklan pihak ketiga berlangsung murni antara Anda dan pihak pengiklan yang bersangkutan. Kami tidak bertanggung jawab atas kerugian atau kekecewaan apa pun yang dialami sehubungan dengan materi iklan pihak ketiga tersebut.'
+          : 'Any business transactions, correspondence, or purchases conducted with third-party advertisers are strictly between you and the respective vendor. We disclaim any liability for damages or losses resulting from engagements with third-party advertisers.'}
+      </p>
+    </section>
+
+    <!-- Section 5: External Links -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>5.</span>
+        <span>{isId ? 'Tautan Keluar (External Hyperlinks)' : 'External Hyperlinks Disclaimer'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Situs kami dapat menyertakan tautan menuju situs web luar untuk kemudahan referensi informasi (misalnya tautan resmi ISO atau panduan browser). Kami tidak memiliki wewenang untuk mengontrol, menyunting, atau menjamin keakuratan isi konten pada situs-situs pihak ketiga tersebut.'
+          : 'Our website may contain hyperlinks to external resources for user reference (e.g. ISO standards or browser vendor support guides). We do not author, monitor, or guarantee the ongoing accuracy of external content hosted on third-party domains.'}
+      </p>
+    </section>
+
+    <!-- Section 6: Limitation of Liability -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>6.</span>
+        <span>{isId ? 'Batasan Tanggung Jawab Hukum (Limitation of Liability)' : 'Limitation of Liability'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Dalam batas maksimal yang diizinkan oleh hukum yang berlaku di Republik Indonesia, pengelola penggarisonline.com, pemilik, dan afiliasinya tidak bertanggung jawab atas segala kerugian langsung, tidak langsung, insidental, khusus, atau konsekuensial (termasuk tetapi tidak terbatas pada kesalahan pemotongan bahan bangunan, kerugian finansial, kegagalan proyek teknik, atau kehilangan data) yang timbul dari penggunaan atau ketidakmampuan menggunakan instrumen penggaris digital di situs ini.'
+          : 'To the fullest extent permitted by applicable law, the operators, developers, and affiliates of penggarisonline.com shall not be held liable for any direct, indirect, incidental, special, or consequential damages (including, without limitation, material cutting errors, economic loss, structural discrepancies, or project delays) arising out of the use or inability to use this digital measurement tool.'}
+      </p>
+    </section>
+
+    <!-- Section 7: Contact -->
+    <section class="space-y-3 p-6 rounded-2xl bg-(--card) border border-(--border)">
+      <h2 class="text-lg sm:text-xl font-bold text-(--foreground) flex items-center gap-2">
+        <span>7.</span>
+        <span>{isId ? 'Kontak & Bantuan Hukum' : 'Contact & Inquiries'}</span>
+      </h2>
+      <p>
+        {isId
+          ? 'Jika Anda memiliki pertanyaan mengenai penafian ini atau memerlukan klarifikasi teknis mengenai metodologi pengukuran piksel layar kami, silakan kirimkan email ke:'
+          : 'If you have questions regarding this disclaimer or require technical clarification regarding our on-screen pixel calibration methodology, please contact:'}
+      </p>
+      <div class="p-3.5 rounded-xl bg-(--muted) font-mono text-xs text-indigo-600 dark:text-cyan-400 font-semibold w-fit">
+        ✉️ legal@penggarisonline.com / kontak@penggarisonline.com
+      </div>
+    </section>
+  </div>
+</article>
