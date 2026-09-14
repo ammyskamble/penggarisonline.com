@@ -1,4 +1,6 @@
 ---
+import Logo from './Logo.astro';
+
 interface Props {
   currentLang?: string;
 }
@@ -14,11 +16,7 @@ const prefix = currentLang === 'en' ? '/en' : '';
       <!-- Col 1: Brand & Description -->
       <div class="md:col-span-2 space-y-3 text-center md:text-left">
         <div class="flex items-center justify-center md:justify-start gap-2">
-          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-sm">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M21.3 15.3 8.7 2.7a1 1 0 0 0-1.4 0L2.7 7.3a1 1 0 0 0 0 1.4l12.6 12.6a1 1 0 0 0 1.4 0l4.6-4.6a1 1 0 0 0 0-1.4z"></path>
-            </svg>
-          </div>
+          <Logo class="w-8 h-8 rounded-xl shrink-0" />
           <span class="font-bold text-lg text-(--foreground)">
             Penggaris<span class="text-indigo-500 dark:text-cyan-400">Online</span>
           </span>

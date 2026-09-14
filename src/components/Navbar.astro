@@ -1,5 +1,6 @@
 ---
 // Navbar.astro
+import Logo from './Logo.astro';
 ---
 
 <header class="sticky top-0 z-40 w-full border-b border-(--border) glass-panel shadow-sm">
@@ -7,14 +8,7 @@
     <div class="flex items-center justify-between h-16 gap-2">
       <!-- Logo & Brand -->
       <a href="/" class="flex items-center gap-2.5 group shrink-0">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-indigo-600 to-cyan-500 p-0.5 shadow-md shadow-indigo-500/20 flex items-center justify-center transition-transform group-hover:scale-105">
-          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21.3 15.3 8.7 2.7a1 1 0 0 0-1.4 0L2.7 7.3a1 1 0 0 0 0 1.4l12.6 12.6a1 1 0 0 0 1.4 0l4.6-4.6a1 1 0 0 0 0-1.4z"></path>
-            <path d="m7.5 10.5 2 2"></path>
-            <path d="m10.5 7.5 2 2"></path>
-            <path d="m13.5 4.5 2 2"></path>
-          </svg>
-        </div>
+        <Logo class="w-9 h-9 shrink-0 rounded-xl transition-transform group-hover:scale-105" />
         <div>
           <span class="font-extrabold text-lg sm:text-xl tracking-tight text-(--foreground) flex items-center gap-1.5">
             Penggaris<span class="text-indigo-500 dark:text-cyan-400">Online</span>
